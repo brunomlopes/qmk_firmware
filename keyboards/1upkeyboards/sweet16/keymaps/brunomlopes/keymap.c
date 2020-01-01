@@ -2,7 +2,8 @@
 
 enum layers {
  _VISUAL_STUDIO,
- _WINDOW_MANAGER
+ _WINDOW_MANAGER,
+ _OSX_WINDOW_MANAGER,
 };
 
 #define RUN         KC_F5
@@ -15,32 +16,22 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
-      KC_NO , STEP_OVER  , STEP_IN   , RUN_TO_LINE,
-      KC_NO , KC_NO      , STEP_OUT  , KC_NO,
-      RUN   , KC_NO      , KC_NO     , KC_NO,
-      MO(1) , ATTACH_TO  , KC_NO     , TOGGLE_BREAKPOINT
+      KC_NO                         , STEP_OVER  , STEP_IN   , RUN_TO_LINE,
+      KC_NO                         , KC_NO      , STEP_OUT  , KC_NO,
+      MO(_OSX_WINDOW_MANAGER)       , KC_NO      , KC_NO     , RUN,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO  , KC_NO     , TOGGLE_BREAKPOINT
     ),
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      KC_NO  , KC_NO        , (KC_UP)   , KC_NO,
-      KC_NO  , (KC_LEFT)    , KC_ESCAPE , (KC_RGHT),
-      KC_NO  , LCTL(KC_LEFT), (KC_DOWN) , LCTL(KC_RGHT),
-      _______, KC_NO        , KC_NO     , KC_NO
+      KC_NO  , LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
+      KC_NO  , (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
+      KC_NO  , _______       , (KC_DOWN) , _______,
+      _______, KC_NO         , KC_NO     , KC_NO
+    ),
+    [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
+      _______, KC_MS_WH_RIGHT , KC_MS_BTN4 , KC_MS_WH_LEFT,
+      _______, _______        , _______    , _______,
+      _______, _______        , _______    , _______,
+      _______, _______        , _______    , _______
     )
 };
 
-bool bml_inWindowManagerLayer = false;
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    // since I'm using _WINDOW_MANAGER as a "window manager layer"
-    // we need to toggle KH_LGUI as long as we're in that particular layer
-    if(biton32(state) == _WINDOW_MANAGER){
-        bml_inWindowManagerLayer = true;
-        register_code(KC_LGUI);
-    }else{
-        if(bml_inWindowManagerLayer){
-            bml_inWindowManagerLayer = false;
-            unregister_code(KC_LGUI);
-        }
-    }
-    return state;
-}
