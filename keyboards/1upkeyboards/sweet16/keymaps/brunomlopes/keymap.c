@@ -7,6 +7,7 @@ enum layers {
 };
 
 #define RUN         KC_F5
+#define RUN_WITHOUT_DEBUG  LCTL(KC_F5)
 #define STEP_OVER   KC_F10
 #define STEP_IN     KC_F11
 #define STEP_OUT    LSFT(KC_F11)
@@ -16,10 +17,10 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
-      KC_NO                         , STEP_OVER  , STEP_IN   , RUN_TO_LINE,
-      KC_NO                         , KC_NO      , STEP_OUT  , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)       , KC_NO      , KC_NO     , RUN,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO  , KC_NO     , TOGGLE_BREAKPOINT
+      KC_NO                         , STEP_OVER  , STEP_IN           , RUN_TO_LINE,
+      KC_NO                         , KC_NO      , STEP_OUT          , KC_NO,
+      MO(_OSX_WINDOW_MANAGER)       , KC_NO      , KC_NO             , RUN,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO  , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
     ),
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       _______, KC_MS_WH_RIGHT , KC_MS_BTN4 , KC_MS_WH_LEFT,
