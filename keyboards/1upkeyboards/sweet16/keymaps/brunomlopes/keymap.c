@@ -29,10 +29,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_MS_WH_RIGHT , _______    , KC_MS_WH_LEFT
     ),
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      KC_NO  , LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
-      KC_NO  , (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
-      KC_NO  , LSFT(KC_LEFT) , (KC_DOWN) , LSFT(KC_RIGHT),
-      _______, _______       , KC_NO     , _______
+      KC_TRNS, LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
+      KC_TRNS, (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
+      KC_TRNS, LSFT(KC_LEFT) , (KC_DOWN) , LSFT(KC_RIGHT),
+      _______, KC_MS_WH_RIGHT, KC_TRNS   , KC_MS_WH_LEFT
     ),
 };
 
