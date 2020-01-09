@@ -9,6 +9,12 @@ enum layers {
  _LAYER_PICKER
 };
 
+/* OS X Keycodes */
+#define OSX_LOCK LGUI(LCTL(KC_Q))
+#define OSX_VIRTUAL_DESKTOP_LEFT KC_MS_WH_RIGHT
+#define OSX_VIRTUAL_DESKTOP_RIGHT KC_MS_WH_LEFT
+#define OSX_EXPOSE KC_MS_BTN4
+
 /* VS Keycodes */ 
 #define RUN         KC_F5
 #define RUN_WITHOUT_DEBUG  LCTL(KC_F5)
@@ -28,23 +34,23 @@ enum layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
       OSL(_LAYER_PICKER)            , STEP_OVER  , STEP_IN           , RUN_TO_LINE,
-      MO(_MEDIA)                   , KC_NO      , STEP_OUT          , KC_NO,
+      MO(_MEDIA)                    , KC_NO      , STEP_OUT          , KC_NO,
       MO(_OSX_WINDOW_MANAGER)       , KC_NO      , KC_NO             , RUN,
       LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO  , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
     ),
 
     [_CHROME_DEBUGGER]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)            , STEP_OVER       , STEP_IN   , RUN_TO_LINE,
-      MO(_MEDIA)                   , KC_NO           , STEP_OUT  , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)       , KC_NO           , KC_NO     , CHROME_RUN,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH  , CHROME_ONOFF_BREAKPOINT     , CHROME_TOGGLE_BREAKPOINT
+      OSL(_LAYER_PICKER)            , STEP_OVER       , STEP_IN                 , RUN_TO_LINE,
+      MO(_MEDIA)                    , KC_NO           , STEP_OUT                , KC_NO,
+      MO(_OSX_WINDOW_MANAGER)       , KC_NO           , KC_NO                   , CHROME_RUN,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH  , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT
     ),
 
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      _______, KC_MS_WH_RIGHT , KC_MS_BTN4 , KC_MS_WH_LEFT,
-      _______, _______        , _______    , _______,
-      _______, _______        , _______    , _______,
-      _______, KC_MS_WH_RIGHT , _______    , KC_MS_WH_LEFT
+      _______  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE , OSX_VIRTUAL_DESKTOP_RIGHT,
+      _______  , _______                  , _______    , _______,
+      _______  , _______                  , _______    , _______,
+      OSX_LOCK , OSX_VIRTUAL_DESKTOP_LEFT , _______    , OSX_VIRTUAL_DESKTOP_RIGHT
     ),
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       _______, LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
@@ -55,10 +61,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_MEDIA]=LAYOUT_ortho_4x4(
-      _______, KC_NO              , KC_NO                 , KC_AUDIO_VOL_UP,
-      _______, KC_MEDIA_PREV_TRACK , KC_MEDIA_PLAY_PAUSE  , KC_MEDIA_NEXT_TRACK,
-      _______, KC_NO              , KC_MEDIA_STOP         , KC_AUDIO_VOL_DOWN,
-      _______, KC_NO              , KC_NO                 , KC_AUDIO_MUTE
+      _______, KC_NO               , KC_NO                 , KC_AUDIO_VOL_UP,
+      _______, KC_MEDIA_PREV_TRACK , KC_MEDIA_PLAY_PAUSE   , KC_MEDIA_NEXT_TRACK,
+      _______, KC_NO               , KC_MEDIA_STOP         , KC_AUDIO_VOL_DOWN,
+      _______, KC_NO               , KC_NO                 , KC_AUDIO_MUTE
     ),
 
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
