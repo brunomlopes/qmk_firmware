@@ -5,6 +5,7 @@ enum layers {
  _CHROME_DEBUGGER,
  _OSX_WINDOW_MANAGER,
  _WINDOW_MANAGER,
+ _LAYER_PICKER
 };
 
 /* VS Keycodes */ 
@@ -24,15 +25,15 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
-      TO(_CHROME_DEBUGGER)          , STEP_OVER  , STEP_IN           , RUN_TO_LINE,
+      OSL(_LAYER_PICKER)            , STEP_OVER  , STEP_IN           , RUN_TO_LINE,
       KC_NO                         , KC_NO      , STEP_OUT          , KC_NO,
       MO(_OSX_WINDOW_MANAGER)       , KC_NO      , KC_NO             , RUN,
       LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO  , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
     ),
 
     [_CHROME_DEBUGGER]=LAYOUT_ortho_4x4(
-      KC_NO                         , STEP_OVER       , STEP_IN   , RUN_TO_LINE,
-      TO(_VISUAL_STUDIO)            , KC_NO           , STEP_OUT  , KC_NO,
+      OSL(_LAYER_PICKER)            , STEP_OVER       , STEP_IN   , RUN_TO_LINE,
+      KC_NO                         , KC_NO           , STEP_OUT  , KC_NO,
       MO(_OSX_WINDOW_MANAGER)       , KC_NO           , KC_NO     , CHROME_RUN,
       LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH  , KC_NO     , CHROME_TOGGLE_BREAKPOINT
     ),
@@ -44,10 +45,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_MS_WH_RIGHT , _______    , KC_MS_WH_LEFT
     ),
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      KC_TRNS, LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
-      KC_TRNS, (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
-      KC_TRNS, LSFT(KC_LEFT) , (KC_DOWN) , LSFT(KC_RIGHT),
-      _______, KC_MS_WH_RIGHT, KC_TRNS   , KC_MS_WH_LEFT
+      _______, LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
+      _______, (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
+      _______, LSFT(KC_LEFT) , (KC_DOWN) , LSFT(KC_RIGHT),
+      _______, KC_MS_WH_RIGHT, KC_F20    , KC_MS_WH_LEFT
+    ),
+
+    [_LAYER_PICKER]=LAYOUT_ortho_4x4(
+      _______, DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , KC_NO,
+      _______, KC_NO              , KC_NO                 , KC_NO,
+      _______, KC_NO              , KC_NO                 , KC_NO,
+      _______, KC_NO              , KC_NO                 , KC_NO
     ),
 };
 
