@@ -22,6 +22,7 @@ enum layers {
 #define CHROME_REFRESH     KC_F5
 #define CHROME_RUN         KC_F8
 #define CHROME_TOGGLE_BREAKPOINT LCTL(KC_B)
+#define CHROME_ONOFF_BREAKPOINT LSFT(LCTL(KC_B))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
@@ -35,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OSL(_LAYER_PICKER)            , STEP_OVER       , STEP_IN   , RUN_TO_LINE,
       KC_NO                         , KC_NO           , STEP_OUT  , KC_NO,
       MO(_OSX_WINDOW_MANAGER)       , KC_NO           , KC_NO     , CHROME_RUN,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH  , KC_NO     , CHROME_TOGGLE_BREAKPOINT
+      LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH  , CHROME_ONOFF_BREAKPOINT     , CHROME_TOGGLE_BREAKPOINT
     ),
 
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
