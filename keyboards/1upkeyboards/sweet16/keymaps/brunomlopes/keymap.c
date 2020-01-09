@@ -5,6 +5,7 @@ enum layers {
  _CHROME_DEBUGGER,
  _OSX_WINDOW_MANAGER,
  _WINDOW_MANAGER,
+ _MEDIA,
  _LAYER_PICKER
 };
 
@@ -27,14 +28,14 @@ enum layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
       OSL(_LAYER_PICKER)            , STEP_OVER  , STEP_IN           , RUN_TO_LINE,
-      KC_NO                         , KC_NO      , STEP_OUT          , KC_NO,
+      MO(_MEDIA)                   , KC_NO      , STEP_OUT          , KC_NO,
       MO(_OSX_WINDOW_MANAGER)       , KC_NO      , KC_NO             , RUN,
       LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO  , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
     ),
 
     [_CHROME_DEBUGGER]=LAYOUT_ortho_4x4(
       OSL(_LAYER_PICKER)            , STEP_OVER       , STEP_IN   , RUN_TO_LINE,
-      KC_NO                         , KC_NO           , STEP_OUT  , KC_NO,
+      MO(_MEDIA)                   , KC_NO           , STEP_OUT  , KC_NO,
       MO(_OSX_WINDOW_MANAGER)       , KC_NO           , KC_NO     , CHROME_RUN,
       LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH  , CHROME_ONOFF_BREAKPOINT     , CHROME_TOGGLE_BREAKPOINT
     ),
@@ -50,6 +51,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
       _______, LSFT(KC_LEFT) , (KC_DOWN) , LSFT(KC_RIGHT),
       _______, KC_MS_WH_RIGHT, KC_F20    , KC_MS_WH_LEFT
+    ),
+
+
+    [_MEDIA]=LAYOUT_ortho_4x4(
+      _______, KC_NO              , KC_NO                 , KC_AUDIO_VOL_UP,
+      _______, KC_MEDIA_PREV_TRACK , KC_MEDIA_PLAY_PAUSE  , KC_MEDIA_NEXT_TRACK,
+      _______, KC_NO              , KC_MEDIA_STOP         , KC_AUDIO_VOL_DOWN,
+      _______, KC_NO              , KC_NO                 , KC_AUDIO_MUTE
     ),
 
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
