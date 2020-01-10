@@ -22,12 +22,13 @@ enum layers {
 #define STEP_IN     KC_F11
 #define STEP_OUT    LSFT(KC_F11)
 #define RUN_TO_LINE LCTL(KC_F10)
-#define ATTACH_TO   LCA_T(KC_P)
+#define ATTACH_TO   LALT(LCTL(KC_P))
 #define TOGGLE_BREAKPOINT KC_F9
 
 /* Chrome Keycodes */ 
 #define CHROME_REFRESH     KC_F5
 #define CHROME_RUN         KC_F8
+#define CHROME_DEVTOOLS    KC_F12
 #define CHROME_TOGGLE_BREAKPOINT LCTL(KC_B)
 #define CHROME_ONOFF_BREAKPOINT LSFT(LCTL(KC_B))
 
@@ -42,15 +43,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_CHROME_DEBUGGER]=LAYOUT_ortho_4x4(
       OSL(_LAYER_PICKER)            , STEP_OVER       , STEP_IN                 , RUN_TO_LINE,
       MO(_MEDIA)                    , KC_NO           , STEP_OUT                , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)       , KC_NO           , KC_NO                   , CHROME_RUN,
+      MO(_OSX_WINDOW_MANAGER)       , CHROME_DEVTOOLS , KC_NO                   , CHROME_RUN,
       LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH  , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT
     ),
 
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       _______  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE , OSX_VIRTUAL_DESKTOP_RIGHT,
+      OSX_LOCK , _______                  , _______    , _______,
       _______  , _______                  , _______    , _______,
-      _______  , _______                  , _______    , _______,
-      OSX_LOCK , OSX_VIRTUAL_DESKTOP_LEFT , _______    , OSX_VIRTUAL_DESKTOP_RIGHT
+      _______  , OSX_VIRTUAL_DESKTOP_LEFT , _______    , OSX_VIRTUAL_DESKTOP_RIGHT
     ),
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       _______, LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
