@@ -14,6 +14,12 @@ enum layers {
 #define OSX_VIRTUAL_DESKTOP_LEFT KC_MS_WH_RIGHT
 #define OSX_VIRTUAL_DESKTOP_RIGHT KC_MS_WH_LEFT
 #define OSX_EXPOSE KC_MS_BTN4
+#define OSX_PREVIOUS_DISPLAY LCTL(LALT(LGUI(KC_LEFT)))
+#define OSX_NEXT_DISPLAY LCTL(LALT(LGUI(KC_RIGHT)))
+#define OSX_WINDOW_UP LCTL(LALT(KC_UP))
+#define OSX_WINDOW_DOWN LCTL(LALT(KC_DOWN))
+#define OSX_WINDOW_LEFT LCTL(LALT(KC_LEFT))
+#define OSX_WINDOW_RIGHT LCTL(LALT(KC_RIGHT))
 
 /* VS Keycodes */ 
 #define RUN         KC_F5
@@ -24,6 +30,7 @@ enum layers {
 #define RUN_TO_LINE LCTL(KC_F10)
 #define ATTACH_TO   LALT(LCTL(KC_P))
 #define TOGGLE_BREAKPOINT KC_F9
+#define VS_NAVIGATE_TO KC_F12
 
 /* Chrome Keycodes */ 
 #define CHROME_REFRESH     KC_F5
@@ -34,10 +41,10 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)            , STEP_OVER  , STEP_IN           , RUN_TO_LINE,
-      MO(_MEDIA)                    , KC_NO      , STEP_OUT          , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)       , KC_NO      , KC_NO             , RUN,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO  , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
+      OSL(_LAYER_PICKER)            , STEP_OVER       , STEP_IN           , RUN_TO_LINE,
+      MO(_MEDIA)                    , KC_NO           , STEP_OUT          , KC_NO,
+      MO(_OSX_WINDOW_MANAGER)       , VS_NAVIGATE_TO  , KC_NO             , RUN,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO       , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
     ),
 
     [_CHROME_DEBUGGER]=LAYOUT_ortho_4x4(
@@ -48,18 +55,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      _______  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE , OSX_VIRTUAL_DESKTOP_RIGHT,
-      OSX_LOCK , _______                  , _______    , _______,
-      _______  , _______                  , _______    , _______,
-      _______  , OSX_VIRTUAL_DESKTOP_LEFT , _______    , OSX_VIRTUAL_DESKTOP_RIGHT
+      _______  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_WINDOW_UP   , OSX_VIRTUAL_DESKTOP_RIGHT,
+      OSX_LOCK , OSX_WINDOW_LEFT          , OSX_EXPOSE      , OSX_WINDOW_RIGHT ,
+      _______  , OSX_PREVIOUS_DISPLAY     , OSX_WINDOW_DOWN , OSX_NEXT_DISPLAY,
+      _______  , OSX_VIRTUAL_DESKTOP_LEFT , _______         , OSX_VIRTUAL_DESKTOP_RIGHT
     ),
+    
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       _______, LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
       _______, (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
       _______, LSFT(KC_LEFT) , (KC_DOWN) , LSFT(KC_RIGHT),
       _______, KC_MS_WH_RIGHT, KC_F20    , KC_MS_WH_LEFT
     ),
-
 
     [_MEDIA]=LAYOUT_ortho_4x4(
       _______, KC_NO               , KC_NO                 , KC_AUDIO_VOL_UP,
