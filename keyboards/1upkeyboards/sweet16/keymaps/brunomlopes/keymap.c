@@ -3,10 +3,10 @@
 enum layers {
  _VISUAL_STUDIO,
  _CHROME_DEBUGGER,
+ _MOUSE,
  _OSX_WINDOW_MANAGER,
  _WINDOW_MANAGER,
  _MEDIA,
- _MOUSE,
  _LAYER_PICKER
 };
 
@@ -57,13 +57,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH      , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT
     ),
 
+    [_MOUSE]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER)            , KC_WH_L               , KC_MS_U               , KC_WH_U,
+      MO(_MEDIA)                    , KC_MS_L               , KC_MS_BTN1            , KC_MS_R,
+      MO(_OSX_WINDOW_MANAGER)       , KC_WH_R               , KC_MS_D               , KC_WH_D,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_ACL0               , KC_ACL1               , KC_ACL2
+    ),
+
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       _______  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE          , OSX_VIRTUAL_DESKTOP_RIGHT,
       OSX_LOCK , OSX_WINDOW_LEFT          , OSX_WINDOW_UP       , OSX_WINDOW_RIGHT ,
       _______  , OSX_PREVIOUS_DISPLAY     , OSX_WINDOW_DOWN     , OSX_NEXT_DISPLAY,
       _______  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_WINDOW_MAXIMIZE , OSX_VIRTUAL_DESKTOP_RIGHT
     ),
-
+   
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       _______, LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
       _______, (KC_LEFT)     , KC_UP     , (KC_RGHT),
@@ -76,13 +83,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_MEDIA_PREV_TRACK , KC_MEDIA_PLAY_PAUSE   , KC_MEDIA_NEXT_TRACK,
       _______, KC_NO               , KC_MEDIA_STOP         , KC_AUDIO_VOL_DOWN,
       _______, KC_NO               , KC_NO                 , KC_AUDIO_MUTE
-    ),
-
-    [_MOUSE]=LAYOUT_ortho_4x4(
-      _______, KC_WH_L               , KC_MS_U               , KC_WH_U,
-      _______, KC_MS_L               , KC_MS_BTN1            , KC_MS_R,
-      _______, KC_WH_R               , KC_MS_D               , KC_WH_D,
-      _______, KC_ACL0               , KC_ACL1               , KC_ACL2
     ),
 
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
