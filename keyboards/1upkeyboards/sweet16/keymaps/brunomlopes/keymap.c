@@ -64,10 +64,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      _______, LCTL(KC_LEFT) , (KC_UP)   , LCTL(KC_RGHT),
-      _______, (KC_LEFT)     , KC_ESCAPE , (KC_RGHT),
-      _______, LSFT(KC_LEFT) , (KC_DOWN) , LSFT(KC_RIGHT),
-      _______, KC_MS_WH_RIGHT, KC_F20    , KC_MS_WH_LEFT
+      _______, LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
+      _______, (KC_LEFT)     , KC_UP     , (KC_RGHT),
+      _______, LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT),
+      _______, KC_MS_WH_RIGHT, KC_ESCAPE , KC_MS_WH_LEFT
     ),
 
     [_MEDIA]=LAYOUT_ortho_4x4(
