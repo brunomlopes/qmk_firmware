@@ -6,6 +6,7 @@ enum layers {
  _OSX_WINDOW_MANAGER,
  _WINDOW_MANAGER,
  _MEDIA,
+ _MOUSE,
  _LAYER_PICKER
 };
 
@@ -77,11 +78,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_NO               , KC_NO                 , KC_AUDIO_MUTE
     ),
 
+    [_MOUSE]=LAYOUT_ortho_4x4(
+      _______, KC_WH_L               , KC_MS_U               , KC_WH_U,
+      _______, KC_MS_L               , KC_MS_BTN1            , KC_MS_R,
+      _______, KC_WH_R               , KC_MS_D               , KC_WH_D,
+      _______, KC_ACL0               , KC_ACL1               , KC_ACL2
+    ),
+
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
       _______, DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , KC_NO,
       _______, KC_NO              , KC_NO                 , KC_NO,
       _______, KC_NO              , KC_NO                 , KC_NO,
-      _______, KC_NO              , KC_NO                 , KC_NO
+      _______, DF(_MOUSE)         , KC_NO                 , KC_NO
     ),
 };
 
