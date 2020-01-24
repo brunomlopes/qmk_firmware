@@ -2,10 +2,10 @@
 enum layers {
  _VISUAL_STUDIO,
  _CHROME_DEBUGGER,
+ _MOUSE,
  _OSX_WINDOW_MANAGER,
  _WINDOW_MANAGER,
  _MEDIA,
- _MOUSE,
  _LAYER_PICKER
 };
 
@@ -13,6 +13,8 @@ enum custom_keycodes {
   VS_SHOW_HIERARCHY = SAFE_RANGE,
   ALT_TAB
 };
+
+#define ALT_TAB_LAYER _OSX_WINDOW_MANAGER
 
 /* OS X Keycodes */
 #define OSX_LOCK LGUI(LCTL(KC_Q))
@@ -98,9 +100,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-// TODO: actually, we can unregister code KC_LALT when we leave layer 
+// we activate alt when we use the alt-tab, 
+// and want to de-activate it when leaving a layer
 bool is_alt_tab_active = false;    // ADD this near the begining of keymap.c
-uint16_t alt_tab_timer = 0;        // we will be using them soon.
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -120,7 +122,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           is_alt_tab_active = true;
           register_code(KC_LALT);
         } 
-        alt_tab_timer = timer_read();
         register_code(KC_TAB);
       } else {
         unregister_code(KC_TAB);
@@ -132,10 +133,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   switch (get_highest_layer(state)) {
-    case _OSX_WINDOW_MANAGER:
+    case ALT_TAB_LAYER:
       break;
     default:
-      // if we're no longer in _OSX_WINDOW_MANAGER but alt_tab is active
+      // if we're no longer in ALT_TAB_LAYER but alt_tab is active
       // leave alt tab mode
       if(is_alt_tab_active){
         unregister_code(KC_LALT);
@@ -143,13 +144,4 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       }
   }
   return state;
-}
-
-void matrix_scan_user(void) {     // The very important timer. 
-  if (is_alt_tab_active) {
-    if (timer_elapsed(alt_tab_timer) > 1000) {
-      unregister_code(KC_LALT);
-      is_alt_tab_active = false;
-    }
-  }
 }
