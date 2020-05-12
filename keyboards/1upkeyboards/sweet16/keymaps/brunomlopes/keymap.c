@@ -29,7 +29,7 @@ enum custom_keycodes {
 #define OSX_WINDOW_RIGHT LCTL(LALT(KC_RIGHT))
 #define OSX_WINDOW_MAXIMIZE LCTL(LALT(KC_ENT))
 
-/* VS Keycodes */ 
+/* VS Keycodes */
 #define RUN         KC_F5
 #define RUN_WITHOUT_DEBUG  LCTL(KC_F5)
 #define STEP_OVER   KC_F10
@@ -40,7 +40,7 @@ enum custom_keycodes {
 #define TOGGLE_BREAKPOINT KC_F9
 #define VS_NAVIGATE_TO KC_F12
 
-/* Chrome Keycodes */ 
+/* Chrome Keycodes */
 #define CHROME_REFRESH     KC_F5
 #define CHROME_RUN         KC_F8
 #define CHROME_DEVTOOLS    KC_F12
@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______       , OSX_PREVIOUS_DISPLAY     , OSX_WINDOW_DOWN     , OSX_NEXT_DISPLAY,
       _______       , OSX_VIRTUAL_DESKTOP_LEFT , OSX_WINDOW_MAXIMIZE , OSX_VIRTUAL_DESKTOP_RIGHT
     ),
-    
+
     [_MOUSE]=LAYOUT_ortho_4x4(
       OSL(_LAYER_PICKER)            , KC_WH_L               , KC_MS_U               , KC_WH_U,
       MO(_MEDIA)                    , KC_MS_L               , KC_MS_BTN1            , KC_MS_R,
@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      _______, LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
+      KC_TAB , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
       _______, (KC_LEFT)     , KC_UP     , (KC_RGHT),
       _______, LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT),
       _______, KC_MS_WH_RIGHT, KC_ESCAPE , KC_MS_WH_LEFT
@@ -100,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-// we activate alt when we use the alt-tab, 
+// we activate alt when we use the alt-tab,
 // and want to de-activate it when leaving a layer
 bool is_alt_tab_active = false;    // ADD this near the begining of keymap.c
 
@@ -121,7 +121,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (!is_alt_tab_active) {
           is_alt_tab_active = true;
           register_code(KC_LALT);
-        } 
+        }
         register_code(KC_TAB);
       } else {
         unregister_code(KC_TAB);
