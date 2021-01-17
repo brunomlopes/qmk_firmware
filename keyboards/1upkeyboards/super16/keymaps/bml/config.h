@@ -18,3 +18,4 @@
 
 // place overrides here
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100
+#define RGBLIGHT_LAYERS
