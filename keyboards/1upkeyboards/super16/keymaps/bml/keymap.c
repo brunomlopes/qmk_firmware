@@ -141,32 +141,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 };
 
-// TODO: this should be a sizeof, if I recall
-#define LAYERS_TO_LED_SIZE 6
-const uint16_t PROGMEM layer_to_led[LAYERS_TO_LED_SIZE][2] = {
-    {_VISUAL_STUDIO, 1},
-    {_CHROME_DEBUGGER, 2},
-    {_MEDIA, 4},
-    {_MOUSE, 9},
-    {_LIGHTS, 10},
-    {_LAYER_PICKER, 0},
-};
-
 // BL: do't really like this macro, seems messy, depending on led_layer, etc
 #define CHECK_LAYER_LED(layer, layer_num, led_ix, led_for_layer) if((layer == layer_num) && (led_ix == led_for_layer)) led_layer = true
 
 void bml_set_layer_indicator(layer_state_t state){
-    //int highest_layer = get_highest_layer(default_layer_state);
-    //int highest_layer_d = get_highest_layer(state);
     // BL: no clue why, but modifiers change the state, but default layer state doesn't
     // so we check the state for temporary layers, and if there are none, go to the default layer state
     int highest_layer = get_highest_layer(state);
-    if(highest_layer == 0)
+    if (highest_layer == 0)
         highest_layer = get_highest_layer(default_layer_state);
-
-    // uprintf("------------------------------------\n");
-    // uprintf("DEFAULT highest layer: %u . state %u\n", get_highest_layer(default_layer_state), default_layer_state);
-    // uprintf("NORMAL  highest layer: %u . state %u\n", get_highest_layer(state), state);
 
     for (int led_ix = 0; led_ix < RGBLED_NUM ; led_ix++)
     {
