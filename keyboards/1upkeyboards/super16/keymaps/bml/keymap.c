@@ -7,6 +7,8 @@ enum layers {
  _WINDOW_MANAGER,
  _MEDIA,
  _LIGHTS,
+ _FKEYS,
+ _FIDDLE,
  _LAYER_PICKER
 };
 
@@ -81,10 +83,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      KC_TAB , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
-      _______, (KC_LEFT)     , KC_UP     , (KC_RGHT),
-      _______, LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT),
-      _______, KC_MS_WH_RIGHT, KC_ESCAPE , KC_MS_WH_LEFT
+      KC_TAB     , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
+      _______    , (KC_LEFT)     , KC_UP     , (KC_RGHT),
+      OSL(_FKEYS), LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT),
+      _______    , KC_MS_WH_LEFT , KC_ESCAPE , KC_MS_WH_RIGHT
     ),
 
     [_MEDIA]=LAYOUT_ortho_4x4(
@@ -95,17 +97,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_LIGHTS]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)           , KC_NO               , RGB_VAI               , RGB_TOG,
-      MO(_MEDIA)                   , KC_NO               , RGB_VAD               , KC_NO,
+      OSL(_LAYER_PICKER)           , RGB_HUI               , RGB_VAI               , RGB_TOG,
+      MO(_MEDIA)                   , RGB_HUD               , RGB_VAD               , KC_NO,
+      MO(_OSX_WINDOW_MANAGER)      , RGB_SAI               , KC_NO                 , KC_NO,
+      LM(_WINDOW_MANAGER, MOD_LGUI), RGB_SAD               , KC_NO                 , KC_NO
+    ),
+
+    // FKEYS are used to switch directly to a virtual desktop
+    [_FKEYS]=LAYOUT_ortho_4x4(
+      KC_F13             , KC_F14, KC_F15 ,KC_F16,
+      KC_F17             , KC_F18, KC_F19 ,KC_F20,
+      KC_NO              , KC_NO , KC_NO  ,KC_NO,
+      OSL(_LAYER_PICKER) , KC_NO , KC_NO  ,KC_NO
+    ),
+
+    [_FIDDLE]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER)           , KC_NO               , KC_NO                 , KC_NO,
+      MO(_MEDIA)                   , KC_NO               , KC_NO                 , KC_NO,
       MO(_OSX_WINDOW_MANAGER)      , KC_NO               , KC_NO                 , KC_NO,
       LM(_WINDOW_MANAGER, MOD_LGUI), KC_NO               , KC_NO                 , KC_NO
     ),
 
-
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
-      _______, DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , KC_NO,
-      _______, KC_NO              , KC_NO                 , KC_NO,
-      RESET  , DF(_MOUSE)         , DF(_LIGHTS)           , KC_NO,
+      KC_NO  , DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , KC_NO,
+      _______, KC_NO              , DF(_FKEYS)            , OSL(_FKEYS),
+      RESET  , DF(_MOUSE)         , DF(_LIGHTS)           , DF(_FIDDLE),
       _______, KC_NO              , KC_NO                 , KC_NO
     ),
 };
@@ -157,9 +173,11 @@ void bml_set_layer_indicator(layer_state_t state){
         CHECK_LAYER_LED(highest_layer, _LAYER_PICKER, led_ix, 0);
         CHECK_LAYER_LED(highest_layer, _VISUAL_STUDIO, led_ix, 1);
         CHECK_LAYER_LED(highest_layer, _CHROME_DEBUGGER, led_ix, 2);
+        CHECK_LAYER_LED(highest_layer, _FKEYS, led_ix, 4);
         CHECK_LAYER_LED(highest_layer, _MEDIA, led_ix, 7);
         CHECK_LAYER_LED(highest_layer, _MOUSE, led_ix, 9);
         CHECK_LAYER_LED(highest_layer, _LIGHTS, led_ix, 10);
+        CHECK_LAYER_LED(highest_layer, _FIDDLE, led_ix, 11);
         CHECK_LAYER_LED(highest_layer, _WINDOW_MANAGER, led_ix, 15);
 
         if(led_layer)
