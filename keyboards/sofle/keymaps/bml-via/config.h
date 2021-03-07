@@ -17,6 +17,11 @@
 
 #pragma once
 
+#ifdef TAPPING_TERM
+#undef TAPPING_TERM
+#endif // TAPPING_TERM
+#define TAPPING_TERM 200
+
 /* The way how "handedness" is decided (which half is which),
 see https://docs.qmk.fm/#/feature_split_keyboard?id=setting-handedness
 for more options.
@@ -29,3 +34,4 @@ for more options.
 #define RGBLIGHT_ANIMATIONS
 
 #define SPLIT_USB_DETECT
+#define DYNAMIC_KEYMAP_LAYER_COUNT 6
