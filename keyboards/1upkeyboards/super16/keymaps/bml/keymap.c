@@ -2,6 +2,7 @@
 enum layers {
  _VISUAL_STUDIO,
  _CHROME_DEBUGGER,
+ _NUMPAD,
  _MOUSE,
  _OSX_WINDOW_MANAGER,
  _WINDOW_MANAGER,
@@ -68,6 +69,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH      , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT
     ),
 
+    [_NUMPAD]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER)            , KC_P7      , KC_P8                , KC_P9,
+      MO(_MEDIA)                    , KC_P4      , KC_P5                , KC_P6,
+      MO(_OSX_WINDOW_MANAGER)       , KC_P1      , KC_P2                , KC_P3,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_P0      , KC_PDOT              , KC_PENT
+    ),
+
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       ALT_TAB       , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE          , OSX_VIRTUAL_DESKTOP_RIGHT,
       OSX_LOCK      , OSX_WINDOW_LEFT          , OSX_WINDOW_UP       , OSX_WINDOW_RIGHT ,
@@ -105,10 +113,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // FKEYS are used to switch directly to a virtual desktop
     [_FKEYS]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER) , KC_NO , KC_NO  ,KC_NO,
       KC_F13             , KC_F14, KC_F15 ,KC_F16,
       KC_F17             , KC_F18, KC_F19 ,KC_F20,
-      KC_NO              , KC_NO , KC_NO  ,KC_NO,
-      OSL(_LAYER_PICKER) , KC_NO , KC_NO  ,KC_NO
+      KC_F21             , KC_F22, KC_F23 ,KC_F24
     ),
 
     [_FIDDLE]=LAYOUT_ortho_4x4(
@@ -119,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
-      KC_NO  , DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , KC_NO,
+      KC_NO  , DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , DF(_NUMPAD),
       _______, KC_NO              , DF(_FKEYS)            , OSL(_FKEYS),
       RESET  , DF(_MOUSE)         , DF(_LIGHTS)           , DF(_FIDDLE),
       _______, KC_NO              , KC_NO                 , KC_NO
@@ -173,6 +181,7 @@ void bml_set_layer_indicator(layer_state_t state){
         CHECK_LAYER_LED(highest_layer, _LAYER_PICKER, led_ix, 0);
         CHECK_LAYER_LED(highest_layer, _VISUAL_STUDIO, led_ix, 1);
         CHECK_LAYER_LED(highest_layer, _CHROME_DEBUGGER, led_ix, 2);
+        CHECK_LAYER_LED(highest_layer, _NUMPAD, led_ix, 3);
         CHECK_LAYER_LED(highest_layer, _FKEYS, led_ix, 4);
         CHECK_LAYER_LED(highest_layer, _MEDIA, led_ix, 7);
         CHECK_LAYER_LED(highest_layer, _MOUSE, led_ix, 9);
