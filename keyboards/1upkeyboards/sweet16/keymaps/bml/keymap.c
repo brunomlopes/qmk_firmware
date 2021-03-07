@@ -2,10 +2,14 @@
 enum layers {
  _VISUAL_STUDIO,
  _CHROME_DEBUGGER,
+ _NUMPAD,
  _MOUSE,
  _OSX_WINDOW_MANAGER,
  _WINDOW_MANAGER,
  _MEDIA,
+ _FKEYS,
+ _FIDDLE,
+ _POWER,
  _LAYER_PICKER
 };
 
@@ -13,6 +17,8 @@ enum custom_keycodes {
   VS_SHOW_HIERARCHY = SAFE_RANGE,
   ALT_TAB
 };
+
+extern rgblight_config_t rgblight_config;
 
 #define ALT_TAB_LAYER _OSX_WINDOW_MANAGER
 
@@ -48,6 +54,10 @@ enum custom_keycodes {
 #define CHROME_ONOFF_BREAKPOINT LSFT(LCTL(KC_B))
 #define CHROME_PICK_ELEMENT LCTL(LSFT(KC_C))
 
+
+/* Power Keycodes */
+#define WIN_LOCK LGUI(KC_L)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
       OSL(_LAYER_PICKER)            , STEP_OVER         , STEP_IN           , RUN_TO_LINE,
@@ -63,6 +73,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH      , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT
     ),
 
+    [_NUMPAD]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER)            , KC_P7      , KC_P8                , KC_P9,
+      MO(_MEDIA)                    , KC_P4      , KC_P5                , KC_P6,
+      MO(_OSX_WINDOW_MANAGER)       , KC_P1      , KC_P2                , KC_P3,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_P0      , KC_PDOT              , KC_PENT
+    ),
+
     [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
       ALT_TAB       , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE          , OSX_VIRTUAL_DESKTOP_RIGHT,
       OSX_LOCK      , OSX_WINDOW_LEFT          , OSX_WINDOW_UP       , OSX_WINDOW_RIGHT ,
@@ -74,14 +91,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OSL(_LAYER_PICKER)            , KC_WH_L               , KC_MS_U               , KC_WH_U,
       MO(_MEDIA)                    , KC_MS_L               , KC_MS_BTN1            , KC_MS_R,
       MO(_OSX_WINDOW_MANAGER)       , KC_WH_R               , KC_MS_D               , KC_WH_D,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_MS_BTN1            , KC_MS_BTN2            , KC_MS_BTN3
+      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_ACL0               , KC_ACL1               , KC_ACL2
     ),
 
     [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      KC_TAB , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
-      _______, (KC_LEFT)     , KC_UP     , (KC_RGHT),
-      _______, LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT),
-      _______, KC_MS_WH_RIGHT, KC_ESCAPE , KC_MS_WH_LEFT
+      KC_TAB     , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
+      _______    , (KC_LEFT)     , KC_UP     , (KC_RGHT),
+      OSL(_FKEYS), LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT),
+      _______    , KC_MS_WH_LEFT , KC_ESCAPE , KC_MS_WH_RIGHT
     ),
 
     [_MEDIA]=LAYOUT_ortho_4x4(
@@ -91,12 +108,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_NO               , KC_NO                 , KC_AUDIO_MUTE
     ),
 
+    // FKEYS are used to switch directly to a virtual desktop
+    [_FKEYS]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER) , KC_NO , KC_NO  ,KC_NO,
+      KC_F13             , KC_F14, KC_F15 ,KC_F16,
+      KC_F17             , KC_F18, KC_F19 ,KC_F20,
+      KC_NO              , KC_NO , KC_NO  ,KC_NO
+    ),
+
+    [_FIDDLE]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER)           , KC_NO               , KC_NO                 , KC_NO,
+      MO(_MEDIA)                   , KC_NO               , KC_NO                 , KC_NO,
+      MO(_OSX_WINDOW_MANAGER)      , KC_NO               , KC_NO                 , KC_NO,
+      LM(_WINDOW_MANAGER, MOD_LGUI), KC_NO               , KC_NO                 , KC_NO
+    ),
+
+    [_POWER]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER) , KC_NO , KC_NO  ,KC_NO,
+      KC_NO              , KC_NO , KC_NO  ,KC_SYSTEM_SLEEP,
+      WIN_LOCK           , KC_NO , KC_NO  ,KC_NO,
+      KC_NO              , KC_NO , KC_NO  ,KC_NO
+    ),
 
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
-      _______, DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , KC_NO,
-      _______, KC_NO              , KC_NO                 , KC_NO,
-      RESET  , DF(_MOUSE)         , KC_NO                 , KC_NO,
-      _______, KC_NO              , KC_NO                 , KC_NO
+      KC_NO  , DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , DF(_NUMPAD),
+      _______, KC_NO              , DF(_FKEYS)            , OSL(_FKEYS),
+      RESET  , DF(_MOUSE)         , KC_NO                 , DF(_FIDDLE),
+      _______, KC_NO              , KC_NO                 , OSL(_POWER)
     ),
 };
 
