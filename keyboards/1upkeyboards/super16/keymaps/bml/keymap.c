@@ -10,6 +10,8 @@ enum layers {
  _LIGHTS,
  _FKEYS,
  _FIDDLE,
+ _POWER,
+ _ARROWS,
  _LAYER_PICKER
 };
 
@@ -126,11 +128,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       LM(_WINDOW_MANAGER, MOD_LGUI), KC_NO               , KC_NO                 , KC_NO
     ),
 
+    [_POWER]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER)           , KC_NO               , KC_NO                 , KC_NO,
+      MO(_MEDIA)                   , KC_NO               , KC_NO                 , KC_NO,
+      LGUI(KC_L)                   , KC_NO               , KC_NO                 , KC_SLEP,
+      LM(_WINDOW_MANAGER, MOD_LGUI), KC_NO               , KC_NO                 , KC_NO
+    ),
+
+    [_ARROWS]=LAYOUT_ortho_4x4(
+      OSL(_LAYER_PICKER)            , KC_HOME , KC_UP   , KC_PGUP,
+      MO(_MEDIA)                    , KC_LEFT , KC_DOWN , KC_RGHT,
+      _______                       , KC_END  , KC_NO   , KC_PGDN,
+      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_INS  , KC_NO   , KC_DEL
+    ),
+
     [_LAYER_PICKER]=LAYOUT_ortho_4x4(
       KC_NO  , DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , DF(_NUMPAD),
-      _______, KC_NO              , DF(_FKEYS)            , OSL(_FKEYS),
+      _______, DF(_ARROWS)        , DF(_FKEYS)            , OSL(_FKEYS),
       RESET  , DF(_MOUSE)         , DF(_LIGHTS)           , DF(_FIDDLE),
-      _______, KC_NO              , KC_NO                 , KC_NO
+      _______, KC_NO              , KC_NO                 , OSL(_POWER)
     ),
 };
 
@@ -183,10 +199,12 @@ void bml_set_layer_indicator(layer_state_t state){
         CHECK_LAYER_LED(highest_layer, _CHROME_DEBUGGER, led_ix, 2);
         CHECK_LAYER_LED(highest_layer, _NUMPAD, led_ix, 3);
         CHECK_LAYER_LED(highest_layer, _FKEYS, led_ix, 4);
+        CHECK_LAYER_LED(highest_layer, _ARROWS, led_ix, 6);
         CHECK_LAYER_LED(highest_layer, _MEDIA, led_ix, 7);
         CHECK_LAYER_LED(highest_layer, _MOUSE, led_ix, 9);
         CHECK_LAYER_LED(highest_layer, _LIGHTS, led_ix, 10);
         CHECK_LAYER_LED(highest_layer, _FIDDLE, led_ix, 11);
+        CHECK_LAYER_LED(highest_layer, _POWER, led_ix, 12);
         CHECK_LAYER_LED(highest_layer, _WINDOW_MANAGER, led_ix, 15);
 
         if(led_layer)
