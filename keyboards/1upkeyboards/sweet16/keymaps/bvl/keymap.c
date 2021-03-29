@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 // BL: do't really like this macro, seems messy, depending on led_layer, etc
-#define CHECK_LAYER_LED(layer, layer_num, led_ix, led_for_layer) if((layer == layer_num) && (led_ix == led_for_layer)) led_layer = true
+#define CHECK_LAYER_LED(layer, layer_num, led_ix, led_for_layer, new_colour) if((layer == layer_num) && (led_ix == led_for_layer)) led_colour = new_colour
 
 // Layer 9 is set up to jump to other layer choice
 
@@ -87,15 +87,20 @@ void bml_set_layer_indicator(layer_state_t state){
 
     for (int led_ix = 0; led_ix < RGBLED_NUM ; led_ix++)
     {
+        enum bml_ug_colours led_colour = highest_layer == 9 ? BML_UG_TEAL : BML_UG_WHITE;
+
         bool led_layer = false;
-        CHECK_LAYER_LED(highest_layer, 0, led_ix, 0);
-        CHECK_LAYER_LED(highest_layer, 1, led_ix, 1);
-        CHECK_LAYER_LED(highest_layer, 2, led_ix, 2);
-        CHECK_LAYER_LED(highest_layer, 3, led_ix, 3);
+        CHECK_LAYER_LED(highest_layer, 0, led_ix, 0, BML_UG_RED);
+        CHECK_LAYER_LED(highest_layer, 1, led_ix, 1, BML_UG_RED);
+        CHECK_LAYER_LED(highest_layer, 2, led_ix, 2, BML_UG_RED);
+        CHECK_LAYER_LED(highest_layer, 3, led_ix, 3, BML_UG_RED);
+        CHECK_LAYER_LED(highest_layer, 4, led_ix, 0, BML_UG_GREEN);
+        CHECK_LAYER_LED(highest_layer, 5, led_ix, 1, BML_UG_GREEN);
+        CHECK_LAYER_LED(highest_layer, 6, led_ix, 2, BML_UG_GREEN);
+        CHECK_LAYER_LED(highest_layer, 7, led_ix, 3, BML_UG_GREEN);
 
         LED_TYPE* current_led = (LED_TYPE *)&led[led_ix];
 
-        enum bml_ug_colours led_colour = led_layer ? BML_UG_RED : BML_UG_WHITE;
         if(led_layer)
             bml_ug_set(led_colour, current_led);
         else
