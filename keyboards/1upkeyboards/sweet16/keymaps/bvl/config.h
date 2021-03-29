@@ -6,3 +6,5 @@
 #undef RGBLED_NUM
 #define RGBLED_NUM 4
 
+#define RGBLIGHT_LIMIT_VAL 100
+#define RGBLIGHT_SLEEP
