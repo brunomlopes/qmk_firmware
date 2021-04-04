@@ -16,22 +16,42 @@
   */
 
 //Setting up what encoder rotation does. If your encoder can be pressed as a button, that function can be set in Via.
+#define QMK_KEYBOARD_H "sofle.h"
+
+#include QMK_KEYBOARD_H
+#include "rotary.h"
 
 #ifdef ENCODER_ENABLE
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        if (clockwise) {
-            tap_code(KC_WH_D);
-        } else {
-            tap_code(KC_WH_U);
-        }
-    } else if (index == 1) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
-        }
+    int current_mode = left_rotary_current_mode;
+
+    if (index == 1) {
+        current_mode = right_rotary_current_mode;
+    }
+
+    switch(current_mode) {
+        case ROTARY_MODE_VOLUME:
+            if (clockwise) {
+                tap_code(KC_VOLU);
+            } else {
+                tap_code(KC_VOLD);
+            }
+            break;
+        case ROTARY_MODE_VERTICAL_SCROLL:
+            if (clockwise) {
+                tap_code(KC_WH_D);
+            } else {
+                tap_code(KC_WH_U);
+            }
+            break;
+        case ROTARY_MODE_HORIZONTAL_SCROLL:
+            if (clockwise) {
+                tap_code(KC_MS_WH_RIGHT);
+            } else {
+                tap_code(KC_MS_WH_LEFT);
+            }
+            break;
     }
 }
 
