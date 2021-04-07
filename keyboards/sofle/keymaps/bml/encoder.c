@@ -24,13 +24,41 @@
 #ifdef ENCODER_ENABLE
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    int current_mode = left_rotary_current_mode;
+    int* current_mode_pointer = &left_rotary_current_mode;
 
     if (index == 1) {
-        current_mode = right_rotary_current_mode;
+        current_mode_pointer = &right_rotary_current_mode;
     }
 
-    switch(current_mode) {
+    // shift+encoder changes the encoder mode
+    if ( get_mods() & MOD_MASK_SHIFT ){
+        if(clockwise){
+            switch (*current_mode_pointer)
+            {
+            case ROTARY_MODE_HORIZONTAL_SCROLL:
+                *current_mode_pointer = ROTARY_MODE_VOLUME;
+                break;
+
+            default:
+                *current_mode_pointer += 1;
+                break;
+            }
+        }else{
+            switch (*current_mode_pointer)
+            {
+            case ROTARY_MODE_VOLUME:
+                *current_mode_pointer = ROTARY_MODE_HORIZONTAL_SCROLL;
+                break;
+
+            default:
+                *current_mode_pointer -= 1;
+                break;
+            }
+        }
+        return;
+    }
+
+    switch(*current_mode_pointer) {
         case ROTARY_MODE_VOLUME:
             if (clockwise) {
                 tap_code(KC_VOLU);
