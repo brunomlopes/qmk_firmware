@@ -8,6 +8,7 @@ enum layers {
  _WINDOW_MANAGER,
  _MEDIA,
  _LIGHTS,
+ // FKEYS are used to switch directly to a virtual desktop
  _FKEYS,
  _FIDDLE,
  _POWER,
@@ -57,98 +58,99 @@ extern rgblight_config_t rgblight_config;
 #define CHROME_PICK_ELEMENT LCTL(LSFT(KC_C))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_VISUAL_STUDIO]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)            , STEP_OVER         , STEP_IN           , RUN_TO_LINE,
-      MO(_MEDIA)                    , VS_SHOW_HIERARCHY , STEP_OUT          , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)       , VS_NAVIGATE_TO    , KC_NO             , RUN,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , ATTACH_TO         , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
-    ),
+  [_VISUAL_STUDIO] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)           , STEP_OVER         , STEP_IN           , RUN_TO_LINE       ,
+    MO(_MEDIA)                   , VS_SHOW_HIERARCHY , STEP_OUT          , KC_NO             ,
+    MO(_OSX_WINDOW_MANAGER)      , VS_NAVIGATE_TO    , KC_NO             , RUN               ,
+    LM(_WINDOW_MANAGER,MOD_LGUI) , ATTACH_TO         , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
+  ),
 
-    [_CHROME_DEBUGGER]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)            , STEP_OVER           , STEP_IN                 , RUN_TO_LINE,
-      MO(_MEDIA)                    , CHROME_PICK_ELEMENT , STEP_OUT                , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)       , CHROME_DEVTOOLS     , KC_NO                   , CHROME_RUN,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH      , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT
-    ),
+  [_CHROME_DEBUGGER] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)            , STEP_OVER           , STEP_IN                 , RUN_TO_LINE              ,
+    MO(_MEDIA)                    , CHROME_PICK_ELEMENT , STEP_OUT                , KC_NO                    ,
+    MO(_OSX_WINDOW_MANAGER)       , CHROME_DEVTOOLS     , KC_NO                   , CHROME_RUN               ,
+    LM(_WINDOW_MANAGER, MOD_LGUI) , CHROME_REFRESH      , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT
+  ),
 
-    [_NUMPAD]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)            , KC_P7      , KC_P8                , KC_P9,
-      MO(_MEDIA)                    , KC_P4      , KC_P5                , KC_P6,
-      MO(_OSX_WINDOW_MANAGER)       , KC_P1      , KC_P2                , KC_P3,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_P0      , KC_PDOT              , KC_PENT
-    ),
+  [_NUMPAD] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)            , KC_P7 , KC_P8   , KC_P9   ,
+    MO(_MEDIA)                    , KC_P4 , KC_P5   , KC_P6   ,
+    MO(_OSX_WINDOW_MANAGER)       , KC_P1 , KC_P2   , KC_P3   ,
+    LM(_WINDOW_MANAGER, MOD_LGUI) , KC_P0 , KC_PDOT , KC_PENT
+  ),
 
-    [_OSX_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      ALT_TAB       , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE          , OSX_VIRTUAL_DESKTOP_RIGHT,
-      OSX_LOCK      , OSX_WINDOW_LEFT          , OSX_WINDOW_UP       , OSX_WINDOW_RIGHT ,
-      _______       , OSX_PREVIOUS_DISPLAY     , OSX_WINDOW_DOWN     , OSX_NEXT_DISPLAY,
-      _______       , OSX_VIRTUAL_DESKTOP_LEFT , OSX_WINDOW_MAXIMIZE , OSX_VIRTUAL_DESKTOP_RIGHT
-    ),
+  [_OSX_WINDOW_MANAGER] = LAYOUT_ortho_4x4(
+    ALT_TAB  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_EXPOSE          , OSX_VIRTUAL_DESKTOP_RIGHT ,
+    OSX_LOCK , OSX_WINDOW_LEFT          , OSX_WINDOW_UP       , OSX_WINDOW_RIGHT          ,
+    _______  , OSX_PREVIOUS_DISPLAY     , OSX_WINDOW_DOWN     , OSX_NEXT_DISPLAY          ,
+    _______  , OSX_VIRTUAL_DESKTOP_LEFT , OSX_WINDOW_MAXIMIZE , OSX_VIRTUAL_DESKTOP_RIGHT
+  ),
 
-    [_MOUSE]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)            , KC_WH_L               , KC_MS_U               , KC_WH_U,
-      MO(_MEDIA)                    , KC_MS_L               , KC_MS_BTN1            , KC_MS_R,
-      MO(_OSX_WINDOW_MANAGER)       , KC_WH_R               , KC_MS_D               , KC_WH_D,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_ACL0               , KC_ACL1               , KC_ACL2
-    ),
+  [_MOUSE] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)            , KC_WH_L , KC_MS_U    , KC_WH_U ,
+    MO(_MEDIA)                    , KC_MS_L , KC_MS_BTN1 , KC_MS_R ,
+    MO(_OSX_WINDOW_MANAGER)       , KC_WH_R , KC_MS_D    , KC_WH_D ,
+    LM(_WINDOW_MANAGER, MOD_LGUI) , KC_ACL0 , KC_ACL1    , KC_ACL2
+  ),
 
-    [_WINDOW_MANAGER]=LAYOUT_ortho_4x4(
-      KC_TAB     , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT),
-      _______    , (KC_LEFT)     , KC_UP     , (KC_RGHT),
-      OSL(_FKEYS), LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT),
-      _______    , KC_MS_WH_LEFT , KC_ESCAPE , KC_MS_WH_RIGHT
-    ),
+  [_WINDOW_MANAGER] = LAYOUT_ortho_4x4(
+    KC_TAB      , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT)  ,
+    _______     , (KC_LEFT)     , KC_UP     , (KC_RGHT)      ,
+    OSL(_FKEYS) , LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT) ,
+    _______     , KC_MS_WH_LEFT , KC_ESCAPE , KC_MS_WH_RIGHT
+  ),
 
-    [_MEDIA]=LAYOUT_ortho_4x4(
-      _______, KC_NO               , KC_NO                 , KC_AUDIO_VOL_UP,
-      _______, KC_MEDIA_PREV_TRACK , KC_MEDIA_PLAY_PAUSE   , KC_MEDIA_NEXT_TRACK,
-      _______, KC_NO               , KC_MEDIA_STOP         , KC_AUDIO_VOL_DOWN,
-      _______, KC_NO               , KC_NO                 , KC_AUDIO_MUTE
-    ),
+  [_MEDIA] = LAYOUT_ortho_4x4(
+    _______ , KC_NO               , KC_NO               , KC_AUDIO_VOL_UP     ,
+    _______ , KC_MEDIA_PREV_TRACK , KC_MEDIA_PLAY_PAUSE , KC_MEDIA_NEXT_TRACK ,
+    _______ , KC_NO               , KC_MEDIA_STOP       , KC_AUDIO_VOL_DOWN   ,
+    _______ , KC_NO               , KC_NO               , KC_AUDIO_MUTE
+  ),
 
-    [_LIGHTS]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)           , RGB_HUI               , RGB_VAI               , RGB_TOG,
-      MO(_MEDIA)                   , RGB_HUD               , RGB_VAD               , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)      , RGB_SAI               , KC_NO                 , KC_NO,
-      LM(_WINDOW_MANAGER, MOD_LGUI), RGB_SAD               , KC_NO                 , KC_NO
-    ),
+  [_LIGHTS] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)            , RGB_HUI , RGB_VAI , RGB_TOG ,
+    MO(_MEDIA)                    , RGB_HUD , RGB_VAD , KC_NO   ,
+    MO(_OSX_WINDOW_MANAGER)       , RGB_SAI , KC_NO   , KC_NO   ,
+    LM(_WINDOW_MANAGER, MOD_LGUI) , RGB_SAD , KC_NO   , KC_NO
+  ),
 
-    // FKEYS are used to switch directly to a virtual desktop
-    [_FKEYS]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER) , KC_NO , KC_NO  ,KC_NO,
-      KC_F13             , KC_F14, KC_F15 ,KC_F16,
-      KC_F17             , KC_F18, KC_F19 ,KC_F20,
-      KC_F21             , KC_F22, KC_F23 ,KC_F24
-    ),
+  [_FKEYS] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER) , KC_NO  , KC_NO  , KC_NO  ,
+    KC_F13             , KC_F14 , KC_F15 , KC_F16 ,
+    KC_F17             , KC_F18 , KC_F19 , KC_F20 ,
+    KC_F21             , KC_F22 , KC_F23 , KC_F24
+  ),
 
-    [_FIDDLE]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)           , KC_NO               , KC_NO                 , KC_NO,
-      MO(_MEDIA)                   , KC_NO               , KC_NO                 , KC_NO,
-      MO(_OSX_WINDOW_MANAGER)      , KC_NO               , KC_NO                 , KC_NO,
-      LM(_WINDOW_MANAGER, MOD_LGUI), KC_NO               , KC_NO                 , KC_NO
-    ),
+  [_FIDDLE] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)            , KC_NO , KC_NO , KC_NO ,
+    MO(_MEDIA)                    , KC_NO , KC_NO , KC_NO ,
+    MO(_OSX_WINDOW_MANAGER)       , KC_NO , KC_NO , KC_NO ,
+    LM(_WINDOW_MANAGER, MOD_LGUI) , KC_NO , KC_NO , KC_NO
+  ),
 
-    [_POWER]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)           , KC_NO               , KC_NO                 , KC_NO,
-      MO(_MEDIA)                   , KC_NO               , KC_NO                 , KC_NO,
-      LGUI(KC_L)                   , KC_NO               , KC_NO                 , KC_SLEP,
-      LM(_WINDOW_MANAGER, MOD_LGUI), KC_NO               , KC_NO                 , KC_NO
-    ),
+  [_POWER] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)            , KC_NO , KC_NO , KC_NO   ,
+    MO(_MEDIA)                    , KC_NO , KC_NO , KC_NO   ,
+    LGUI(KC_L)                    , KC_NO , KC_NO , KC_SLEP ,
+    LM(_WINDOW_MANAGER, MOD_LGUI) , KC_NO , KC_NO , KC_NO
+  ),
 
-    [_ARROWS]=LAYOUT_ortho_4x4(
-      OSL(_LAYER_PICKER)            , KC_HOME , KC_UP   , KC_PGUP,
-      MO(_MEDIA)                    , KC_LEFT , KC_DOWN , KC_RGHT,
-      _______                       , KC_END  , KC_NO   , KC_PGDN,
-      LM(_WINDOW_MANAGER, MOD_LGUI) , KC_INS  , KC_NO   , KC_DEL
-    ),
+  [_ARROWS] = LAYOUT_ortho_4x4(
+    OSL(_LAYER_PICKER)            , KC_HOME , KC_UP   , KC_PGUP ,
+    MO(_MEDIA)                    , KC_LEFT , KC_DOWN , KC_RGHT ,
+    _______                       , KC_END  , KC_NO   , KC_PGDN ,
+    LM(_WINDOW_MANAGER, MOD_LGUI) , KC_INS  , KC_NO   , KC_DEL
+  ),
 
-    [_LAYER_PICKER]=LAYOUT_ortho_4x4(
-      KC_NO  , DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER)  , DF(_NUMPAD),
-      _______, DF(_ARROWS)        , DF(_FKEYS)            , OSL(_FKEYS),
-      RESET  , DF(_MOUSE)         , DF(_LIGHTS)           , DF(_FIDDLE),
-      _______, KC_NO              , KC_NO                 , OSL(_POWER)
-    ),
+  [_LAYER_PICKER] = LAYOUT_ortho_4x4(
+    KC_NO   , DF(_VISUAL_STUDIO) , DF(_CHROME_DEBUGGER) , DF(_NUMPAD) ,
+    _______ , DF(_ARROWS)        , DF(_FKEYS)           , OSL(_FKEYS) ,
+    RESET   , DF(_MOUSE)         , DF(_LIGHTS)          , DF(_FIDDLE) ,
+    _______ , KC_NO              , KC_NO                , OSL(_POWER)
+  ),
+
 };
+
 
 // we activate alt when we use the alt-tab,
 // and want to de-activate it when leaving a layer
@@ -220,6 +222,10 @@ void keyboard_post_init_user(void) {
 	layer_state_set_user(layer_state);
 }
 
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    bml_set_layer_indicator(state);
+    return state;
+}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     //int highest_default_layer = get_highest_layer(default_layer_state);
