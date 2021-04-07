@@ -28,6 +28,12 @@ static void print_rotary_mode(int8_t mode){
         case ROTARY_MODE_VOLUME:
             oled_write_P(PSTR("R vol"), false);
             break;
+        case ROTARY_MODE_VERTICAL_MOVE:
+            oled_write_ln_P(PSTR("R m^"), false);
+            break;
+        case ROTARY_MODE_HORIZONTAL_MOVE:
+            oled_write_P(PSTR("R m<>"), false);
+            break;
         case ROTARY_MODE_VERTICAL_SCROLL:
             oled_write_ln_P(PSTR("R ^ "), false);
             break;

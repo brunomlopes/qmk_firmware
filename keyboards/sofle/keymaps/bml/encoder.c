@@ -66,6 +66,20 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_VOLD);
             }
             break;
+        case ROTARY_MODE_VERTICAL_MOVE:
+            if (clockwise) {
+                tap_code(KC_MS_UP);
+            } else {
+                tap_code(KC_MS_DOWN);
+            }
+            break;
+        case ROTARY_MODE_HORIZONTAL_MOVE:
+            if (clockwise) {
+                tap_code(KC_MS_RIGHT);
+            } else {
+                tap_code(KC_MS_LEFT);
+            }
+            break;
         case ROTARY_MODE_VERTICAL_SCROLL:
             if (clockwise) {
                 tap_code(KC_WH_D);
