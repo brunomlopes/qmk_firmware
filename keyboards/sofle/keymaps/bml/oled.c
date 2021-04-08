@@ -29,19 +29,19 @@ static void print_rotary_mode(int8_t mode){
             oled_write_P(PSTR("R vol"), false);
             break;
         case ROTARY_MODE_VERTICAL_MOVE:
-            oled_write_ln_P(PSTR("R m^"), false);
+            oled_write_P(PSTR("R m^ "), false);
             break;
         case ROTARY_MODE_HORIZONTAL_MOVE:
             oled_write_P(PSTR("R m<>"), false);
             break;
         case ROTARY_MODE_VERTICAL_SCROLL:
-            oled_write_ln_P(PSTR("R ^ "), false);
+            oled_write_P(PSTR("R ^  "), false);
             break;
         case ROTARY_MODE_HORIZONTAL_SCROLL:
-            oled_write_ln_P(PSTR("R <>"), false);
+            oled_write_P(PSTR("R <> "), false);
             break;
         default:
-            oled_write_ln_P(PSTR("R ?"), false);
+            oled_write_P(PSTR("R ?  "), false);
     }
 }
 
@@ -53,13 +53,13 @@ static void print_status_narrow(void) {
 
     switch (highest_layer) {
         case 0:
-            oled_write_ln_P(PSTR("Qwrt"), false);
+            oled_write_P(PSTR("Qwrt "), false);
             break;
         case 1:
-            oled_write_ln_P(PSTR("Clmk"), false);
+            oled_write_P(PSTR("Clmk "), false);
             break;
         default:
-            oled_write_P(PSTR("Mod\n"), false);
+            oled_write_P(PSTR("Mod  "), false);
             break;
     }
     oled_write_P(PSTR("\n\n"), false);
@@ -85,7 +85,7 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("numpd"), false);
             break;
         default:
-            oled_write_ln_P(PSTR("Undef"), false);
+            oled_write_P(PSTR("undef"), false);
     }
     print_rotary_mode(left_rotary_current_mode);
     print_rotary_mode(right_rotary_current_mode);
