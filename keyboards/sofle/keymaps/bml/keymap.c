@@ -27,7 +27,11 @@ enum custom_keycodes {
     KC_BML_ATILDE,
     KC_BML_OTILDE,
     KC_BML_GRAVE,
-    KC_BML_ACUTE
+    KC_BML_ACUTE,
+    KC_BML_HAT,
+    KC_BML_TILDE,
+
+    KC_BML_LAYERC_TAB
 };
 
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
@@ -77,13 +81,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_SYMBOL] = LAYOUT(
-    A(KC_F4) , KC_F13        , KC_F14        , KC_F15        , KC_F16        , KC_NO         ,                      KC_NO         , KC_MPRV       , KC_MPLY      , KC_MNXT      , KC_MINS , KC_EQL  ,
-    KC_TAB   , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_ASTR       , KC_ASTR       ,                      KC_LPRN       , KC_LPRN       , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC , KC_RBRC ,
-    KC_NO    , A(ALGR(KC_2)) , KC_AT         , KC_COLN       , A(ALGR(KC_7)) , A(ALGR(KC_8)) ,                      A(ALGR(KC_9)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT , KC_BSLS ,
-    KC_LSFT  , KC_NUBS       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE , KC_NUBS       , KC_NO ,      KC_NO , S(KC_NUBS)    , KC_RPRN       , KC_COMM      , KC_DOT       , KC_SLSH , KC_RSFT ,
-                               _______       , _______       , _______       , TT(_NUMPAD)   , KC_NO ,      KC_NO , KC_NO         , _______       , _______      , _______
+    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16        , KC_NO         ,                      KC_NO         , KC_MPRV       , KC_MPLY      , KC_MNXT      , KC_MINS , KC_EQL  ,
+    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_NO         , KC_ASTR       ,                      KC_LPRN       , KC_NO         , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC , KC_RBRC ,
+    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , KC_AT         , KC_COLN       , A(ALGR(KC_7)) , A(ALGR(KC_8)) ,                      A(ALGR(KC_9)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT , KC_BSLS ,
+    KC_LSFT           , KC_NUBS       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE , KC_NUBS       , KC_NO ,      KC_NO , S(KC_NUBS)    , KC_RPRN       , KC_BML_HAT   , KC_BML_TILDE , KC_SLSH , KC_RSFT ,
+                                        _______       , _______       , _______       , TT(_NUMPAD)   , KC_NO ,      KC_NO , KC_NO         , _______       , _______      , _______
   ),
-
   [_NUMPAD] = LAYOUT(
     KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9   , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , KC_NO   , KC_NO  , KC_NLCK ,
     KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6   , KC_PAST     ,                          KC_NO       , KC_NO            , KC_NO             , KC_NO   , KC_NO  , KC_NO   ,
@@ -94,6 +97,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// this currently only supports control. implementation can be slighly improved
+uint8_t unpress_mod_on_layer_change = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -135,6 +140,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if(record->event.pressed)
             SEND_STRING(SS_TAP(X_RBRC) SS_TAP(X_SPC));
         break;
+    case KC_BML_HAT:
+        if(record->event.pressed)
+            SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_BSLS) SS_UP(X_LSFT) SS_TAP(X_SPC));
+        break;
+    case KC_BML_TILDE:
+        if(record->event.pressed)
+            SEND_STRING(SS_TAP(X_BSLS) SS_TAP(X_SPC));
+        break;
+    case KC_BML_LAYERC_TAB:
+        if(record->event.pressed){
+            if(!(get_mods() & MOD_MASK_CTRL)){
+                register_code(KC_LCTRL);
+                unpress_mod_on_layer_change |= MOD_BIT(KC_LCTRL);
+            }
+            tap_code(KC_TAB);
+        }
+        break;
     }
     return true;
 };
+
+layer_state_t layer_state_set_user(layer_state_t state){
+    if (unpress_mod_on_layer_change & MOD_BIT(KC_LCTRL)){
+        unregister_code(KC_LCTRL);
+        unpress_mod_on_layer_change ^= MOD_BIT(KC_LCTRL);
+    }
+    return state;
+}
