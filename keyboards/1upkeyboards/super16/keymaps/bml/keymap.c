@@ -218,6 +218,9 @@ void bml_set_layer_indicator(layer_state_t state){
 }
 
 void keyboard_post_init_user(void) {
+    // BL: I think there's a timer somewhere which runs and sets up the leds
+    // this wait makes it so that our set layer indicator runs after that init
+    wait_ms(100);
 	//Enable the LED layers
 	layer_state_set_user(layer_state);
 }
