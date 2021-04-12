@@ -8,3 +8,6 @@
 
 #define RGBLIGHT_LIMIT_VAL 100
 #define RGBLIGHT_SLEEP
+
+// I don't care about rgb animations, we're using the leds directly ourselves
+#undef RGBLIGHT_ANIMATIONS
