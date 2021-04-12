@@ -29,9 +29,8 @@ for more options.
 
 //Add RGB underglow
 #define RGB_DI_PIN D3
-#define RGBLED_NUM 14
-#define RGBLED_SPLIT {7,7}
-#define RGBLIGHT_ANIMATIONS
+#define RGBLED_NUM 13
+#define RGBLED_SPLIT {13,0}
+#define RGBLIGHT_SLEEP
 
 #define SPLIT_USB_DETECT
-#define DYNAMIC_KEYMAP_LAYER_COUNT 6
