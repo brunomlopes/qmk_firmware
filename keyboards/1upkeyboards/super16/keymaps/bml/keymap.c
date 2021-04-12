@@ -255,3 +255,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     }
     return state;
 }
+
+void suspend_wakeup_init_user(void) {
+    bml_set_layer_indicator(default_layer_state);
+}
