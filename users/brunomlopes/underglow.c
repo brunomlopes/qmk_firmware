@@ -1,4 +1,4 @@
-#include "sweet16.h"
+#include QMK_KEYBOARD_H
 #include "underglow.h"
 
 void bml_ug_set(enum bml_ug_colours colour, LED_TYPE* led)
