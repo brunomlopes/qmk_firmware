@@ -20,6 +20,8 @@
 
 #include QMK_KEYBOARD_H
 #include "rotary.h"
+#include "layers.h"
+#include "underglow.h"
 
 enum custom_keycodes {
     ROTARY_MODE_LEFT = SAFE_RANGE,
@@ -37,16 +39,6 @@ enum custom_keycodes {
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
 int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 
-enum layers {
-	_BASE,
-	_COLEMAK,
-	_LOWER,
-	_NAV,
-	_SYMBOL,
-	_NUMPAD,
-};
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
     KC_GRV              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5              ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS ,
@@ -62,6 +54,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB  , KC_A , KC_R    , KC_S    , KC_T    , KC_D    ,                         KC_H    , KC_N    , KC_E    , KC_I    , KC_O    , KC_QUOT ,
     KC_LSFT , KC_Z , KC_X    , KC_C    , KC_V    , KC_B    , KC_MUTE ,      KC_NO  , KC_K    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_RSFT ,
                      KC_LGUI , KC_LALT , KC_LCTL , _______ , KC_ENT  ,      KC_SPC , _______ , KC_RCTL , KC_RALT , KC_RGUI
+  ),
+
+  [_GAMING] = LAYOUT(
+    KC_GRV              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5   ,                                 KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS ,
+    KC_ESC              , KC_Q , KC_W    , KC_E    , KC_R    , KC_T   ,                                 KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , KC_RBRC ,
+    MT(MOD_LSFT,KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G   ,                                 KC_H        , KC_J    , KC_K    , KC_L    , KC_BSLS , KC_BSPC ,
+    KC_LSFT             , KC_Z , KC_X    , KC_C    , KC_V    , KC_B   , TG(_GAMING) ,      KC_MUTE     , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_RSFT ,
+                                 KC_LCTL , KC_LALT , KC_LCTL , KC_SPC , KC_ENT      ,      MO(_NAV)    , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_RALT
   ),
 
   [_LOWER] = LAYOUT(
@@ -89,11 +89,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_NUMPAD] = LAYOUT(
     KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9   , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , KC_NO   , KC_NO  , KC_NLCK ,
-    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6   , KC_PAST     ,                          KC_NO       , KC_NO            , KC_NO             , KC_NO   , KC_NO  , KC_NO   ,
+    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6   , KC_PAST     ,                          TG(_GAMING) , KC_NO            , KC_NO             , KC_NO   , KC_NO  , KC_NO   ,
     KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3   , KC_PMNS     ,                          KC_NO       , KC_NO            , KC_NO             , KC_NO   , KC_DEL , KC_BSPC ,
     KC_NO   , KC_COMM , KC_P0   , KC_PDOT , KC_PENT , KC_PPLS     , RESET   ,      KC_NO   , KC_NO       , KC_NO            , KC_NO             , KC_NO   , KC_NO  , KC_NO   ,
                         _______ , _______ , _______ , TT(_NUMPAD) , _______ ,      _______ , _______     , _______          , _______           , _______
   ),
+
 
 };
 
@@ -161,10 +162,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
+
+
+
+
+void bml_set_layer_indicator(layer_state_t state){
+    int highest_layer = get_highest_layer(state);
+    if (highest_layer == 0)
+        highest_layer = get_highest_layer(default_layer_state);
+
+    switch (highest_layer)
+    {
+    case _NUMPAD:
+        rgblight_sethsv_noeeprom(HSV_BLUE);
+        break;
+    case _GAMING:
+        rgblight_sethsv_noeeprom(HSV_RED);
+        break;
+    case _LOWER:
+    case _NAV:
+    case _SYMBOL:
+    default:
+        rgblight_sethsv_noeeprom(HSV_WHITE);
+        break;
+    }
+}
+
+void keyboard_post_init_user(void){
+    rgblight_enable_noeeprom();
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+
+    rgblight_sethsv_noeeprom_white();
+    bml_set_layer_indicator(default_layer_state);
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state){
+    bml_set_layer_indicator(state);
+    return state;
+}
 layer_state_t layer_state_set_user(layer_state_t state){
     if (unpress_mod_on_layer_change & MOD_BIT(KC_LCTRL)){
         unregister_code(KC_LCTRL);
         unpress_mod_on_layer_change ^= MOD_BIT(KC_LCTRL);
     }
+    bml_set_layer_indicator(state);
     return state;
 }
