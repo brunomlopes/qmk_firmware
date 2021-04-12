@@ -20,6 +20,7 @@
 
 #include QMK_KEYBOARD_H
 #include "rotary.h"
+#include "layers.h"
 
 #ifdef OLED_DRIVER_ENABLE
 
@@ -52,10 +53,10 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("\n"), false);
 
     switch (highest_layer) {
-        case 0:
+        case _BASE:
             oled_write_P(PSTR("Qwrt "), false);
             break;
-        case 1:
+        case _COLEMAK:
             oled_write_P(PSTR("Clmk "), false);
             break;
         default:
@@ -68,21 +69,24 @@ static void print_status_narrow(void) {
     oled_write_char('0' + highest_layer, false);
     oled_write_P(PSTR(" _"), false);
     switch (highest_layer) {
-        case 0:
-        case 1:
+        case _BASE:
+        case _COLEMAK:
             oled_write_P(PSTR("base "), false);
             break;
-        case 2:
+        case _LOWER:
             oled_write_P(PSTR("lower"), false);
             break;
-        case 3:
+        case _NAV:
             oled_write_P(PSTR("nav  "), false);
             break;
-        case 4:
+        case _SYMBOL:
             oled_write_P(PSTR("symbl"), false);
             break;
-        case 5:
+        case _NUMPAD:
             oled_write_P(PSTR("numpd"), false);
+            break;
+        case _GAMING:
+            oled_write_P(PSTR("game "), false);
             break;
         default:
             oled_write_P(PSTR("undef"), false);
