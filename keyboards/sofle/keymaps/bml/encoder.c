@@ -20,8 +20,11 @@
 
 #include QMK_KEYBOARD_H
 #include "rotary.h"
+#include "layers.h"
 
 #ifdef ENCODER_ENABLE
+
+#define THRICE(X) X; X; X;
 
 void encoder_update_user(uint8_t index, bool clockwise) {
     int* current_mode_pointer = &left_rotary_current_mode;
@@ -53,6 +56,26 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             default:
                 *current_mode_pointer -= 1;
                 break;
+            }
+        }
+        return;
+    }
+
+    // Sometimes the cursor sticks in front of the text,
+    // this gives me an easy way to get the mouse out of the way on the symbol layer.
+    if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
+        if (index == 0){
+            if (clockwise) {
+                THRICE(tap_code(KC_MS_RIGHT));
+            } else {
+                THRICE(tap_code(KC_MS_LEFT));
+            }
+        }
+        else{
+            if (clockwise) {
+                THRICE(tap_code(KC_MS_UP));
+            } else {
+                THRICE(tap_code(KC_MS_DOWN));
             }
         }
         return;

@@ -9,3 +9,6 @@ enum layers {
 	_SYMBOL,
 	_NUMPAD
 };
+
+
+#define ROTARY_MOUSE_MODE_LAYER _SYMBOL

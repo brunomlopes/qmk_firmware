@@ -91,8 +91,15 @@ static void print_status_narrow(void) {
         default:
             oled_write_P(PSTR("undef"), false);
     }
-    print_rotary_mode(left_rotary_current_mode);
-    print_rotary_mode(right_rotary_current_mode);
+
+    if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
+        print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
+        print_rotary_mode(ROTARY_MODE_VERTICAL_MOVE);
+    }else{
+        print_rotary_mode(left_rotary_current_mode);
+        print_rotary_mode(right_rotary_current_mode);
+    }
+
     oled_write_P(PSTR("\n\n"), false);
     led_t led_usb_state = host_keyboard_led_state();
     oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
