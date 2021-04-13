@@ -40,14 +40,28 @@ enum custom_keycodes {
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
 int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 
+/*
+- thumb keys have lalt on both sides, to allow for easier access to alt+(left side key) instead of twisting fingers on left.
+- altgr is on symbol layer
+*/
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    KC_GRV              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5              ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS ,
-    KC_ESC              , KC_Q , KC_W    , KC_E    , KC_R    , KC_T              ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , KC_RBRC ,
-    MT(MOD_LSFT,KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G              ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_BSLS , KC_BSPC ,
-    KC_LSFT             , KC_Z , KC_X    , KC_C    , KC_V    , KC_B              , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_RSFT ,
-                                 KC_LCTL , KC_LALT , KC_LGUI , LT(_LOWER,KC_SPC) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_RALT
+    KC_GRV              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5              ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , KC_MINS       ,
+    KC_ESC              , KC_Q , KC_W    , KC_E    , KC_R    , KC_T              ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , KC_RBRC       ,
+    MT(MOD_LSFT,KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G              ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_BSLS , KC_BSPC       ,
+    KC_LSFT             , KC_Z , KC_X    , KC_C    , KC_V    , KC_B              , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT) ,
+                                 KC_LCTL , KC_LALT , KC_LGUI , LT(_LOWER,KC_SPC) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_LALT
   ),
+
+  [_HRMOD] = LAYOUT(
+    _______             , _______            , _______            , _______            , _______            , _______ ,                          _______ , _______            , _______            , _______            , _______               , _______ ,
+    _______             , _______            , _______            , _______            , _______            , _______ ,                          _______ , _______            , _______            , _______            , _______               , _______ ,
+    MT(MOD_LSFT,KC_TAB) , MT(MOD_LGUI, KC_A) , MT(MOD_LALT, KC_S) , MT(MOD_LSFT, KC_D) , MT(MOD_LCTL, KC_F) , _______ ,                          _______ , MT(MOD_RCTL, KC_J) , MT(MOD_RSFT, KC_K) , MT(MOD_LALT, KC_L) , MT(MOD_RGUI, KC_BSLS) , KC_BSPC ,
+    _______             , _______            , _______            , _______            , _______            , _______ , _______ ,      _______ , _______ , _______            , _______            , _______            , _______               , _______ ,
+                                               _______            , _______            , _______            , _______ , _______ ,      _______ , _______ , _______            , _______            , _______
+  ),
+
 
   [_COLEMAK] = LAYOUT(
     KC_GRV  , KC_1 , KC_2    , KC_3    , KC_4    , KC_5    ,                         KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_GRV  ,
@@ -86,12 +100,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_ASTR       ,                      KC_LPRN       , KC_NO         , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC , KC_RBRC ,
     KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , KC_AT         , KC_COLN       , A(ALGR(KC_7))     , A(ALGR(KC_8)) ,                      A(ALGR(KC_9)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT , KC_BSLS ,
     KC_LSFT           , KC_NUBS       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_NUBS       , KC_NO ,      KC_NO , S(KC_NUBS)    , KC_RPRN       , KC_BML_HAT   , KC_BML_TILDE , KC_SLSH , KC_RSFT ,
-                                        _______       , _______       , _______           , TT(_NUMPAD)   , KC_NO ,      KC_NO , KC_NO         , _______       , _______      , _______
+                                        _______       , _______       , _______           , TT(_NUMPAD)   , KC_NO ,      KC_NO , KC_NO         , _______       , _______      , OSM(MOD_RALT)
   ),
   [_NUMPAD] = LAYOUT(
     KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9   , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , KC_NO   , KC_NO  , KC_NLCK ,
     KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6   , KC_PAST     ,                          TG(_GAMING) , KC_NO            , KC_NO             , KC_NO   , KC_NO  , KC_NO   ,
-    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3   , KC_PMNS     ,                          KC_NO       , KC_NO            , KC_NO             , KC_NO   , KC_DEL , KC_BSPC ,
+    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3   , KC_PMNS     ,                          TG(_HRMOD)  , KC_NO            , KC_NO             , KC_NO   , KC_DEL , KC_BSPC ,
     KC_NO   , KC_COMM , KC_P0   , KC_PDOT , KC_PENT , KC_PPLS     , RESET   ,      KC_NO   , KC_NO       , KC_NO            , KC_NO             , KC_NO   , KC_NO  , KC_NO   ,
                         _______ , _______ , _______ , TT(_NUMPAD) , _______ ,      _______ , _______     , _______          , _______           , _______
   ),

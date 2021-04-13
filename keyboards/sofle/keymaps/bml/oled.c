@@ -54,6 +54,7 @@ static void print_status_narrow(void) {
 
     switch (highest_layer) {
         case _BASE:
+        case _HRMOD:
             oled_write_P(PSTR("Qwrt "), false);
             break;
         case _COLEMAK:
@@ -63,7 +64,9 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("Mod  "), false);
             break;
     }
-    oled_write_P(PSTR("\n\n"), false);
+    oled_write_P(PSTR("HRMOD"), highest_layer==_HRMOD);
+
+    oled_write_P(PSTR("\n"), false);
     // Print current layer
     oled_write_P(PSTR("_ "), false);
     oled_write_char('0' + highest_layer, false);
