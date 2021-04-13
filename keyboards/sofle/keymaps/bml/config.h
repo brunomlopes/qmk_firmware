@@ -22,6 +22,13 @@
 #endif // TAPPING_TERM
 #define TAPPING_TERM 200
 
+// Read "a guide to homerow mods" for info regarding the next defines for holds,taps, etc
+// https://precondition.github.io/home-row-mods#toc-skipped
+
+#define IGNORE_MOD_TAP_INTERRUPT
+#define PERMISSIVE_HOLD
+#define TAPPING_FORCE_HOLD
+
 /* The way how "handedness" is decided (which half is which),
 see https://docs.qmk.fm/#/feature_split_keyboard?id=setting-handedness
 for more options.
