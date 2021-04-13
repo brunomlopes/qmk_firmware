@@ -2,6 +2,7 @@
 
 enum layers {
 	_BASE,
+    _HRMOD,
 	_COLEMAK,
     _GAMING,
 	_LOWER,
