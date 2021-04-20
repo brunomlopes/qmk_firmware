@@ -36,8 +36,8 @@ for more options.
 
 //Add RGB underglow
 #define RGB_DI_PIN D3
-#define RGBLED_NUM 13
-#define RGBLED_SPLIT {13,0}
+#define RGBLED_NUM 32
+#define RGBLED_SPLIT {16,16}
 #define RGBLIGHT_SLEEP
-
+#define RGBLIGHT_LIMIT_VAL 150
 #define SPLIT_USB_DETECT
