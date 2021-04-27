@@ -40,6 +40,8 @@ enum custom_keycodes {
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
 int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 
+#define _T KC_TRANSPARENT
+
 /*
 - thumb keys have lalt on both sides, to allow for easier access to alt+(left side key) instead of twisting fingers on left.
 - altgr is on symbol layer
@@ -54,11 +56,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_HRMOD] = LAYOUT(
-    _______ , _______            , _______            , _______            , _______            , _______ ,                          _______ , _______            , _______            , _______            , _______               , _______ ,
-    _______ , _______            , _______            , _______            , _______            , _______ ,                          _______ , _______            , _______            , _______            , _______               , _______ ,
-    _______ , MT(MOD_LGUI, KC_A) , MT(MOD_LALT, KC_S) , MT(MOD_LSFT, KC_D) , MT(MOD_LCTL, KC_F) , _______ ,                          _______ , MT(MOD_RCTL, KC_J) , MT(MOD_RSFT, KC_K) , MT(MOD_LALT, KC_L) , MT(MOD_RGUI, KC_BSLS) , _______ ,
-    _______ , _______            , _______            , _______            , _______            , _______ , _______ ,      _______ , _______ , _______            , _______            , _______            , _______               , _______ ,
-                                   _______            , _______            , _______            , _______ , _______ ,      _______ , _______ , _______            , _______            , _______
+    _T , _T                 , _T                 , _T                 , _T                 , _T ,                _T , _T                 , _T                 , _T                 , _T                    , _T ,
+    _T , _T                 , _T                 , _T                 , _T                 , _T ,                _T , _T                 , _T                 , _T                 , _T                    , _T ,
+    _T , MT(MOD_LGUI, KC_A) , MT(MOD_LALT, KC_S) , MT(MOD_LSFT, KC_D) , MT(MOD_LCTL, KC_F) , _T ,                _T , MT(MOD_RCTL, KC_J) , MT(MOD_RSFT, KC_K) , MT(MOD_LALT, KC_L) , MT(MOD_RGUI, KC_BSLS) , _T ,
+    _T , _T                 , _T                 , _T                 , _T                 , _T , _T ,      _T , _T , _T                 , _T                 , _T                 , _T                    , _T ,
+                              _T                 , _T                 , _T                 , _T , _T ,      _T , _T , _T                 , _T                 , _T
   ),
 
   [_COLEMAK] = LAYOUT(
@@ -86,10 +88,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NAV] = LAYOUT(
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4)        , XXXXXXX ,                          XXXXXXX , XXXXXXX    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , A(KC_F4)   ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4)        , XXXXXXX ,                          KC_APP  , XXXXXXX    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , A(KC_F4)   ,
     _______ , KC_INS  , KC_PSCR , KC_PAUS , A(ALGR(KC_TAB)) , XXXXXXX ,                          KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
-    _______ , KC_LALT , KC_LCTL , KC_LSFT , XXXXXXX         , KC_CAPS ,                          KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , _______    ,
-    _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , KC_INS  , _______ ,      _______ , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
+    _______ , KC_LALT , KC_LCTL , KC_LSFT , XXXXXXX         , XXXXXXX ,                          KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , _______    ,
+    _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX , _______ ,      _______ , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , KC_INS    , _______    ,
                         _______ , _______ , _______         , _______ , _______ ,      _______ , KC_ENT  , _______    , _______    , _______
   ),
 
@@ -102,9 +104,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NUMPAD] = LAYOUT(
-    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9   , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , XXXXXXX , XXXXXXX , KC_NLCK ,
+    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9   , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , XXXXXXX , KC_CAPS , KC_NLCK ,
     KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6   , KC_PAST     ,                          TG(_GAMING) , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
-    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3   , KC_PMNS     ,                          TG(_HRMOD)  , XXXXXXX          , XXXXXXX           , XXXXXXX , KC_DEL  , KC_BSPC ,
+    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3   , KC_PMNS     ,                          TG(_HRMOD)  , XXXXXXX          , XXXXXXX           , KC_INS  , KC_DEL  , KC_BSPC ,
     XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT , KC_PPLS     , RESET   ,      XXXXXXX , XXXXXXX     , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
                         _______ , _______ , _______ , TT(_NUMPAD) , _______ ,      _______ , _______     , _______          , _______           , _______
   ),
