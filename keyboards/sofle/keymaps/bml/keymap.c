@@ -231,6 +231,13 @@ layer_state_t layer_state_set_user(layer_state_t state){
         unregister_code(KC_LALT);
         unpress_mod_on_layer_change ^= MOD_BIT(KC_LALT);
     }
+    // if by any chance we switch to the numpad layer and numlock is off, turn it on
+    if(IS_LAYER_ON_STATE(state, _NUMPAD)){
+        led_t led_usb_state = host_keyboard_led_state();
+        if(!led_usb_state.num_lock){
+            tap_code(KC_NLCK);
+        }
+    }
     bml_set_layer_indicator(state);
     return state;
 }
