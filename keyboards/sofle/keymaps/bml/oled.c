@@ -47,7 +47,6 @@ static void print_rotary_mode(int8_t mode){
 }
 
 static void print_status_narrow(void) {
-    // char status_buffer[7];
     int highest_layer = get_highest_layer(layer_state);
     // Print current mode
     oled_write_P(PSTR("\n"), false);
@@ -64,7 +63,7 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("Mod  "), false);
             break;
     }
-    oled_write_P(PSTR("HRMOD"), highest_layer==_HRMOD);
+    oled_write_P(PSTR("HRMOD"), IS_LAYER_ON(_HRMOD));
 
     oled_write_P(PSTR("\n"), false);
     // Print current layer
