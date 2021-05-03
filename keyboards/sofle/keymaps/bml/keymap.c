@@ -250,3 +250,13 @@ void suspend_wakeup_init_user(void) {
 void suspend_power_down_user(void){
     oled_off();
 }
+
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(_NAV,KC_SPC):
+            return TAPPING_TERM + 500;
+        default:
+            return TAPPING_TERM;
+    }
+}
