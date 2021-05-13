@@ -34,7 +34,9 @@ enum custom_keycodes {
     KC_BML_TILDE,
 
     KC_BML_LAYERC_TAB,
-    KC_BML_LAYERA_TAB
+    KC_BML_LAYERA_TAB,
+
+    REPEAT
 };
 
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
@@ -48,7 +50,7 @@ int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    KC_GRV              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , XXXXXXX       ,
+    REPEAT              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , XXXXXXX       ,
     KC_ESC              , KC_Q , KC_W    , KC_E    , KC_R    , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , KC_RBRC       ,
     MT(MOD_LSFT,KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_BSLS , KC_BSPC       ,
     KC_LSFT             , KC_Z , KC_X    , KC_C    , KC_V    , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT) ,
@@ -88,10 +90,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NAV] = LAYOUT(
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4)        , XXXXXXX ,                          KC_APP  , XXXXXXX    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , A(KC_F4)   ,
+    REPEAT  , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4)        , XXXXXXX ,                          KC_APP  , XXXXXXX    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , A(KC_F4)   ,
     _______ , KC_INS  , KC_PSCR , KC_PAUS , A(ALGR(KC_TAB)) , XXXXXXX ,                          KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
     _______ , KC_LALT , KC_LCTL , KC_LSFT , XXXXXXX         , XXXXXXX ,                          KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , _______    ,
-    _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX , _______ ,      _______ , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , KC_INS    , _______    ,
+    _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX , _______ ,      _______ , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
                         _______ , _______ , _______         , _______ , _______ ,      _______ , KC_ENT  , _______    , _______    , _______
   ),
 
@@ -104,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NUMPAD] = LAYOUT(
-    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9   , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , XXXXXXX , KC_CAPS , KC_NLCK ,
+    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9   , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , RGB_TOG , KC_CAPS , KC_NLCK ,
     KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6   , KC_PAST     ,                          TG(_GAMING) , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
     KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3   , KC_PMNS     ,                          TG(_HRMOD)  , XXXXXXX          , XXXXXXX           , KC_INS  , KC_DEL  , KC_BSPC ,
     XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT , KC_PPLS     , RESET   ,      XXXXXXX , XXXXXXX     , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
@@ -112,11 +114,89 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+// Used to extract the basic tapping keycode from a dual-role key.
+// Example: GET_TAP_KC(MT(MOD_RSFT, KC_E)) == KC_E
+#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+uint16_t repeat_last_keycode = KC_NO;
+uint8_t repeat_last_modifier = 0;
+uint8_t repeat_count = 0;
+
+// Initialize variables holding the bitfield
+// representation of active modifiers.
+uint8_t repeat_mod_state;
+uint8_t repeat_oneshot_mod_state;
+bool repeat_is_counting = false;
+
+bool process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
+    if (keycode != REPEAT) {
+        repeat_last_modifier = repeat_oneshot_mod_state > repeat_mod_state ? repeat_oneshot_mod_state : repeat_mod_state;
+
+        switch (keycode) {
+            case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+                if (record->event.pressed) {
+                    repeat_last_keycode = GET_TAP_KC(keycode);
+                }
+                break;
+            case KC_1 ... KC_9:
+                if(repeat_is_counting && record->event.pressed){
+                    repeat_count *= 10;
+                    repeat_count += keycode - (KC_1-1);
+                    return false;
+                }
+                break;
+            case KC_0:
+                if(repeat_is_counting && record->event.pressed){
+                    repeat_count *= 10;
+                    return false;
+                }
+                break;
+            default:
+                if(record->event.pressed){
+                    repeat_last_keycode = keycode;
+                }
+            break;
+        }
+    } else { // keycode == REPEAT
+
+        if (record->event.pressed) {
+            repeat_is_counting = true;
+            repeat_count=0;
+        } else {
+            repeat_is_counting = false;
+            if(repeat_count>0){
+                register_mods(repeat_last_modifier);
+                for (size_t i = 0; i < repeat_count; i++)
+                {
+                    tap_code16(repeat_last_keycode);
+                }
+                unregister_mods(repeat_last_modifier);
+            } else {
+                register_mods(repeat_last_modifier);
+                tap_code16(repeat_last_keycode);
+                unregister_mods(repeat_last_modifier);
+            }
+        }
+    }
+    return true;
+}
+
 
 // this currently only supports control and alt. implementation can be slighly improved
 uint8_t unpress_mod_on_layer_change = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    bool keep_processing = true;
+    keep_processing = process_repeat_key(keycode, record);
+    // It's important to update the mod variables *after* calling process_repeat_key, or else
+    // only a single modifier from the previous key is repeated (e.g. Ctrl+Shift+T then Repeat produces Shift+T)
+    repeat_mod_state = get_mods();
+    repeat_oneshot_mod_state = get_oneshot_mods();
+
+    if(!keep_processing){
+        return false;
+    }
+
     switch (keycode) {
     case ROTARY_MODE_LEFT:
         if (!record->event.pressed) {
