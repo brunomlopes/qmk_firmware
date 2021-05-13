@@ -41,5 +41,5 @@ for more options.
 #define RGBLED_NUM 32
 #define RGBLED_SPLIT {16,16}
 #define RGBLIGHT_SLEEP
-#define RGBLIGHT_LIMIT_VAL 150
+#define RGBLIGHT_LIMIT_VAL 75
 #define SPLIT_USB_DETECT
