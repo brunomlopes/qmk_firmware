@@ -44,6 +44,8 @@ int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 
 #define _T KC_TRANSPARENT
 
+#define KC_BML_TREMA RALT(KC_LBRC)
+
 /*
 - thumb keys have lalt on both sides, to allow for easier access to alt+(left side key) instead of twisting fingers on left.
 - altgr is on symbol layer
@@ -98,11 +100,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_SYMBOL] = LAYOUT(
-    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , XXXXXXX       ,                          XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , KC_MINS , KC_EQL  ,
-    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_ASTR       ,                          A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , KC_RBRC ,
-    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , A(ALGR(KC_8))     , A(ALGR(KC_9)) ,                          A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , KC_BSLS ,
-    KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , RALT(KC_LBRC) , XXXXXXX ,      XXXXXXX , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_SLSH , KC_RSFT ,
-                                        _______       , _______       , _______           , TT(_NUMPAD)   , XXXXXXX ,      XXXXXXX , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
+    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , XXXXXXX      ,                          XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , KC_MINS , KC_EQL  ,
+    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_ASTR      ,                          A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , KC_RBRC ,
+    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , XXXXXXX           , XXXXXXX      ,                          A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , KC_BSLS ,
+    KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_SLSH , KC_RSFT ,
+                                        _______       , _______       , _______           , TT(_NUMPAD)  , XXXXXXX ,      XXXXXXX , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
   ),
 
   [_NUMPAD] = LAYOUT(
