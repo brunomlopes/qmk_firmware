@@ -100,9 +100,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_SYMBOL] = LAYOUT(
-    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , XXXXXXX      ,                          XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , KC_MINS , KC_EQL  ,
-    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_ASTR      ,                          A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , KC_RBRC ,
-    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , XXXXXXX           , XXXXXXX      ,                          A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , KC_BSLS ,
+    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , XXXXXXX      ,                          XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX , KC_EQL  ,
+    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_ASTR      ,                          A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , XXXXXXX ,
+    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                          A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , XXXXXXX ,
     KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_SLSH , KC_RSFT ,
                                         _______       , _______       , _______           , TT(_NUMPAD)  , XXXXXXX ,      XXXXXXX , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
   ),
@@ -337,7 +337,7 @@ void suspend_power_down_user(void){
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(_NAV,KC_SPC):
-            return TAPPING_TERM + 500;
+            return TAPPING_TERM + 350;
         default:
             return TAPPING_TERM;
     }
