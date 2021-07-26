@@ -67,8 +67,14 @@ static void print_status_narrow(void) {
 
     oled_write_P(PSTR("\n"), false);
     // Print current layer
-    oled_write_P(PSTR("_ "), false);
-    oled_write_char('0' + highest_layer, false);
+    oled_write_P(PSTR("_"), false);
+    if(highest_layer <10){
+        oled_write_char(' ', false);
+        oled_write_char('0' + highest_layer, false);
+    } else {
+        oled_write_char('0' + (highest_layer/10), false);
+        oled_write_char('0' + (highest_layer%10), false);
+    }
     oled_write_P(PSTR(" _"), false);
     switch (highest_layer) {
         case _BASE:
@@ -87,8 +93,17 @@ static void print_status_narrow(void) {
         case _NUMPAD:
             oled_write_P(PSTR("numpd"), false);
             break;
+        case _NUMPADALT:
+            oled_write_P(PSTR("altpd"), false);
+            break;
         case _GAMING:
             oled_write_P(PSTR("game "), false);
+            break;
+        case _METALAYER:
+            oled_write_P(PSTR(" meta"), false);
+            break;
+        case _CHROME:
+            oled_write_P(PSTR("chrme"), false);
             break;
         default:
             oled_write_P(PSTR("undef"), false);
