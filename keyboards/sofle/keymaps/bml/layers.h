@@ -8,7 +8,10 @@ enum layers {
 	_LOWER,
 	_NAV,
 	_SYMBOL,
-	_NUMPAD
+	_NUMPAD,
+    _NUMPADALT,
+    _METALAYER,
+    _CHROME
 };
 
 
