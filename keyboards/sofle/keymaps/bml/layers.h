@@ -6,6 +6,7 @@ enum layers {
 	_COLEMAK,
     _GAMING,
 	_LOWER,
+    _LOWERFN,
 	_NAV,
 	_SYMBOL,
 	_NUMPAD,
