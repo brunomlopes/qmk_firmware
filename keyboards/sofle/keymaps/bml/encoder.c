@@ -26,7 +26,7 @@
 
 #define THRICE(X) X; X; X;
 
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     int* current_mode_pointer = &left_rotary_current_mode;
 
     if (index == 1) {
@@ -58,7 +58,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 break;
             }
         }
-        return;
+        return true;
     }
 
     // Sometimes the cursor sticks in front of the text,
@@ -78,7 +78,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 THRICE(tap_code(KC_MS_DOWN));
             }
         }
-        return;
+        return true;
     }
 
     switch(*current_mode_pointer) {
@@ -118,6 +118,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             }
             break;
     }
+    return true;
 }
 
 #endif
