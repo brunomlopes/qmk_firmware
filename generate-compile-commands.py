@@ -1,5 +1,8 @@
 
 """Creates a compilation database for the given keyboard build.
+Run:
+make -n keyboard:keymap > .build/make-output.txt
+python generate-compile-commands.py
 """
 
 import json
@@ -70,7 +73,7 @@ def parse_make_n(f: TextIO) -> List[Dict[str, str]]:
 with open(".build/make-output.txt","rt") as output:
     db = parse_make_n(output)
 
-dbpath = QMK_FIRMWARE / 'compile_commands.json'
+dbpath = QMK_FIRMWARE / '.vscode' / 'compile_commands.json'
 
 print(f"Writing build database to {dbpath}")
 dbpath.write_text(json.dumps(db, indent=4))
