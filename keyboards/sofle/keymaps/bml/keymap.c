@@ -16,7 +16,9 @@
   */
 
 // This define helps vscode parse the file and provide intelisense
-#define QMK_KEYBOARD_H "sofle.h"
+#ifndef QMK_KEYBOARD_H
+#define QMK_KEYBOARD_H "../../sofle.h"
+#endif
 
 #include QMK_KEYBOARD_H
 #include "rotary.h"
