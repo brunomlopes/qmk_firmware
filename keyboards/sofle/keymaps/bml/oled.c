@@ -16,13 +16,15 @@
   */
 
 //Sets up what the OLED screens display.
-#define QMK_KEYBOARD_H "sofle.h"
+#ifndef QMK_KEYBOARD_H
+#define QMK_KEYBOARD_H "../../sofle.h"
+#endif
 
 #include QMK_KEYBOARD_H
 #include "rotary.h"
 #include "layers.h"
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 
 static void print_rotary_mode(int8_t mode){
     switch(mode){
