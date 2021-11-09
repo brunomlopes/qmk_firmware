@@ -58,9 +58,6 @@ static void print_status_narrow(void) {
         case _HRMOD:
             oled_write_P(PSTR("Qwrt "), false);
             break;
-        case _COLEMAK:
-            oled_write_P(PSTR("Clmk "), false);
-            break;
         default:
             oled_write_P(PSTR("Mod  "), false);
             break;
@@ -86,7 +83,6 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR(" _"), false);
     switch (highest_layer) {
         case _BASE:
-        case _COLEMAK:
         case _HRMOD:
             oled_write_P(PSTR("base "), false);
             break;
@@ -135,7 +131,6 @@ static void print_status_narrow(void) {
 
     oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
     oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
-
 }
 
 static void print_status_narrow_right(void) {
