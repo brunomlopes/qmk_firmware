@@ -14,6 +14,10 @@
   * You should have received a copy of the GNU General Public License
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
+// vscode shim for intelisense
+#ifndef QMK_KEYBOARD_H
+#define QMK_KEYBOARD_H "kimiko.h"
+#endif
 
 //Setting up what encoder rotation does. If your encoder can be pressed as a button, that function can be set in Via.
 
@@ -28,6 +32,10 @@
 bool encoder_update_user(uint8_t index, bool clockwise) {
     int* current_mode_pointer = &left_rotary_current_mode;
 
+    // the current board, or encoder, is switched around on the left
+    if (index == 0) {
+        clockwise = !clockwise;
+    }
     if (index == 1) {
         current_mode_pointer = &right_rotary_current_mode;
     }
