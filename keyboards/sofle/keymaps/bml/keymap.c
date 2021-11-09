@@ -73,11 +73,11 @@ int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    REPEAT  , KC_1 , KC_2    , KC_3    , KC_4    , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , MO(_HRMOD)    ,
-    KC_ESC  , KC_Q , KC_W    , KC_E    , KC_R    , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , KC_RBRC       ,
-    KC_TAB  , KC_A , KC_S    , KC_D    , KC_F    , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_ENT  , KC_BSPC       ,
-    KC_LSFT , KC_Z , KC_X    , KC_C    , KC_V    , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT) ,
-                     KC_LCTL , KC_LALT , KC_LGUI , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_LALT
+    REPEAT               , KC_1 , KC_2    , KC_3    , KC_4    , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , MO(_HRMOD)    ,
+    KC_ESC               , KC_Q , KC_W    , KC_E    , KC_R    , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , KC_RBRC       ,
+    MT(MOD_LSFT, KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_ENT  , KC_BSPC       ,
+    KC_LCTL              , KC_Z , KC_X    , KC_C    , KC_V    , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT) ,
+                                  KC_LCTL , KC_LALT , KC_LGUI , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_LALT
   ),
 
   [_HRMOD] = LAYOUT(
@@ -86,14 +86,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _T , MT(MOD_LGUI, KC_A) , MT(MOD_LALT, KC_S) , MT(MOD_LSFT, KC_D) , MT(MOD_LCTL, KC_F) , _T ,                _T , MT(MOD_RCTL, KC_J) , MT(MOD_RSFT, KC_K) , MT(MOD_LALT, KC_L) , MT(MOD_RGUI, KC_ENT)  , _T ,
     _T , _T                 , _T                 , _T                 , _T                 , _T , _T ,      _T , _T , _T                 , _T                 , _T                 , _T                    , _T ,
                               _T                 , _T                 , _T                 , _T , _T ,      _T , _T , _T                 , _T                 , _T
-  ),
-
-  [_COLEMAK] = LAYOUT(
-    KC_GRV  , KC_1 , KC_2    , KC_3    , KC_4    , KC_5    ,                          KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_GRV  ,
-    KC_ESC  , KC_Q , KC_W    , KC_F    , KC_P    , KC_G    ,                          KC_J    , KC_L    , KC_U    , KC_Y    , KC_SCLN , KC_BSPC ,
-    KC_TAB  , KC_A , KC_R    , KC_S    , KC_T    , KC_D    ,                          KC_H    , KC_N    , KC_E    , KC_I    , KC_O    , KC_QUOT ,
-    KC_LSFT , KC_Z , KC_X    , KC_C    , KC_V    , KC_B    , KC_MUTE ,      XXXXXXX , KC_K    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_RSFT ,
-                     KC_LGUI , KC_LALT , KC_LCTL , _______ , KC_ENT  ,      KC_SPC  , _______ , KC_RCTL , KC_RALT , KC_RGUI
   ),
 
   [_GAMING] = LAYOUT(
@@ -129,8 +121,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_SYMBOL] = LAYOUT(
-    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , XXXXXXX      ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX , KC_EQL  ,
-    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , XXXXXXX      ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , XXXXXXX ,
+    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX , KC_EQL  ,
+    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , XXXXXXX ,
     KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                                 A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , KC_BSLS ,
     KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX        , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_SLSH , KC_RSFT ,
                                         _______       , _______       , _______           , TT(_NUMPAD)  , XXXXXXX ,      TT(_METALAYER) , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
