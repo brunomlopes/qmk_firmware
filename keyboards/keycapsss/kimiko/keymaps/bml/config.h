@@ -22,7 +22,11 @@
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-#define OLED_FONT_H "keyboards/keycapsss/kimiko/keymaps/default/glcdfont.c"
+#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_LED_STATE_ENABLE
+#define SPLIT_MODS_ENABLE
+
 // #define OLED_FONT_WIDTH 5
 // #define OLED_FONT_HEIGHT 7
 
@@ -30,9 +34,11 @@
 #   define RGBLIGHT_HUE_STEP 8
 #   define RGBLIGHT_SAT_STEP 8
 #   define RGBLIGHT_VAL_STEP 8
+#   undef RGBLIGHT_LIMIT_VAL
+#   define RGBLIGHT_LIMIT_VAL 50
 #   define RGBLIGHT_SLEEP       /* the RGB lighting will be switched off when the host goes to sleep */
 /*== all animations enable ==*/
-#   define RGBLIGHT_ANIMATIONS
+// #   define RGBLIGHT_ANIMATIONS
 /*== or choose animations to save space ==*/
 // #   define RGBLIGHT_EFFECT_BREATHING
 // #   define RGBLIGHT_EFFECT_RAINBOW_MOOD

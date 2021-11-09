@@ -53,19 +53,9 @@ static void print_status_narrow(void) {
     // Print current mode
     oled_write_P(PSTR("\n"), false);
 
-    switch (highest_layer) {
-        case _BASE:
-        case _HRMOD:
-            oled_write_P(PSTR("Qwrt "), false);
-            break;
-        case _COLEMAK:
-            oled_write_P(PSTR("Clmk "), false);
-            break;
-        default:
-            oled_write_P(PSTR("Mod  "), false);
-            break;
-    }
     oled_write_P(PSTR("HRMOD"), IS_LAYER_ON(_HRMOD));
+    oled_write_P(PSTR("\n"), false);
+
     // helper for hrmods
     oled_write_P(PSTR("G"),(get_mods() & MOD_MASK_GUI));
     oled_write_P(PSTR("A"),(get_mods() & MOD_MASK_ALT));
@@ -76,7 +66,7 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("\n"), false);
     // Print current layer
     oled_write_P(PSTR("_"), false);
-    if(highest_layer <10){
+    if(highest_layer < 10){
         oled_write_char(' ', false);
         oled_write_char('0' + highest_layer, false);
     } else {
@@ -86,7 +76,6 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR(" _"), false);
     switch (highest_layer) {
         case _BASE:
-        case _COLEMAK:
         case _HRMOD:
             oled_write_P(PSTR("base "), false);
             break;
@@ -105,17 +94,11 @@ static void print_status_narrow(void) {
         case _NUMPAD:
             oled_write_P(PSTR("numpd"), false);
             break;
-        case _NUMPADALT:
-            oled_write_P(PSTR("altpd"), false);
-            break;
         case _GAMING:
             oled_write_P(PSTR("game "), false);
             break;
         case _METALAYER:
             oled_write_P(PSTR(" meta"), false);
-            break;
-        case _CHROME:
-            oled_write_P(PSTR("chrme"), false);
             break;
         default:
             oled_write_P(PSTR("undef"), false);
@@ -130,16 +113,14 @@ static void print_status_narrow(void) {
     }
 
     oled_write_P(PSTR("\n"), false);
-    led_t led_usb_state = host_keyboard_led_state();
-    oled_write_P(PSTR("\n"), false);
-
-    oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
-    oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
 
 }
 
 static void print_status_narrow_right(void) {
-    print_rotary_mode(right_rotary_current_mode);
+    led_t led_usb_state = host_keyboard_led_state();
+
+    oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
