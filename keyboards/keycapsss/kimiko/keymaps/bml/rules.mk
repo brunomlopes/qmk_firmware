@@ -1,4 +1,4 @@
-SRC += oled.c encoder.c
+SRC += oled.c encoder.c transport.c
 
 BOOTLOADER = caterina
 
