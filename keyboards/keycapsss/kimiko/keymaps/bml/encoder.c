@@ -41,7 +41,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
 
     // shift+encoder changes the encoder mode
-    if ( get_mods() & MOD_MASK_SHIFT ){
+    if ( (get_mods() & MOD_MASK_SHIFT) || IS_LAYER_ON(ROTARY_MOUSE_MODE_ADJUST) ){
         if(clockwise){
             switch (*current_mode_pointer)
             {
