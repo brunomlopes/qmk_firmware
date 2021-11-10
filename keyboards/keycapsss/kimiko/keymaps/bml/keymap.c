@@ -23,6 +23,8 @@
 #include QMK_KEYBOARD_H
 #include "rotary.h"
 #include "layers.h"
+#include "transport.h"
+#include <transactions.h>
 
 enum custom_keycodes {
     ROTARY_MODE_LEFT = SAFE_RANGE,
@@ -328,13 +330,7 @@ void bml_set_layer_indicator(layer_state_t state){
 }
 
 
-void keyboard_post_init_user(void){
-    rgblight_enable_noeeprom();
-    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 
-    rgblight_sethsv_noeeprom_white();
-    bml_set_layer_indicator(default_layer_state);
-}
 
 layer_state_t default_layer_state_set_user(layer_state_t state){
     bml_set_layer_indicator(state);
@@ -344,6 +340,17 @@ layer_state_t default_layer_state_set_user(layer_state_t state){
 void bml_set_layer_indicator(layer_state_t state){
 }
 #endif
+
+void keyboard_post_init_user(void){
+    #ifdef RGBLIGHT_ENABLE
+    rgblight_enable_noeeprom();
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+
+    rgblight_sethsv_noeeprom_white();
+    #endif
+    transaction_register_rpc(USER_SYNC_ROTARY, user_sync_a_slave_handler);
+    bml_set_layer_indicator(default_layer_state);
+}
 
 layer_state_t layer_state_set_user(layer_state_t state){
     if (unpress_mod_on_layer_change & MOD_BIT(KC_LCTRL)){
@@ -363,6 +370,18 @@ layer_state_t layer_state_set_user(layer_state_t state){
     }
     bml_set_layer_indicator(state);
     return state;
+}
+
+void housekeeping_task_user(void) {
+    if(is_keyboard_master()){
+        static uint32_t last_sync = 0;
+        if(timer_elapsed32(last_sync)>500){
+            master_to_slave_t m2s = {left_rotary_current_mode,right_rotary_current_mode};
+            if(transaction_rpc_send(USER_SYNC_ROTARY, sizeof(master_to_slave_t), &m2s)){
+                last_sync=timer_read32();
+            }
+        }
+    }
 }
 
 void suspend_wakeup_init_user(void) {

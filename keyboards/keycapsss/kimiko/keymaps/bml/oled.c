@@ -74,6 +74,9 @@ static void print_status_narrow(void) {
         oled_write_char('0' + (highest_layer%10), false);
     }
     oled_write_P(PSTR(" _"), false);
+
+    oled_write_P(PSTR("\n"), false);
+
     switch (highest_layer) {
         case _BASE:
         case _HRMOD:
@@ -121,6 +124,16 @@ static void print_status_narrow_right(void) {
 
     oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
     oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
+
+    oled_write_P(PSTR("\n"), false);
+
+    if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
+        print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
+        print_rotary_mode(ROTARY_MODE_VERTICAL_MOVE);
+    }else{
+        print_rotary_mode(left_rotary_current_mode);
+        print_rotary_mode(right_rotary_current_mode);
+    }
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
