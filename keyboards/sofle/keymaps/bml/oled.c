@@ -110,31 +110,43 @@ static void print_status_narrow(void) {
         case _METALAYER:
             oled_write_P(PSTR(" meta"), false);
             break;
-        case _CHROME:
-            oled_write_P(PSTR("chrme"), false);
-            break;
         default:
             oled_write_P(PSTR("undef"), false);
     }
 
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
         print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
-        print_rotary_mode(ROTARY_MODE_VERTICAL_MOVE);
     }else{
         print_rotary_mode(left_rotary_current_mode);
-        print_rotary_mode(right_rotary_current_mode);
     }
 
     oled_write_P(PSTR("\n"), false);
-    led_t led_usb_state = host_keyboard_led_state();
     oled_write_P(PSTR("\n"), false);
 
-    oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
-    oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
 }
 
 static void print_status_narrow_right(void) {
-    print_rotary_mode(right_rotary_current_mode);
+    led_t led_usb_state = host_keyboard_led_state();
+
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+
+    if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
+        print_rotary_mode(ROTARY_MODE_VERTICAL_MOVE);
+    }else{
+        print_rotary_mode(right_rotary_current_mode);
+
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
+
+    oled_write_P(PSTR("\n"), false);
+    }
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {

@@ -24,6 +24,8 @@
 #include "rotary.h"
 #include "layers.h"
 #include "underglow.h"
+#include "transport.h"
+#include <transactions.h>
 
 enum custom_keycodes {
     ROTARY_MODE_LEFT = SAFE_RANGE,
@@ -144,17 +146,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         _______ , TG(_NUMPADALT) , _______ , _______ , _______ ,      _______ , _______        , _______    , _______    , _______
   ),
 
-  [_CHROME] = LAYOUT(
-    XXXXXXX , STEP_OVER           , STEP_IN                 , RUN_TO_LINE              , XXXXXXX , XXXXXXX ,                          XXXXXXX , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , CHROME_PICK_ELEMENT , STEP_OUT                , KC_NO                    , XXXXXXX , XXXXXXX ,                          XXXXXXX , TG(_CHROME) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , CHROME_DEVTOOLS     , KC_NO                   , CHROME_RUN               , XXXXXXX , XXXXXXX ,                          XXXXXXX , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , CHROME_REFRESH      , CHROME_ONOFF_BREAKPOINT , CHROME_TOGGLE_BREAKPOINT , XXXXXXX , XXXXXXX , XXXXXXX ,      XXXXXXX , XXXXXXX , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-                                    _______                 , _______                  , _______ , _______ , _______ ,      _______ , _______ , _______     , _______ , _______
-  ),
-
   [_METALAYER] = LAYOUT(
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_NUMPAD)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_GAMING)    , TG(_CHROME)    , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_GAMING)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_HRMOD)     , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
                         _______ , _______ , _______ , TT(_METALAYER) , _______ ,      _______ , _______        , _______        , _______ , _______
@@ -333,9 +327,6 @@ void bml_set_layer_indicator(layer_state_t state){
     case _GAMING:
         rgblight_sethsv_noeeprom(HSV_RED);
         break;
-    case _CHROME:
-        rgblight_sethsv_noeeprom(HSV_ORANGE);
-        break;
     case _METALAYER:
         rgblight_sethsv_noeeprom(HSV_TURQUOISE);
         break;
@@ -356,6 +347,8 @@ void keyboard_post_init_user(void){
 
     rgblight_sethsv_noeeprom_white();
     bml_set_layer_indicator(default_layer_state);
+
+    transaction_register_rpc(USER_SYNC_ROTARY, user_sync_a_slave_handler);
 }
 
 layer_state_t default_layer_state_set_user(layer_state_t state){
@@ -381,6 +374,18 @@ layer_state_t layer_state_set_user(layer_state_t state){
     }
     bml_set_layer_indicator(state);
     return state;
+}
+
+void housekeeping_task_user(void) {
+    if(is_keyboard_master()){
+        static uint32_t last_sync = 0;
+        if(timer_elapsed32(last_sync)>500){
+            master_to_slave_t m2s = {left_rotary_current_mode,right_rotary_current_mode};
+            if(transaction_rpc_send(USER_SYNC_ROTARY, sizeof(master_to_slave_t), &m2s)){
+                last_sync=timer_read32();
+            }
+        }
+    }
 }
 
 void suspend_wakeup_init_user(void) {
