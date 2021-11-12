@@ -27,11 +27,7 @@
 #define THRICE(X) X; X; X;
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    int* current_mode_pointer = &left_rotary_current_mode;
-
-    if (index == 1) {
-        current_mode_pointer = &right_rotary_current_mode;
-    }
+    int* current_mode_pointer = index ? &right_rotary_current_mode : &left_rotary_current_mode;
 
     // shift+encoder changes the encoder mode
     if ( get_mods() & MOD_MASK_SHIFT ){
@@ -66,16 +62,16 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
         if (index == 0){
             if (clockwise) {
-                THRICE(tap_code(KC_MS_RIGHT));
+                tap_code(KC_MS_RIGHT);
             } else {
-                THRICE(tap_code(KC_MS_LEFT));
+                tap_code(KC_MS_LEFT);
             }
         }
         else{
             if (clockwise) {
-                THRICE(tap_code(KC_MS_UP));
+                tap_code(KC_MS_UP);
             } else {
-                THRICE(tap_code(KC_MS_DOWN));
+                tap_code(KC_MS_DOWN);
             }
         }
         return true;
