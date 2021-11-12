@@ -11,7 +11,6 @@ enum layers {
 	_NUMPAD,
     _NUMPADALT,
     _METALAYER,
-    _CHROME
 };
 
 
