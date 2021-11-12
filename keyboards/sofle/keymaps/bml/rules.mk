@@ -1,5 +1,6 @@
-SRC += oled.c encoder.c underglow.c
+SRC += oled.c encoder.c underglow.c transport.c
 
+TAP_DANCE_ENABLE = no
 OLED_ENABLE = yes
 ENCODER_ENABLE = yes
 CONSOLE_ENABLE = no
