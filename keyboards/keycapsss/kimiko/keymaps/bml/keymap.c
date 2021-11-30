@@ -314,6 +314,8 @@ void bml_set_layer_indicator(layer_state_t state){
         break;
     case _GAMING:
         rgblight_sethsv_noeeprom(HSV_RED);
+        rgblight_sethsv_at(HSV_WHITE, 9);
+        rgblight_sethsv_range(HSV_WHITE, 13, 16);
         break;
     case _METALAYER:
         rgblight_sethsv_noeeprom(HSV_TURQUOISE);
