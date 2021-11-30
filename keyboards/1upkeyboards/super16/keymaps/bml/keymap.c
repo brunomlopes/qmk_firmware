@@ -46,6 +46,7 @@ extern rgblight_config_t rgblight_config;
 #define STEP_OUT    LSFT(KC_F11)
 #define RUN_TO_LINE LCTL(KC_F10)
 #define ATTACH_TO   LALT(LCTL(KC_P))
+#define REATTACH_TO   LALT(LSFT(KC_P))
 #define TOGGLE_BREAKPOINT KC_F9
 #define VS_NAVIGATE_TO KC_F12
 
@@ -61,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_VISUAL_STUDIO] = LAYOUT_ortho_4x4(
     OSL(_LAYER_PICKER)           , STEP_OVER         , STEP_IN           , RUN_TO_LINE       ,
     MO(_MEDIA)                   , VS_SHOW_HIERARCHY , STEP_OUT          , KC_NO             ,
-    MO(_OSX_WINDOW_MANAGER)      , VS_NAVIGATE_TO    , KC_NO             , RUN               ,
+    MO(_OSX_WINDOW_MANAGER)      , VS_NAVIGATE_TO    , REATTACH_TO       , RUN               ,
     LM(_WINDOW_MANAGER,MOD_LGUI) , ATTACH_TO         , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
   ),
 
