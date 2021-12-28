@@ -9,5 +9,5 @@ VIA_ENABLE = no
 LTO_ENABLE = yes
 RGBLIGHT_ENABLE = yes
 MOUSEKEY_ENABLE = yes
-
+RGBLIGHT_LAYERS = no
 USER_NAME := brunomlopes
