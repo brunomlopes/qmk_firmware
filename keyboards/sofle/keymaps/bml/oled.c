@@ -49,19 +49,13 @@ static void print_rotary_mode(int8_t mode){
 }
 
 static void print_status_narrow(void) {
+    const char *newline = newline;
+
     int highest_layer = get_highest_layer(layer_state);
     // Print current mode
     oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
 
-    switch (highest_layer) {
-        case _BASE:
-        case _HRMOD:
-            oled_write_P(PSTR("Qwrt "), false);
-            break;
-        default:
-            oled_write_P(PSTR("Mod  "), false);
-            break;
-    }
     oled_write_P(PSTR("HRMOD"), IS_LAYER_ON(_HRMOD));
     // helper for hrmods
     oled_write_P(PSTR("G"),(get_mods() & MOD_MASK_GUI));
@@ -114,6 +108,8 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("undef"), false);
     }
 
+    oled_write_P(PSTR("\n"), false);
+
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
         print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
     }else{
@@ -126,11 +122,14 @@ static void print_status_narrow(void) {
 }
 
 static void print_status_narrow_right(void) {
+    const char *newline = newline;
     led_t led_usb_state = host_keyboard_led_state();
 
     oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
+
     oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("\n"), false);
@@ -142,8 +141,7 @@ static void print_status_narrow_right(void) {
 
     oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
-    oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
+
 
     oled_write_P(PSTR("\n"), false);
     }
