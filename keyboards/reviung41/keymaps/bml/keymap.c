@@ -61,24 +61,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_RAISE] = LAYOUT_reviung41(
-    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,           A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC , XXXXXXX ,
-    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,           A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT , KC_BSLS ,
-    KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA ,           KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE , KC_SLSH , KC_RSFT ,
+    KC_TAB            , XXXXXXX       , XXXXXXX       , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , XXXXXXX      ,            A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC , XXXXXXX ,
+    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,            A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT , KC_BSLS ,
+    KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA ,            KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE , KC_SLSH , KC_RSFT ,
                                                                         _______           , _______      , KC_SPACE , _______       , _______
   ),
 
   [_ADJUST] = LAYOUT_reviung41(
-    _______ , KC_INS  , KC_PSCR , XXXXXXX , XXXXXXX , XXXXXXX ,           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , KC_DEL ,
+    RESET   , KC_INS  , KC_PSCR , XXXXXXX , XXXXXXX , XXXXXXX ,           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , KC_DEL ,
     _______ , KC_MINS , KC_EQL  , KC_LBRC , KC_RBRC , KC_BSLS ,           KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   , KC_F6  ,
     _______ , KC_ESC  , KC_RGUI , KC_RALT , KC_CAPS , KC_QUOT ,           KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12 ,
-                                            _______ , _______ , KC_BSPC , _______ , _______
+                                            _______ , _______ , _______ , _______ , _______
   ),
 
   [_NAV] = LAYOUT_reviung41(
-    KC_DEL  , KC_F13  , KC_F14  , KC_F15        , KC_F16            , KC_F19  ,           KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
-    _______ , KC_F17  , KC_F18  , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20  ,           KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
-    _______ , C(KC_Z) , C(KC_X) , C(KC_C)       , C(KC_V)           , XXXXXXX ,           XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
-                                                  _______           , _______ , _______ , _______ , _______
+    KC_DEL  , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19   ,           KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
+    _______ , KC_F17  , KC_F18  , KC_BML_LAYERC_TAB , KC_BML_LAYERA_TAB , KC_F20   ,           KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
+    _______ , C(KC_Z) , C(KC_X) , C(KC_C)           , C(KC_V)           , A(KC_F4) ,           XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
+                                                      _______           , _______  , _______ , _______ , _______
   ),
 
   [_ADJUST_PLUS] = LAYOUT_reviung41(
@@ -87,8 +87,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX ,           RESET   , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
                                              _______ , _______ , XXXXXXX , _______ , _______
   ),
-
 };
+
 
 // this currently only supports control and alt. implementation can be slighly improved
 uint8_t unpress_mod_on_layer_change = 0;
