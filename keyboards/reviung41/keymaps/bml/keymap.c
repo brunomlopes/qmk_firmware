@@ -45,10 +45,11 @@ enum custom_keycodes {
 #define _T KC_TRANSPARENT
 
 #define KC_BML_TREMA RALT(KC_LBRC)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_reviung41(
     MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E , KC_R    , KC_T       ,                     KC_Y       , KC_U    , KC_I    , KC_O   , KC_P    , MT(MOD_LALT, KC_RBRC) ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D , KC_F    , KC_G       ,                     KC_H       , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D , KC_F    , KC_G       ,                     KC_H       , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_RCTL, KC_BSPC) ,
     KC_LSFT              , KC_Z , KC_X , KC_C , KC_V    , KC_B       ,                     KC_N       , KC_M    , KC_COMM , KC_DOT , KC_SLSH , OSM(MOD_RSFT)         ,
                                                 KC_LCTL , MO(_LOWER) , LT(_NAV,KC_SPACE) , MO(_RAISE) , KC_LALT
   ),
@@ -68,9 +69,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_ADJUST] = LAYOUT_reviung41(
-    RESET   , KC_INS  , KC_PSCR , XXXXXXX , XXXXXXX , XXXXXXX ,           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , KC_DEL ,
-    _______ , KC_MINS , KC_EQL  , KC_LBRC , KC_RBRC , KC_BSLS ,           KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   , KC_F6  ,
-    _______ , KC_ESC  , KC_RGUI , KC_RALT , KC_CAPS , KC_QUOT ,           KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12 ,
+    RESET   , KC_INS  , KC_PSCR , XXXXXXX , RGB_TOG , KC_VOLU ,           KC_APP  , KC_MPRV , KC_MPLY , KC_MNXT , XXXXXXX , XXXXXXX ,
+    _______ , XXXXXXX , KC_EQL  , XXXXXXX , RGB_VAI , KC_VOLD ,           KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   , KC_F6   ,
+    _______ , XXXXXXX , XXXXXXX , KC_RALT , KC_CAPS , KC_MUTE ,           KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12  ,
                                             _______ , _______ , _______ , _______ , _______
   ),
 
@@ -78,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_DEL  , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19   ,           KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
     _______ , KC_F17  , KC_F18  , KC_BML_LAYERC_TAB , KC_BML_LAYERA_TAB , KC_F20   ,           KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
     _______ , C(KC_Z) , C(KC_X) , C(KC_C)           , C(KC_V)           , A(KC_F4) ,           XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
-                                                      _______           , _______  , _______ , _______ , _______
+                                                      _______           , KC_RGUI  , _______ , OSM(MOD_LGUI) , _______
   ),
 
   [_ADJUST_PLUS] = LAYOUT_reviung41(
@@ -144,6 +145,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 
+void bml_set_layer_indicator(layer_state_t state){
+    int highest_layer = get_highest_layer(state);
+    if (highest_layer == 0)
+        highest_layer = get_highest_layer(default_layer_state);
+
+    switch (highest_layer)
+    {
+    case _LOWER:
+        rgblight_sethsv_noeeprom(HSV_BLUE);
+        break;
+    case _RAISE:
+        rgblight_sethsv_noeeprom(HSV_GREEN);
+        break;
+    case _NAV:
+        rgblight_sethsv_noeeprom(HSV_RED);
+        break;
+    case _ADJUST:
+        rgblight_sethsv_noeeprom(HSV_TURQUOISE);
+        break;
+    default:
+        rgblight_sethsv_noeeprom(HSV_WHITE);
+        break;
+    }
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state){
+    bml_set_layer_indicator(state);
+    return state;
+}
+
 layer_state_t layer_state_set_user(layer_state_t state){
     if (unpress_mod_on_layer_change & MOD_BIT(KC_LCTRL)){
         unregister_code(KC_LCTRL);
@@ -154,6 +185,8 @@ layer_state_t layer_state_set_user(layer_state_t state){
         unpress_mod_on_layer_change ^= MOD_BIT(KC_LALT);
     }
 
+    bml_set_layer_indicator(state);
+
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
@@ -161,9 +194,20 @@ layer_state_t layer_state_set_user(layer_state_t state){
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case MT(MOD_RCTL, KC_BSPC):
+            return TAPPING_TERM + 350;
         case LT(_NAV,KC_SPC):
             return TAPPING_TERM + 350;
         default:
             return TAPPING_TERM;
     }
+}
+
+
+void keyboard_post_init_user(void){
+    rgblight_enable_noeeprom();
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+
+    rgblight_sethsv_noeeprom_white();
+    bml_set_layer_indicator(default_layer_state);
 }
