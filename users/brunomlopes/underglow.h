@@ -1,4 +1,5 @@
 #pragma once
+#if RGBLIGHT_ENABLE
 
 enum bml_ug_colours {
     BML_UG_WHITE,
@@ -22,3 +23,5 @@ enum bml_ug_colours {
 };
 
 void bml_ug_set(enum bml_ug_colours colour, LED_TYPE *led);
+
+#endif
