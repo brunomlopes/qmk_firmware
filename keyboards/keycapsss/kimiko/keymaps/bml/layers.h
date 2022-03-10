@@ -9,6 +9,7 @@ enum layers {
 	_NAV,
 	_SYMBOL,
 	_NUMPAD,
+    _NUMPADALT,
     _METALAYER
 };
 
