@@ -74,10 +74,10 @@ int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    KC_ESC               , KC_1 , KC_2    , KC_3    , KC_4    , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , MO(_HRMOD)    ,
-    KC_ESC               , KC_Q , KC_W    , KC_E    , KC_R    , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , KC_RBRC       ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_ENT  , KC_BSPC       ,
-    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V    , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT) ,
+    XXXXXXX              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
+    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R    , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
+    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V    , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
                                   KC_LCTL , KC_LALT , KC_LGUI , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_LALT
   ),
 
@@ -97,12 +97,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                      KC_LCTL , KC_LALT , KC_LCTL , KC_SPC , KC_ENT      ,      MO(_NAV) , MO(_SYMBOL) , TT(_METALAYER) , KC_RGUI , KC_RALT
   ),
 
-  [_LOWER] = LAYOUT(
-    KC_DEL  , KC_F1   , KC_F2   , KC_F3         , KC_F4       , KC_F5   ,                                 KC_F6       , KC_F7        , KC_F8      , KC_F9     , KC_F10     , KC_F11     ,
-    KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4        , KC_5    ,                                 KC_6        , KC_7         , KC_8       , KC_9      , KC_0       , KC_F12     ,
-    KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR      , KC_PERC ,                                 KC_CIRC     , KC_AMPR      , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______    ,
-    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR     , KC_LBRC , _______ ,      _______        , KC_NUBS     , KC_RPRN      , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , MO(_HRMOD) ,
-                        _______ , _______       , TG(_NUMPAD) , _______ , KC_SPC  ,      TT(_METALAYER) , TT(_NUMPAD) , TT(_LOWERFN) , _______    , _______
+[_LOWER] = LAYOUT(
+    KC_DEL  , KC_F1   , KC_F2   , KC_F3          , KC_F4       , KC_F5   ,                                 KC_F6       , KC_F7   , KC_F8      , KC_F9     , KC_F10     , KC_F11     ,
+    KC_BSPC , KC_1    , KC_2    , KC_3           , KC_4        , KC_5    ,                                 KC_6        , KC_7    , KC_8       , KC_9      , KC_0       , KC_F12     ,
+    KC_TILD , KC_EXLM , KC_AT   , KC_HASH        , KC_DLR      , KC_PERC ,                                 KC_CIRC     , KC_AMPR , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______    ,
+    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2))  , KC_LCBR     , KC_LBRC , _______ ,      _______        , KC_NUBS     , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , MO(_HRMOD) ,
+                        _______ , TG(_NUMPADALT) , TG(_NUMPAD) , _______ , KC_SPC  ,      TT(_METALAYER) , TT(_NUMPAD) , TT(_LOWERFN) , _______    , _______
   ),
 
   [_LOWERFN] = LAYOUT(
@@ -116,33 +116,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAV] = LAYOUT(
     KC_ESC  , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4)        , XXXXXXX ,                          KC_APP  , KC_PSCR    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , KC_PAUS    ,
     _______ , KC_INS  , KC_PSCR , XXXXXXX , A(ALGR(KC_TAB)) , XXXXXXX ,                          KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
-    _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX         , XXXXXXX ,                          KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , _______    ,
+    _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX         , XXXXXXX ,                          KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
     _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX , _______ ,      _______ , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
                         _______ , _______ , _______         , _______ , _______ ,      _______ , KC_ENT  , _______    , _______    , _______
   ),
 
   [_SYMBOL] = LAYOUT(
-    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , XXXXXXX      ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX , KC_EQL  ,
-    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , XXXXXXX      ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , XXXXXXX ,
+    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX , KC_EQL  ,
+    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , XXXXXXX ,
     KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                                 A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , KC_BSLS ,
     KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX        , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_SLSH , KC_RSFT ,
                                         _______       , _______       , _______           , TT(_NUMPAD)  , XXXXXXX ,      TT(_METALAYER) , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
   ),
 
   [_NUMPAD] = LAYOUT(
-    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                          TG(_NUMPAD) , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , RGB_TOG , KC_CAPS , KC_NLCK ,
-    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6       , KC_PAST     ,                          TG(_GAMING) , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
-    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3       , KC_PMNS     ,                          TG(_HRMOD)  , XXXXXXX          , XXXXXXX           , KC_INS  , KC_DEL  , KC_BSPC ,
-    XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT     , KC_PPLS     , RESET   ,      XXXXXXX , XXXXXXX     , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
-                        _______ , _______ , TG(_NUMPAD) , TT(_NUMPAD) , _______ ,      _______ , _______     , _______          , _______           , _______
+    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                          TG(_NUMPAD)    , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , RGB_TOG , KC_CAPS , KC_NLCK ,
+    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6       , KC_PAST     ,                          TG(_GAMING)    , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
+    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3       , KC_PMNS     ,                          TG(_HRMOD)     , XXXXXXX          , XXXXXXX           , KC_INS  , KC_DEL  , KC_BSPC ,
+    XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT     , KC_PPLS     , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT)   , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
+                        _______ , _______ , TG(_NUMPAD) , TT(_NUMPAD) , _______ ,      _______ , _______        , _______          , _______           , _______
+  ),
+
+  [_NUMPADALT] = LAYOUT(
+    KC_BSPC , KC_LEFT , KC_UP   , KC_DOWN        , KC_RGHT , KC_PSLS ,                          XXXXXXX        , XXXXXXX    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , XXXXXXX    ,
+    KC_DEL  , KC_P1   , KC_P2   , KC_P3          , KC_P4   , KC_PAST ,                          KC_PGUP        , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
+    KC_P0   , KC_P5   , KC_P6   , KC_P7          , KC_P8   , KC_PMNS ,                          KC_PGDN        , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
+    KC_COMM , KC_P9   , KC_P0   , KC_PDOT        , KC_PENT , KC_PPLS , XXXXXXX ,      XXXXXXX , TG(_NUMPADALT) , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , XXXXXXX    ,
+                        _______ , TG(_NUMPADALT) , _______ , _______ , _______ ,      _______ , _______        , _______    , _______    , _______
   ),
 
   [_METALAYER] = LAYOUT(
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_NUMPAD) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_GAMING) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_HRMOD)  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        , RESET   ,      XXXXXXX , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-                        _______ , _______ , _______ , TT(_METALAYER) , _______ ,      _______ , _______     , _______ , _______ , _______
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_NUMPAD)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_GAMING)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_HRMOD)     , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+                        _______ , _______ , _______ , TT(_METALAYER) , _______ ,      _______ , _______        , _______        , _______ , _______
   ),
 
 };
