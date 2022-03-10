@@ -49,13 +49,14 @@ static void print_rotary_mode(int8_t mode){
 }
 
 static void print_status_narrow(void) {
+    const char *newline = newline;
+
     int highest_layer = get_highest_layer(layer_state);
     // Print current mode
     oled_write_P(PSTR("\n"), false);
-
-    oled_write_P(PSTR("HRMOD"), IS_LAYER_ON(_HRMOD));
     oled_write_P(PSTR("\n"), false);
 
+    oled_write_P(PSTR("HRMOD"), IS_LAYER_ON(_HRMOD));
     // helper for hrmods
     oled_write_P(PSTR("G"),(get_mods() & MOD_MASK_GUI));
     oled_write_P(PSTR("A"),(get_mods() & MOD_MASK_ALT));
@@ -74,9 +75,6 @@ static void print_status_narrow(void) {
         oled_write_char('0' + (highest_layer%10), false);
     }
     oled_write_P(PSTR(" _"), false);
-
-    oled_write_P(PSTR("\n"), false);
-
     switch (highest_layer) {
         case _BASE:
         case _HRMOD:
@@ -97,6 +95,9 @@ static void print_status_narrow(void) {
         case _NUMPAD:
             oled_write_P(PSTR("numpd"), false);
             break;
+        case _NUMPADALT:
+            oled_write_P(PSTR("altpd"), false);
+            break;
         case _GAMING:
             oled_write_P(PSTR("game "), false);
             break;
@@ -107,32 +108,42 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("undef"), false);
     }
 
+    oled_write_P(PSTR("\n"), false);
+
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
         print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
-        print_rotary_mode(ROTARY_MODE_VERTICAL_MOVE);
     }else{
         print_rotary_mode(left_rotary_current_mode);
-        print_rotary_mode(right_rotary_current_mode);
     }
 
+    oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("\n"), false);
 
 }
 
 static void print_status_narrow_right(void) {
+    const char *newline = newline;
     led_t led_usb_state = host_keyboard_led_state();
 
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
     oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
 
     oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
 
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
-        print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
         print_rotary_mode(ROTARY_MODE_VERTICAL_MOVE);
     }else{
-        print_rotary_mode(left_rotary_current_mode);
         print_rotary_mode(right_rotary_current_mode);
+
+    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
+
+
+    oled_write_P(PSTR("\n"), false);
     }
 }
 
