@@ -30,15 +30,26 @@
 
 #define SPLIT_TRANSACTION_IDS_USER USER_SYNC_ROTARY
 
-// #define OLED_FONT_WIDTH 5
-// #define OLED_FONT_HEIGHT 7
+#ifdef TAPPING_TERM
+#undef TAPPING_TERM
+#endif // TAPPING_TERM
+#define TAPPING_TERM 175
+
+#define TAPPING_TERM_PER_KEY
+
+// Read "a guide to homerow mods" for info regarding the next defines for holds,taps, etc
+// https://precondition.github.io/home-row-mods#toc-skipped
+
+#define IGNORE_MOD_TAP_INTERRUPT
+#define PERMISSIVE_HOLD
+#define TAPPING_FORCE_HOLD
 
 #ifdef RGBLIGHT_ENABLE
 #   define RGBLIGHT_HUE_STEP 8
 #   define RGBLIGHT_SAT_STEP 8
 #   define RGBLIGHT_VAL_STEP 8
 #   undef RGBLIGHT_LIMIT_VAL
-#   define RGBLIGHT_LIMIT_VAL 50
+#   define RGBLIGHT_LIMIT_VAL 40
 #   define RGBLIGHT_SLEEP       /* the RGB lighting will be switched off when the host goes to sleep */
 /*== all animations enable ==*/
 // #   define RGBLIGHT_ANIMATIONS
@@ -54,6 +65,7 @@
 // #   define RGBLIGHT_EFFECT_ALTERNATING
 #endif
 
+#undef RGBLIGHT_LAYERS
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
