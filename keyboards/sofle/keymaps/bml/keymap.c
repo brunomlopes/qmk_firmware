@@ -316,6 +316,7 @@ void bml_set_layer_indicator(layer_state_t state){
     if (highest_layer == 0)
         highest_layer = get_highest_layer(default_layer_state);
 
+#if RGBLIGHT_ENABLE
     switch (highest_layer)
     {
     case _NUMPAD:
@@ -339,13 +340,17 @@ void bml_set_layer_indicator(layer_state_t state){
         rgblight_sethsv_noeeprom(HSV_WHITE);
         break;
     }
+#endif
 }
 
 void keyboard_post_init_user(void){
+#if RGBLIGHT_ENABLE
+
     rgblight_enable_noeeprom();
     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 
     rgblight_sethsv_noeeprom_white();
+#endif
     bml_set_layer_indicator(default_layer_state);
 
     transaction_register_rpc(USER_SYNC_ROTARY, user_sync_a_slave_handler);
