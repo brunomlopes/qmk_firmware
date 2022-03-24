@@ -21,6 +21,7 @@ enum layer_names {
     _RAISE,
     _ADJUST,
     _NAV,
+    _FKEYS,
     _ADJUST_PLUS
 };
 
@@ -48,14 +49,14 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_reviung41(
-    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E , KC_R    , KC_T       ,                     KC_Y       , KC_U    , KC_I    , KC_O   , KC_P    , MT(MOD_LALT, KC_RBRC) ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D , KC_F    , KC_G       ,                     KC_H       , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_RCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X , KC_C , KC_V    , KC_B       ,                     KC_N       , KC_M    , KC_COMM , KC_DOT , KC_SLSH , OSM(MOD_RSFT)         ,
-                                                KC_LCTL , MO(_LOWER) , LT(_NAV,KC_SPACE) , MO(_RAISE) , KC_LALT
+    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E , KC_R            , KC_T       ,                     KC_Y       , KC_U    , KC_I    , KC_O   , KC_P    , MT(MOD_LALT, KC_RBRC) ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D , LT(_FKEYS,KC_F) , KC_G       ,                     KC_H       , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_RCTL, KC_BSPC) ,
+    KC_LSFT              , KC_Z , KC_X , KC_C , KC_V            , KC_B       ,                     KC_N       , KC_M    , KC_COMM , KC_DOT , KC_SLSH , OSM(MOD_RSFT)         ,
+                                                KC_LCTL         , MO(_LOWER) , LT(_NAV,KC_SPACE) , MO(_RAISE) , KC_LALT
   ),
 
   [_LOWER] = LAYOUT_reviung41(
-    KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,          KC_6    , KC_7    , KC_8       , KC_9      , KC_0       , KC_F12  ,
+    KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,          KC_6    , KC_7    , KC_8       , KC_9      , KC_0       , _______ ,
     KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR  , KC_PERC ,          KC_CIRC , KC_AMPR , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______ ,
     KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC ,          KC_NUBS , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , _______ ,
                                                   _______ , _______ , KC_ENT , _______ , _______
@@ -69,17 +70,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_ADJUST] = LAYOUT_reviung41(
-    RESET   , KC_INS  , KC_PSCR , XXXXXXX , RGB_TOG , KC_VOLU ,           KC_APP  , KC_MPRV , KC_MPLY , KC_MNXT , XXXXXXX , RGB_TOG ,
-    AG_TOGG , XXXXXXX , KC_EQL  , XXXXXXX , RGB_VAI , KC_VOLD ,           KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   , KC_F6   ,
-    CG_TOGG , XXXXXXX , XXXXXXX , KC_RALT , KC_CAPS , KC_MUTE ,           KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12  ,
+    AG_TOGG , KC_INS  , KC_PSCR , XXXXXXX , RGB_TOG , KC_VOLU ,           KC_APP  , KC_MPRV , KC_MPLY , KC_MNXT , XXXXXXX , RGB_TOG ,
+    CG_TOGG , XXXXXXX , KC_EQL  , XXXXXXX , RGB_VAI , KC_VOLD ,           KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   , KC_F6   ,
+    RESET   , XXXXXXX , XXXXXXX , KC_RALT , KC_CAPS , KC_MUTE ,           KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12  ,
                                             _______ , _______ , _______ , _______ , _______
   ),
 
   [_NAV] = LAYOUT_reviung41(
-    KC_DEL  , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19   ,           KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
-    _______ , KC_F17  , KC_F18  , KC_BML_LAYERC_TAB , KC_BML_LAYERA_TAB , KC_F20   ,           KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
-    _______ , C(KC_Z) , C(KC_X) , C(KC_C)           , C(KC_V)           , A(KC_F4) ,           XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
+    KC_DEL  , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19   ,           KC_PGUP       , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
+    _______ , KC_F17  , KC_F18  , KC_BML_LAYERC_TAB , KC_BML_LAYERA_TAB , KC_F20   ,           KC_PGDN       , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
+    _______ , C(KC_Z) , C(KC_X) , C(KC_C)           , C(KC_V)           , A(KC_F4) ,           XXXXXXX       , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
                                                       _______           , KC_RGUI  , _______ , OSM(MOD_LGUI) , _______
+  ),
+
+  [_FKEYS] = LAYOUT_reviung41(
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,           KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   , KC_F6   ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,           KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12  ,
+                                            _______ , _______ , _______ , _______ , _______
   ),
 
   [_ADJUST_PLUS] = LAYOUT_reviung41(
@@ -88,7 +96,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX ,           RESET   , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
                                              _______ , _______ , XXXXXXX , _______ , _______
   ),
+
 };
+
 
 
 // this currently only supports control and alt. implementation can be slighly improved
@@ -164,6 +174,9 @@ void bml_set_layer_indicator(layer_state_t state){
     case _ADJUST:
         rgblight_sethsv_noeeprom(HSV_TURQUOISE);
         break;
+    case _FKEYS:
+        rgblight_sethsv_noeeprom(HSV_CYAN);
+        break;
     default:
         rgblight_sethsv_noeeprom(HSV_WHITE);
         break;
@@ -196,6 +209,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case MT(MOD_RCTL, KC_BSPC):
             return TAPPING_TERM + 350;
+        case LT(_FKEYS,KC_SPACE):
+            return TAPPING_TERM + 750;
         case LT(_NAV,KC_SPC):
             return TAPPING_TERM + 350;
         default:
