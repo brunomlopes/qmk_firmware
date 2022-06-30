@@ -63,10 +63,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_RAISE] = LAYOUT_reviung41(
-    KC_TAB            , XXXXXXX       , XXXXXXX       , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , XXXXXXX      ,            A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC , XXXXXXX ,
-    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,            A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT , KC_BSLS ,
-    KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA ,            KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE , KC_SLSH , KC_RSFT ,
-                                                                        _______           , _______      , KC_SPACE , _______       , _______
+    KC_TAB  , XXXXXXX       , XXXXXXX       , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , XXXXXXX      ,            A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC , XXXXXXX ,
+    XXXXXXX , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,            A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT , KC_BSLS ,
+    KC_LSFT , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA ,            KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE , KC_SLSH , KC_RSFT ,
+                                                              _______           , _______      , KC_SPACE , _______       , _______
   ),
 
   [_ADJUST] = LAYOUT_reviung41(
@@ -77,10 +77,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NAV] = LAYOUT_reviung41(
-    KC_DEL  , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19   ,           KC_PGUP       , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
-    _______ , KC_F17  , KC_F18  , KC_BML_LAYERC_TAB , KC_BML_LAYERA_TAB , KC_F20   ,           KC_PGDN       , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
-    _______ , C(KC_Z) , C(KC_X) , C(KC_C)           , C(KC_V)           , A(KC_F4) ,           XXXXXXX       , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
-                                                      _______           , KC_RGUI  , _______ , OSM(MOD_LGUI) , _______
+    KC_DEL            , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19   ,           KC_PGUP       , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
+    KC_BML_LAYERC_TAB , KC_F17  , KC_F18  , KC_BML_LAYERC_TAB , KC_BML_LAYERA_TAB , KC_F20   ,           KC_PGDN       , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
+    _______           , C(KC_Z) , C(KC_X) , C(KC_C)           , C(KC_V)           , A(KC_F4) ,           XXXXXXX       , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
+                                                                _______           , KC_RGUI  , _______ , OSM(MOD_LGUI) , _______
   ),
 
   [_FKEYS] = LAYOUT_reviung41(
