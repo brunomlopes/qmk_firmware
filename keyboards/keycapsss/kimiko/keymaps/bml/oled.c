@@ -109,6 +109,7 @@ static void print_status_narrow(void) {
     }
 
     oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n"), false);
 
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
         print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
@@ -129,6 +130,7 @@ static void print_status_narrow_right(void) {
     oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
     oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
+    oled_write_P(PSTR("CPWRD"), is_caps_word_on_mode);
 
     oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("\n"), false);
@@ -151,12 +153,15 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (is_keyboard_master()) {
         print_status_narrow();
     } else {
         print_status_narrow_right();
     }
+
+    return true;
+
 }
 
 
