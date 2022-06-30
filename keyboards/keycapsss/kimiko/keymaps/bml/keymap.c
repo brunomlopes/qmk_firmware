@@ -46,7 +46,7 @@ enum custom_keycodes {
 
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
 int right_rotary_current_mode = ROTARY_MODE_VOLUME;
-
+bool is_caps_word_on_mode = false;
 #define _T KC_TRANSPARENT
 
 #define KC_BML_TREMA RALT(KC_LBRC)
@@ -399,7 +399,7 @@ void housekeeping_task_user(void) {
     if(is_keyboard_master()){
         static uint32_t last_sync = 0;
         if(timer_elapsed32(last_sync)>500){
-            master_to_slave_t m2s = {left_rotary_current_mode,right_rotary_current_mode};
+            master_to_slave_t m2s = {left_rotary_current_mode,right_rotary_current_mode,is_caps_word_on()};
             if(transaction_rpc_send(USER_SYNC_ROTARY, sizeof(master_to_slave_t), &m2s)){
                 last_sync=timer_read32();
             }
@@ -423,5 +423,28 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM + 350;
         default:
             return TAPPING_TERM;
+    }
+}
+
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+        case KC_MINS:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+        case KC_SLSH:
+        case S(KC_SLSH):
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
     }
 }
