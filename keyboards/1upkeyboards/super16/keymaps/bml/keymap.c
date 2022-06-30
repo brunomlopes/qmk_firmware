@@ -47,6 +47,7 @@ extern rgblight_config_t rgblight_config;
 #define RUN_TO_LINE LCTL(KC_F10)
 #define ATTACH_TO   LALT(LCTL(KC_P))
 #define REATTACH_TO   LALT(LSFT(KC_P))
+#define VS_ONOFF_BREAKPOINT LCTL(KC_F9)
 #define TOGGLE_BREAKPOINT KC_F9
 #define VS_NAVIGATE_TO KC_F12
 
@@ -60,10 +61,10 @@ extern rgblight_config_t rgblight_config;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_VISUAL_STUDIO] = LAYOUT_ortho_4x4(
-    OSL(_LAYER_PICKER)           , STEP_OVER         , STEP_IN           , RUN_TO_LINE       ,
-    MO(_MEDIA)                   , VS_SHOW_HIERARCHY , STEP_OUT          , KC_NO             ,
-    MO(_OSX_WINDOW_MANAGER)      , VS_NAVIGATE_TO    , REATTACH_TO       , RUN               ,
-    LM(_WINDOW_MANAGER,MOD_LGUI) , ATTACH_TO         , RUN_WITHOUT_DEBUG , TOGGLE_BREAKPOINT
+    OSL(_LAYER_PICKER)           , STEP_OVER         , STEP_IN             , RUN_TO_LINE       ,
+    MO(_MEDIA)                   , VS_SHOW_HIERARCHY , STEP_OUT            , RUN_WITHOUT_DEBUG ,
+    MO(_OSX_WINDOW_MANAGER)      , VS_NAVIGATE_TO    , REATTACH_TO         , RUN               ,
+    LM(_WINDOW_MANAGER,MOD_LGUI) , ATTACH_TO         , VS_ONOFF_BREAKPOINT , TOGGLE_BREAKPOINT
   ),
 
   [_CHROME_DEBUGGER] = LAYOUT_ortho_4x4(
@@ -96,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_WINDOW_MANAGER] = LAYOUT_ortho_4x4(
     KC_TAB      , LCTL(KC_LEFT) , KC_F14    , LCTL(KC_RGHT)  ,
-    _______     , (KC_LEFT)     , KC_UP     , (KC_RGHT)      ,
+    KC_ESC      , (KC_LEFT)     , KC_UP     , (KC_RGHT)      ,
     OSL(_FKEYS) , LSFT(KC_LEFT) , KC_DOWN   , LSFT(KC_RIGHT) ,
     _______     , KC_MS_WH_LEFT , KC_ESCAPE , KC_MS_WH_RIGHT
   ),
