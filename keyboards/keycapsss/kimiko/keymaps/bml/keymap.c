@@ -36,6 +36,8 @@ enum custom_keycodes {
     KC_BML_HAT,
     KC_BML_TILDE,
 
+    KC_BML_FLAYER_FA,
+
     KC_BML_LAYERC_TAB,
     KC_BML_LAYERA_TAB,
 
@@ -74,12 +76,19 @@ int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    XXXXXXX              , KC_1 , KC_2    , KC_3    , KC_4    , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
-    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R    , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , KC_F    , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V    , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
-                                  KC_LCTL , KC_LALT , KC_LGUI , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_LALT
+    // |   XXXXXXX    | 1 |  2   |  3  |         4         |     5                           |                      |      6      |  7   |  8  |  9  |  0  |  MO(_HRMOD)   |
+    // | LALT| KC_ESC | Q |  W   |  E  |         R         |     T                           |                      |      Y      |  U   |  I  |  O  |  P  | LALT| KC_RBRC |
+    // | LCTL| KC_TAB | A |  S   |  D  | LT(_LOWERFN,KC_F) |     G                           |                      |      H      |  J   |  K  |  L  | ENT | LCTL| KC_BSPC |
+    // |     LSFT     | Z |  X   |  C  |         V         |     B      |      MS_BTN1       |    |      MUTE       |      N      |  M   |  ,  |  .  |  /  | OSM(MOD_RSFT) |
+    //                    | LCTL | ALT |        GUI        | MO(_LOWER) | LT(_SYMBOL,KC_ENT) |    | LT(_NAV,KC_SPC) | MO(_SYMBOL) | RCTL | GUI | ALT |
+
+    XXXXXXX              , KC_1 , KC_2    , KC_3    , KC_4              , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
+    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R              , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , LT(_LOWERFN,KC_F) , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
+    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V              , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
+                                  KC_LCTL , KC_LALT , KC_LGUI           , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_LALT
   ),
+
 
   [_HRMOD] = LAYOUT(
     _T , _T                 , _T                 , _T                 , _T                 , _T ,                _T , _T                 , _T                 , _T                 , _T                   , _T ,
@@ -104,13 +113,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2))  , KC_LCBR     , KC_LBRC , _______ ,      _______        , KC_NUBS     , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , MO(_HRMOD) ,
                         _______ , TG(_NUMPADALT) , TG(_NUMPAD) , _______ , KC_SPC  ,      TT(_METALAYER) , TT(_NUMPAD) , TT(_LOWERFN) , _______    , _______
   ),
-
+  // `fa` roll is common, and used to trigger the f layer and come out as 1, so just
   [_LOWERFN] = LAYOUT(
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX ,                          XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    KC_DEL  , KC_F1   , KC_F2   , KC_F3   , KC_F4        , KC_F5   ,                          KC_F6   , KC_F7        , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
-    KC_BSPC , KC_1    , KC_2    , KC_3    , KC_4         , KC_5    ,                          KC_6    , KC_7         , KC_8    , KC_9    , KC_0    , KC_F12  ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX , _______ ,      _______ , XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , _______ ,
-                        _______ , _______ , TT(_LOWERFN) , _______ , _______ ,      _______ , _______ , TT(_LOWERFN) , _______ , _______
+    XXXXXXX , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX ,                          XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    KC_DEL  , KC_F1             , KC_F2   , KC_F3   , KC_F4        , KC_F5   ,                          KC_F6   , KC_F7        , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
+    KC_BSPC , KC_BML_FLAYER_FA  , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX    ,                          KC_6    , KC_7         , KC_8    , KC_9    , KC_0    , KC_F12  ,
+    XXXXXXX , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX , _______ ,      _______ , XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , _______ ,
+                                  _______ , _______ , TG(_LOWERFN) , _______ , _______ ,      _______ , _______ , TT(_LOWERFN) , _______ , _______
   ),
 
   [_NAV] = LAYOUT(
@@ -261,6 +270,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 right_rotary_current_mode += 1;
             }
         }
+        break;
+    case KC_BML_FLAYER_FA:
+        if(record->event.pressed)
+            SEND_STRING(SS_TAP(X_F) SS_TAP(X_A));
         break;
     case KC_BML_ATILDE:
         if(record->event.pressed)
