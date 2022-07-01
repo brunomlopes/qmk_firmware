@@ -235,8 +235,14 @@ bool process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
 
 // this currently only supports control and alt. implementation can be slighly improved
 uint8_t unpress_mod_on_layer_change = 0;
+uint8_t mod_state;
+
+#define TAP_HEX_CODE4(a,b,c,d) register_code(KC_LALT);tap_code(a);tap_code(b);tap_code(c);tap_code(d);unregister_code(KC_LALT);
+#define TAP_HEX_CODE2(a,b) register_code(KC_LALT);tap_code(a);tap_code(b);unregister_code(KC_LALT);
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    mod_state = get_mods();
+
     bool keep_processing = true;
     keep_processing = process_repeat_key(keycode, record);
     // It's important to update the mod variables *after* calling process_repeat_key, or else
@@ -246,9 +252,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if(!keep_processing){
         return false;
-    }
 
     switch (keycode) {
+    }
     case ROTARY_MODE_LEFT:
         if (!record->event.pressed) {
             switch(left_rotary_current_mode){
@@ -276,28 +282,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING(SS_TAP(X_F) SS_TAP(X_A));
         break;
     case KC_BML_ATILDE:
-        if(record->event.pressed)
-            SEND_STRING(SS_TAP(X_BSLASH) SS_TAP(X_A));
+        if (record->event.pressed) {
+            if (mod_state && MOD_MASK_SHIFT) {
+                TAP_HEX_CODE4(KC_KP_0,KC_KP_1,KC_KP_9,KC_KP_5);
+            }else{
+                TAP_HEX_CODE4(KC_KP_0,KC_KP_2,KC_KP_2,KC_KP_7);
+            }
+        }
         break;
     case KC_BML_OTILDE:
-        if(record->event.pressed)
-            SEND_STRING(SS_TAP(X_BSLASH) SS_TAP(X_O));
+        if(record->event.pressed) {
+            if (mod_state && MOD_MASK_SHIFT) {
+                TAP_HEX_CODE4(KC_KP_0,KC_KP_2,KC_KP_1,KC_KP_3);
+            }else{
+                TAP_HEX_CODE4(KC_KP_0,KC_KP_2,KC_KP_4,KC_KP_5);
+            }
+        }
         break;
     case KC_BML_GRAVE:
-        if(record->event.pressed)
-            SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_RBRC) SS_UP(X_LSFT) SS_TAP(X_SPC));
+        if(record->event.pressed) {
+            TAP_HEX_CODE2(KC_KP_9,KC_KP_6);
+        }
         break;
     case KC_BML_ACUTE:
-        if(record->event.pressed)
-            SEND_STRING(SS_TAP(X_RBRC) SS_TAP(X_SPC));
+        if(record->event.pressed){
+            TAP_HEX_CODE4(KC_KP_0,KC_KP_1,KC_KP_8,KC_KP_0);
+        }
         break;
     case KC_BML_HAT:
-        if(record->event.pressed)
-            SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_BSLS) SS_UP(X_LSFT) SS_TAP(X_SPC));
+        if(record->event.pressed){
+            TAP_HEX_CODE2(KC_KP_9,KC_KP_4);
+        }
         break;
     case KC_BML_TILDE:
-        if(record->event.pressed)
-            SEND_STRING(SS_TAP(X_BSLS) SS_TAP(X_SPC));
+        if(record->event.pressed){
+            TAP_HEX_CODE4(KC_KP_0,KC_KP_1,KC_KP_5,KC_KP_2);
+        }
         break;
     case KC_BML_LAYERC_TAB:
         if(record->event.pressed){
