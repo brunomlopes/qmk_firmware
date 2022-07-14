@@ -212,7 +212,7 @@ void bml_set_layer_indicator(layer_state_t state){
         CHECK_LAYER_LED(highest_layer, _WINDOW_MANAGER, led_ix, 15);
 
         if(led_layer)
-            sethsv(219,65,100, (LED_TYPE *)&led[led_ix]);
+            sethsv(219,65,255, (LED_TYPE *)&led[led_ix]);
         else
             sethsv(255,255,0, (LED_TYPE *)&led[led_ix]);
     }
