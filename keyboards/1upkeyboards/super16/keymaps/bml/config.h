@@ -17,4 +17,5 @@
 #pragma once
 
 // place overrides here
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255
+
