@@ -14,4 +14,5 @@ void user_sync_a_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t o
     right_rotary_current_mode = m2s->m2s_rotary_right;
     left_rotary_current_mode = m2s->m2s_rotary_left;
     is_caps_word_on_mode = m2s->is_caps_word_on;
+    is_bml_spunderscore_active = m2s->is_spunderscore_on;
 }
