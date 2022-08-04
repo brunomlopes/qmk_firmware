@@ -13,3 +13,4 @@ extern int left_rotary_current_mode;
 
 // yeah, this should not be here
 extern bool is_caps_word_on_mode;
+extern bool is_bml_spunderscore_active;
