@@ -41,12 +41,17 @@ enum custom_keycodes {
     KC_BML_LAYERC_TAB,
     KC_BML_LAYERA_TAB,
 
+    KC_BML_SPUNDERSCORE,
+    KC_BML_TOGGLE_SPUNDERSCORE,
+
     REPEAT
 };
 
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
 int right_rotary_current_mode = ROTARY_MODE_VOLUME;
 bool is_caps_word_on_mode = false;
+bool is_bml_spunderscore_active = false;
+
 #define _T KC_TRANSPARENT
 
 #define KC_BML_TREMA RALT(KC_LBRC)
@@ -134,12 +139,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX , KC_EQL  ,
     KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , XXXXXXX ,
     KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                                 A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , KC_BSLS ,
-    KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX        , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_SLSH , KC_RSFT ,
+    KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX        , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_BML_TOGGLE_SPUNDERSCORE , KC_RSFT ,
                                         _______       , _______       , _______           , TT(_NUMPAD)  , XXXXXXX ,      TT(_METALAYER) , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
   ),
 
   [_NUMPAD] = LAYOUT(
-    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                          TG(_NUMPAD)    , ROTARY_MODE_LEFT , ROTARY_MODE_RIGHT , RGB_TOG , KC_CAPS , KC_NLCK ,
+    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                          TG(_NUMPAD)    , XXXXXXX          , KC_BML_TOGGLE_SPUNDERSCORE , RGB_TOG , KC_CAPS , KC_NLCK ,
     KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6       , KC_PAST     ,                          TG(_GAMING)    , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
     KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3       , KC_PMNS     ,                          TG(_HRMOD)     , XXXXXXX          , XXXXXXX           , KC_INS  , KC_DEL  , KC_BSPC ,
     XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT     , KC_PPLS     , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT)   , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
@@ -177,6 +182,7 @@ uint8_t repeat_count = 0;
 uint8_t repeat_mod_state;
 uint8_t repeat_oneshot_mod_state;
 bool repeat_is_counting = false;
+
 
 bool process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
     if (keycode != REPEAT) {
@@ -337,9 +343,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code(KC_TAB);
         }
         break;
+    case KC_BML_SPUNDERSCORE:
+        if(is_bml_spunderscore_active){
+            if(record->event.pressed){
+                tap_code16(S(KC_SLSH)); 
+            }
+        }else{
+            if(record->event.pressed){
+                register_code(KC_SPC);
+            }else{
+                unregister_code(KC_SPC);
+            }
+        }
+        break;
+    case LT(_NAV,KC_SPC):
+        if(is_bml_spunderscore_active && record->tap.count && record->event.pressed){ 
+            tap_code16(S(KC_SLSH)); 
+            return false; // ignore the rest
+        }
+        break;
+    case KC_BML_TOGGLE_SPUNDERSCORE:
+        if(record->event.pressed){
+            is_bml_spunderscore_active = !is_bml_spunderscore_active;
+        }
     }
     return true;
-
 };
 
 #ifdef RGBLIGHT_ENABLE
@@ -419,7 +447,7 @@ void housekeeping_task_user(void) {
     if(is_keyboard_master()){
         static uint32_t last_sync = 0;
         if(timer_elapsed32(last_sync)>500){
-            master_to_slave_t m2s = {left_rotary_current_mode,right_rotary_current_mode,is_caps_word_on()};
+            master_to_slave_t m2s = {left_rotary_current_mode,right_rotary_current_mode,is_caps_word_on(),is_bml_spunderscore_active};
             if(transaction_rpc_send(USER_SYNC_ROTARY, sizeof(master_to_slave_t), &m2s)){
                 last_sync=timer_read32();
             }
