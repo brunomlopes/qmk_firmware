@@ -131,6 +131,7 @@ static void print_status_narrow_right(void) {
     oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
     oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
     oled_write_P(PSTR("CPWRD"), is_caps_word_on_mode);
+    oled_write_P(PSTR("_"), is_bml_spunderscore_active);
 
     oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR("\n"), false);
