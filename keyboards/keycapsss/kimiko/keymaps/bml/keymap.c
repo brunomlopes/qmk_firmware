@@ -81,21 +81,26 @@ bool is_bml_spunderscore_active = false;
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    // |   XXXXXXX    | 1 |  2   |  3  |         4         |     5                           |                      |      6      |  7   |  8  |  9  |  0  |  MO(_HRMOD)   |
+    // |     MUTE     | 1 |  2   |  3  |         4         |     5                           |                      |      6      |  7   |  8  |  9  |  0  |  MO(_HRMOD)   |
     // | LALT| KC_ESC | Q |  W   |  E  |         R         |     T                           |                      |      Y      |  U   |  I  |  O  |  P  | LALT| KC_RBRC |
     // | LCTL| KC_TAB | A |  S   |  D  | LT(_LOWERFN,KC_F) |     G                           |                      |      H      |  J   |  K  |  L  | ENT | LCTL| KC_BSPC |
     // |     LSFT     | Z |  X   |  C  |         V         |     B      |      MS_BTN1       |    |      MUTE       |      N      |  M   |  ,  |  .  |  /  | OSM(MOD_RSFT) |
     //                    | LCTL | ALT |        GUI        | MO(_LOWER) | LT(_SYMBOL,KC_ENT) |    | LT(_NAV,KC_SPC) | MO(_SYMBOL) | RCTL | GUI | ALT |
 
-    KC_MUTE              , KC_1 , KC_2    , KC_3    , KC_4              , KC_5       ,                                             KC_6        , KC_7    , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
-    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R              , KC_T       ,                                             KC_Y        , KC_U    , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , LT(_LOWERFN,KC_F) , KC_G       ,                                             KC_H        , KC_J    , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V              , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
-                                  KC_LCTL , KC_LALT , KC_LGUI           , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL , KC_RGUI , KC_LALT
+    KC_MUTE              , KC_1 , KC_2    , KC_3    , KC_4              , KC_5       ,                                             KC_6        , KC_7              , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
+    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R              , KC_T       ,                                             KC_Y        , KC_U              , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , LT(_LOWERFN,KC_F) , KC_G       ,                                             KC_H        , LT(_LOWERFN,KC_J) , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
+    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V              , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M              , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
+                                  KC_LCTL , KC_LALT , KC_LGUI           , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL           , KC_RGUI , KC_LALT
   ),
 
-
   [_HRMOD] = LAYOUT(
+    // | _T |     _T     |     _T     |     _T     |     _T     | _T      |         | _T |     _T     |     _T     |     _T     |      _T      | _T |
+    // | _T |     _T     |     _T     |     _T     |     _T     | _T      |         | _T |     _T     |     _T     |     _T     |      _T      | _T |
+    // | _T | LGUI| KC_A | LALT| KC_S | LSFT| KC_D | LCTL| KC_F | _T      |         | _T | RCTL| KC_J | RSFT| KC_K | LALT| KC_L | RGUI| KC_ENT | _T |
+    // | _T |     _T     |     _T     |     _T     |     _T     | _T | _T |    | _T | _T |     _T     |     _T     |     _T     |      _T      | _T |
+    //                   |     _T     |     _T     |     _T     | _T | _T |    | _T | _T |     _T     |     _T     |     _T     |
+
     _T , _T                 , _T                 , _T                 , _T                 , _T ,                _T , _T                 , _T                 , _T                 , _T                   , _T ,
     _T , _T                 , _T                 , _T                 , _T                 , _T ,                _T , _T                 , _T                 , _T                 , _T                   , _T ,
     _T , MT(MOD_LGUI, KC_A) , MT(MOD_LALT, KC_S) , MT(MOD_LSFT, KC_D) , MT(MOD_LCTL, KC_F) , _T ,                _T , MT(MOD_RCTL, KC_J) , MT(MOD_RSFT, KC_K) , MT(MOD_LALT, KC_L) , MT(MOD_RGUI, KC_ENT) , _T ,
@@ -104,6 +109,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_GAMING] = LAYOUT(
+    // | 5 | ESC  |  1   |  2  |  3   |  4                |               |      6      |       7        |  8  |  9  | 0 |  -   |
+    // | T | TAB  |  Q   |  W  |  E   |  R                |               |      Y      |       U        |  I  |  O  | P |  }   |
+    // | G | LSFT |  A   |  S  |  D   |  F                |               |      H      |       J        |  K  |  L  | \ | BSPC |
+    // | B |  `   |  Z   |  X  |  C   |  V  | TG(_GAMING) |    |   MUTE   |      N      |       M        |  ,  |  .  | / | RSFT |
+    //            | LCTL | ALT | LCTL | SPC |     ENT     |    | MO(_NAV) | MO(_SYMBOL) | TT(_METALAYER) | GUI | ALT |
+
     KC_5 , KC_ESC  , KC_1    , KC_2    , KC_3    , KC_4   ,                               KC_6        , KC_7           , KC_8    , KC_9    , KC_0    , KC_MINS ,
     KC_T , KC_TAB  , KC_Q    , KC_W    , KC_E    , KC_R   ,                               KC_Y        , KC_U           , KC_I    , KC_O    , KC_P    , KC_RBRC ,
     KC_G , KC_LSFT , KC_A    , KC_S    , KC_D    , KC_F   ,                               KC_H        , KC_J           , KC_K    , KC_L    , KC_BSLS , KC_BSPC ,
@@ -111,47 +122,83 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                      KC_LCTL , KC_LALT , KC_LCTL , KC_SPC , KC_ENT      ,      MO(_NAV) , MO(_SYMBOL) , TT(_METALAYER) , KC_RGUI , KC_RALT
   ),
 
-[_LOWER] = LAYOUT(
-    KC_DEL  , KC_F1   , KC_F2   , KC_F3          , KC_F4       , KC_F5   ,                                 KC_F6       , KC_F7   , KC_F8      , KC_F9     , KC_F10     , KC_F11     ,
-    KC_BSPC , KC_1    , KC_2    , KC_3           , KC_4        , KC_5    ,                                 KC_6        , KC_7    , KC_8       , KC_9      , KC_0       , KC_F12     ,
-    KC_TILD , KC_EXLM , KC_AT   , KC_HASH        , KC_DLR      , KC_PERC ,                                 KC_CIRC     , KC_AMPR , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______    ,
-    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2))  , KC_LCBR     , KC_LBRC , _______ ,      _______        , KC_NUBS     , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , MO(_HRMOD) ,
+  [_LOWER] = LAYOUT(
+    // | DEL  | F1 |   F2    |       F3       |     F4      |   F5              |                     |     F6      |      F7      |   F8    |   F9    | F10  |    F11     |
+    // | BSPC | 1  |    2    |       3        |      4      |    5              |                     |      6      |      7       |    8    |    9    |  0   |    F12     |
+    // |  ~   | !  |    @    |       #        |      $      |    %              |                     |    CIRC     |      &       |  ASTR   |    (    |  )   |  _______   |
+    // |  `   | _  |    -    |    ALGR(2)     |    LCBR     |    {    | _______ |    |    _______     |      \      |      )       |  S(\)   |  S(.)   | S(/) | MO(_HRMOD) |
+    //             | _______ | TG(_NUMPADALT) | TG(_NUMPAD) | _______ |   SPC   |    | TT(_METALAYER) | TT(_NUMPAD) | TT(_LOWERFN) | _______ | _______ |
+
+    KC_DEL  , KC_F1   , KC_F2   , KC_F3          , KC_F4       , KC_F5   ,                                 KC_F6       , KC_F7        , KC_F8      , KC_F9     , KC_F10     , KC_F11     ,
+    KC_BSPC , KC_1    , KC_2    , KC_3           , KC_4        , KC_5    ,                                 KC_6        , KC_7         , KC_8       , KC_9      , KC_0       , KC_F12     ,
+    KC_TILD , KC_EXLM , KC_AT   , KC_HASH        , KC_DLR      , KC_PERC ,                                 KC_CIRC     , KC_AMPR      , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______    ,
+    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2))  , KC_LCBR     , KC_LBRC , _______ ,      _______        , KC_NUBS     , KC_RPRN      , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , MO(_HRMOD) ,
                         _______ , TG(_NUMPADALT) , TG(_NUMPAD) , _______ , KC_SPC  ,      TT(_METALAYER) , TT(_NUMPAD) , TT(_LOWERFN) , _______    , _______
   ),
-  // `fa` roll is common, and used to trigger the f layer and come out as 1, so just
+
   [_LOWERFN] = LAYOUT(
-    XXXXXXX , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX ,                          XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    KC_DEL  , KC_F1             , KC_F2   , KC_F3   , KC_F4        , KC_F5   ,                          KC_F6   , KC_F7        , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
-    KC_BSPC , KC_BML_FLAYER_FA  , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX    ,                          KC_6    , KC_7         , KC_8    , KC_9    , KC_0    , KC_F12  ,
-    XXXXXXX , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX , _______ ,      _______ , XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , _______ ,
-                                  _______ , _______ , TG(_LOWERFN) , _______ , _______ ,      _______ , _______ , TT(_LOWERFN) , _______ , _______
+    // | XXXXXXX |    XXXXXXX    | XXXXXXX | XXXXXXX |   XXXXXXX    | XXXXXXX           |              | XXXXXXX |   XXXXXXX    | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // |   DEL   |      F1       |   F2    |   F3    |      F4      |   F5              |              |   F6    |      F7      |   F8    |   F9    |   F10   |   F11   |
+    // |  BSPC   | BML_FLAYER_FA | XXXXXXX | XXXXXXX |   XXXXXXX    | XXXXXXX           |              |    6    |      7       |    8    |    9    |    0    |   F12   |
+    // | XXXXXXX |    XXXXXXX    | XXXXXXX | XXXXXXX |   XXXXXXX    | XXXXXXX | _______ |    | _______ | XXXXXXX |   XXXXXXX    | XXXXXXX | XXXXXXX | XXXXXXX | _______ |
+    //                           | _______ | _______ | TG(_LOWERFN) | _______ | _______ |    | _______ | _______ | TT(_LOWERFN) | _______ | _______ |
+
+    XXXXXXX , XXXXXXX          , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX ,                          XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    KC_DEL  , KC_F1            , KC_F2   , KC_F3   , KC_F4        , KC_F5   ,                          KC_F6   , KC_F7        , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
+    KC_BSPC , KC_BML_FLAYER_FA , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX ,                          KC_6    , KC_7         , KC_8    , KC_9    , KC_0    , KC_F12  ,
+    XXXXXXX , XXXXXXX          , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX , _______ ,      _______ , XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , _______ ,
+                                 _______ , _______ , TG(_LOWERFN) , _______ , _______ ,      _______ , _______ , TT(_LOWERFN) , _______ , _______
   ),
 
   [_NAV] = LAYOUT(
+    // |   ESC   | XXXXXXX | XXXXXXX | XXXXXXX |   A(F4)   | XXXXXXX           |              |   APP   |  PSCR   |  C(^)   | XXXXXXX | XXXXXXX |  PAUS   |
+    // | _______ |   INS   |  PSCR   | XXXXXXX | ALGR(TAB) |  BTN5             |              |  PGUP   |  HOME   |    ^    |   END   | C(DEL)  | C(BSPC) |
+    // | _______ | XXXXXXX | XXXXXXX | XXXXXXX |  XXXXXXX  |  BTN4             |              |  PGDN   |   <-    |    v    |   ->    |   DEL   |  BSPC   |
+    // | _______ |  C(Z)   |  C(X)   |  C(C)   |   C(V)    | XXXXXXX | _______ |    | _______ | XXXXXXX |  C(<-)  |  C(v)   |  C(->)  | XXXXXXX | _______ |
+    //                     | _______ | _______ |  _______  | _______ | _______ |    | _______ |   ENT   | _______ | _______ | _______ |
+
     KC_ESC  , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4)        , XXXXXXX ,                          KC_APP  , KC_PSCR    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , KC_PAUS    ,
-    _______ , KC_INS  , KC_PSCR , XXXXXXX , A(ALGR(KC_TAB)) , XXXXXXX ,                          KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
-    _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX         , XXXXXXX ,                          KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
+    _______ , KC_INS  , KC_PSCR , XXXXXXX , A(ALGR(KC_TAB)) , KC_BTN5 ,                          KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
+    _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX         , KC_BTN4 ,                          KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
     _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX , _______ ,      _______ , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
                         _______ , _______ , _______         , _______ , _______ ,      _______ , KC_ENT  , _______    , _______    , _______
   ),
 
   [_SYMBOL] = LAYOUT(
-    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX , KC_EQL  ,
-    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC , XXXXXXX ,
-    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                                 A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT , KC_BSLS ,
+    // |     A(F4)      |   F13   |    F14     |   F15   |      F16       |     F19               |                     | XXXXXXX |  MPRV   |   MPLY    |     MNXT      |         XXXXXXX         |    =    |
+    // |      TAB       |   F17   |    F18     | ALGR(E) | BML_LAYERA_TAB |     F20               |                     | ALGR(8) | ALGR(9) | BML_ACUTE |   BML_GRAVE   |            {            | XXXXXXX |
+    // | BML_LAYERC_TAB | ALGR(2) |  XXXXXXX   |    :    |      S(,)      |    S(.)               |                     | ALGR(7) | ALGR(0) |   ASTR    |       (       |            '            |    \    |
+    // |      LSFT      | XXXXXXX | BML_ATILDE |    ;    |   BML_OTILDE   |  BML_TREMA  | XXXXXXX |    |    XXXXXXX     |    \    |  S(\)   |  BML_HAT  |   BML_TILDE   | BML_TOGGLE_SPUNDERSCORE |  RSFT   |
+    //                            |  _______   | _______ |    _______     | TT(_NUMPAD) | XXXXXXX |    | TT(_METALAYER) | XXXXXXX | _______ |  _______  | OSM(MOD_RALT) |
+
+    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX                    , KC_EQL  ,
+    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC                    , XXXXXXX ,
+    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                                 A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT                    , KC_BSLS ,
     KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX        , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_BML_TOGGLE_SPUNDERSCORE , KC_RSFT ,
                                         _______       , _______       , _______           , TT(_NUMPAD)  , XXXXXXX ,      TT(_METALAYER) , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
   ),
 
   [_NUMPAD] = LAYOUT(
-    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                          TG(_NUMPAD)    , XXXXXXX          , KC_BML_TOGGLE_SPUNDERSCORE , RGB_TOG , KC_CAPS , KC_NLCK ,
-    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6       , KC_PAST     ,                          TG(_GAMING)    , XXXXXXX          , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
-    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3       , KC_PMNS     ,                          TG(_HRMOD)     , XXXXXXX          , XXXXXXX           , KC_INS  , KC_DEL  , KC_BSPC ,
-    XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT     , KC_PPLS     , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT)   , XXXXXXX           , XXXXXXX , XXXXXXX , XXXXXXX ,
-                        _______ , _______ , TG(_NUMPAD) , TT(_NUMPAD) , _______ ,      _______ , _______        , _______          , _______           , _______
+    // |  BSPC   | ^  |   #7    |   #8    |     #9      |     #/                |              |  TG(_NUMPAD)   |    XXXXXXX     | BML_TOGGLE_SPUNDERSCORE | RGB_TOG |  CAPS   |  NLCK   |
+    // |   <-    | -> |   #4    |   #5    |     #6      |     #*                |              |  TG(_GAMING)   |    XXXXXXX     |         XXXXXXX         | XXXXXXX | XXXXXXX | XXXXXXX |
+    // |   DEL   | v  |   #1    |   #2    |     #3      |     #-                |              |   TG(_HRMOD)   |    XXXXXXX     |         XXXXXXX         |   INS   |   DEL   |  BSPC   |
+    // | XXXXXXX | ,  |   #0    |  PDOT   |     #⮠      |     #+      |  RESET  |    | XXXXXXX | TG(_NUMPADALT) | TT(_NUMPADALT) |         XXXXXXX         | XXXXXXX | XXXXXXX | XXXXXXX |
+    //                | _______ | _______ | TG(_NUMPAD) | TT(_NUMPAD) | _______ |    | _______ |    _______     |    _______     |         _______         | _______ |
+
+    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                          TG(_NUMPAD)    , XXXXXXX        , KC_BML_TOGGLE_SPUNDERSCORE , RGB_TOG , KC_CAPS , KC_NLCK ,
+    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6       , KC_PAST     ,                          TG(_GAMING)    , XXXXXXX        , XXXXXXX                    , XXXXXXX , XXXXXXX , XXXXXXX ,
+    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3       , KC_PMNS     ,                          TG(_HRMOD)     , XXXXXXX        , XXXXXXX                    , KC_INS  , KC_DEL  , KC_BSPC ,
+    XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT     , KC_PPLS     , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX                    , XXXXXXX , XXXXXXX , XXXXXXX ,
+                        _______ , _______ , TG(_NUMPAD) , TT(_NUMPAD) , _______ ,      _______ , _______        , _______        , _______                    , _______
   ),
 
   [_NUMPADALT] = LAYOUT(
+    // | BSPC | <- |    ^    |       v        |   ->    |   #/              |              |    XXXXXXX     | XXXXXXX |  C(^)   | XXXXXXX | XXXXXXX | XXXXXXX |
+    // | DEL  | #1 |   #2    |       #3       |   #4    |   #*              |              |      PGUP      |  HOME   |    ^    |   END   | C(DEL)  | C(BSPC) |
+    // |  #0  | #5 |   #6    |       #7       |   #8    |   #-              |              |      PGDN      |   <-    |    v    |   ->    |   DEL   |  BSPC   |
+    // |  ,   | #9 |   #0    |      PDOT      |   #⮠    |   #+    | XXXXXXX |    | XXXXXXX | TG(_NUMPADALT) |  C(<-)  |  C(v)   |  C(->)  | XXXXXXX | XXXXXXX |
+    //             | _______ | TG(_NUMPADALT) | _______ | _______ | _______ |    | _______ |    _______     | _______ | _______ | _______ |
+
     KC_BSPC , KC_LEFT , KC_UP   , KC_DOWN        , KC_RGHT , KC_PSLS ,                          XXXXXXX        , XXXXXXX    , C(KC_UP)   , XXXXXXX    , XXXXXXX   , XXXXXXX    ,
     KC_DEL  , KC_P1   , KC_P2   , KC_P3          , KC_P4   , KC_PAST ,                          KC_PGUP        , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
     KC_P0   , KC_P5   , KC_P6   , KC_P7          , KC_P8   , KC_PMNS ,                          KC_PGDN        , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
@@ -160,12 +207,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_METALAYER] = LAYOUT(
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX               |              |  TG(_NUMPAD)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX               |              |  TG(_GAMING)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX               |              |   TG(_HRMOD)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX     |  RESET  |    | XXXXXXX | TG(_NUMPADALT) | TT(_NUMPADALT) | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    //                     | _______ | _______ | _______ | TT(_METALAYER) | _______ |    | _______ |    _______     |    _______     | _______ | _______ |
+
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_NUMPAD)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_GAMING)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_HRMOD)     , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
                         _______ , _______ , _______ , TT(_METALAYER) , _______ ,      _______ , _______        , _______        , _______ , _______
   ),
+
 
 };
 
@@ -346,7 +400,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_BML_SPUNDERSCORE:
         if(is_bml_spunderscore_active){
             if(record->event.pressed){
-                tap_code16(S(KC_SLSH)); 
+                tap_code16(S(KC_SLSH));
             }
         }else{
             if(record->event.pressed){
@@ -357,8 +411,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
     case LT(_NAV,KC_SPC):
-        if(is_bml_spunderscore_active && record->tap.count && record->event.pressed){ 
-            tap_code16(S(KC_SLSH)); 
+        if(is_bml_spunderscore_active && record->tap.count && record->event.pressed){
+            tap_code16(S(KC_SLSH));
             return false; // ignore the rest
         }
         break;
