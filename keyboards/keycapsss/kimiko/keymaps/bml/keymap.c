@@ -82,17 +82,17 @@ bool is_bml_spshift_active = false;
 */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-    // |     MUTE     | 1 |  2   |  3  |         4         |     5                           |                      |      6      |  7   |  8  |  9  |  0  |  MO(_HRMOD)   |
-    // | LALT| KC_ESC | Q |  W   |  E  |         R         |     T                           |                      |      Y      |  U   |  I  |  O  |  P  | LALT| KC_RBRC |
-    // | LCTL| KC_TAB | A |  S   |  D  | LT(_LOWERFN,KC_F) |     G                           |                      |      H      |  J   |  K  |  L  | ENT | LCTL| KC_BSPC |
-    // |     LSFT     | Z |  X   |  C  |         V         |     B      |      MS_BTN1       |    |      MUTE       |      N      |  M   |  ,  |  .  |  /  | OSM(MOD_RSFT) |
-    //                    | LCTL | ALT |        GUI        | MO(_LOWER) | LT(_SYMBOL,KC_ENT) |    | LT(_NAV,KC_SPC) | MO(_SYMBOL) | RCTL | GUI | ALT |
+    // |     MUTE     | 1 |  2   |  3  |         4         |        5                              |                      |      6      |         7         |  8  |  9  |  0  |  MO(_HRMOD)   |
+    // | LALT| KC_ESC | Q |  W   |  E  |         R         |        T                              |                      |      Y      |         U         |  I  |  O  |  P  | LALT| KC_RBRC |
+    // | LCTL| KC_TAB | A |  S   |  D  | LT(_LOWERFN,KC_F) | LT(_LEFTFN,KC_G)                      |                      |      H      | LT(_LOWERFN,KC_J) |  K  |  L  | ENT | LCTL| KC_BSPC |
+    // |     LSFT     | Z |  X   |  C  |         V         |        B         |      MS_BTN1       |    |      MUTE       |      N      |         M         |  ,  |  .  |  /  | OSM(MOD_RSFT) |
+    //                    | LCTL | ALT |        GUI        |    MO(_LOWER)    | LT(_SYMBOL,KC_ENT) |    | LT(_NAV,KC_SPC) | MO(_SYMBOL) |       RCTL        | GUI | ALT |
 
-    KC_MUTE              , KC_1 , KC_2    , KC_3    , KC_4              , KC_5       ,                                             KC_6        , KC_7              , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
-    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R              , KC_T       ,                                             KC_Y        , KC_U              , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , LT(_LOWERFN,KC_F) , KC_G       ,                                             KC_H        , LT(_LOWERFN,KC_J) , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V              , KC_B       , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M              , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
-                                  KC_LCTL , KC_LALT , KC_LGUI           , MO(_LOWER) , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL           , KC_RGUI , KC_LALT
+    KC_MUTE              , KC_1 , KC_2    , KC_3    , KC_4              , KC_5             ,                                             KC_6        , KC_7              , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
+    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R              , KC_T             ,                                             KC_Y        , KC_U              , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , LT(_LOWERFN,KC_F) , LT(_LEFTFN,KC_G) ,                                             KC_H        , LT(_LOWERFN,KC_J) , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
+    KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V              , KC_B             , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M              , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
+                                  KC_LCTL , KC_LALT , KC_LGUI           , MO(_LOWER)       , LT(_SYMBOL,KC_ENT) ,      LT(_NAV,KC_SPC) , MO(_SYMBOL) , KC_RCTL           , KC_RGUI , KC_LALT
   ),
 
   [_HRMOD] = LAYOUT(
@@ -151,6 +151,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______ , _______ , TG(_LOWERFN) , _______ , _______ ,      _______ , _______ , TT(_LOWERFN) , _______ , _______
   ),
 
+  [_LEFTFN] = LAYOUT(
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |   XXXXXXX    | XXXXXXX           |              | XXXXXXX |   XXXXXXX    | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // |   DEL   |   F1    |   F2    |   F3    |      F4      | XXXXXXX           |              |   F6    |      F7      |   F8    |   F9    |   F10   |   F11   |
+    // |  BSPC   |   F5    |   F6    |   F7    |      F8      | XXXXXXX           |              |    6    |      7       |    8    |    9    |    0    |   F12   |
+    // | XXXXXXX |   F9    |   F10   |   F11   |     F12      | XXXXXXX | _______ |    | _______ | XXXXXXX |   XXXXXXX    | XXXXXXX | XXXXXXX | XXXXXXX | _______ |
+    //                     | _______ | _______ | TG(_LOWERFN) | _______ | _______ |    | _______ | _______ | TT(_LOWERFN) | _______ | _______ |
+
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX      , XXXXXXX ,                          XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    KC_DEL  , KC_F1   , KC_F2   , KC_F3   , KC_F4        , XXXXXXX ,                          KC_F6   , KC_F7        , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
+    KC_BSPC , KC_F5   , KC_F6   , KC_F7   , KC_F8        , XXXXXXX ,                          KC_6    , KC_7         , KC_8    , KC_9    , KC_0    , KC_F12  ,
+    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12       , XXXXXXX , _______ ,      _______ , XXXXXXX , XXXXXXX      , XXXXXXX , XXXXXXX , XXXXXXX , _______ ,
+                        _______ , _______ , TG(_LOWERFN) , _______ , _______ ,      _______ , _______ , TT(_LOWERFN) , _______ , _______
+  ),
+
   [_NAV] = LAYOUT(
     // |   ESC   | XXXXXXX | XXXXXXX | XXXXXXX |   A(F4)   | XXXXXXX           |              |   APP   |  PSCR   |  C(^)   | XXXXXXX | XXXXXXX |  PAUS   |
     // | _______ |   INS   |  PSCR   | XXXXXXX | ALGR(TAB) |  BTN5             |              |  PGUP   |  HOME   |    ^    |   END   | C(DEL)  | C(BSPC) |
@@ -166,15 +180,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_SYMBOL] = LAYOUT(
-    // |     A(F4)      |   F13   |    F14     |   F15   |      F16       |     F19               |                     | XXXXXXX |  MPRV   |   MPLY    |     MNXT      |         XXXXXXX         |    =    |
-    // |      TAB       |   F17   |    F18     | ALGR(E) | BML_LAYERA_TAB |     F20               |                     | ALGR(8) | ALGR(9) | BML_ACUTE |   BML_GRAVE   |            {            | XXXXXXX |
-    // | BML_LAYERC_TAB | ALGR(2) |  XXXXXXX   |    :    |      S(,)      |    S(.)               |                     | ALGR(7) | ALGR(0) |   ASTR    |       (       |            '            |    \    |
-    // |      LSFT      | XXXXXXX | BML_ATILDE |    ;    |   BML_OTILDE   |  BML_TREMA  | XXXXXXX |    |    XXXXXXX     |    \    |  S(\)   |  BML_HAT  |   BML_TILDE   | BML_TOGGLE_SPUNDERSCORE |  RSFT   |
+    // |     A(F4)      |   F13   |    F14     |   F15   |      F16       |     F19               |                     | XXXXXXX |  MPRV   |   MPLY    |     MNXT      |         XXXXXXX         |         =          |
+    // |      TAB       |   F17   |    F18     | ALGR(E) | BML_LAYERA_TAB |     F20               |                     | ALGR(8) | ALGR(9) | BML_ACUTE |   BML_GRAVE   |            {            |      XXXXXXX       |
+    // | BML_LAYERC_TAB | ALGR(2) |  XXXXXXX   |    :    |      S(,)      |    S(.)               |                     | ALGR(7) | ALGR(0) |   ASTR    |       (       |            '            |         \          |
+    // |      LSFT      | XXXXXXX | BML_ATILDE |    ;    |   BML_OTILDE   |  BML_TREMA  | XXXXXXX |    |    XXXXXXX     |    \    |  S(\)   |  BML_HAT  |   BML_TILDE   | BML_TOGGLE_SPUNDERSCORE | BML_TOGGLE_SPSHIFT |
     //                            |  _______   | _______ |    _______     | TT(_NUMPAD) | XXXXXXX |    | TT(_METALAYER) | XXXXXXX | _______ |  _______  | OSM(MOD_RALT) |
 
-    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX                    , KC_EQL  ,
-    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC                    , XXXXXXX ,
-    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                                 A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT                    , KC_BSLS ,
+    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX                    , KC_EQL                ,
+    KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,                                 A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE  , KC_LBRC                    , XXXXXXX               ,
+    KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,                                 A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN       , KC_QUOT                    , KC_BSLS               ,
     KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA , XXXXXXX ,      XXXXXXX        , KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE  , KC_BML_TOGGLE_SPUNDERSCORE , KC_BML_TOGGLE_SPSHIFT ,
                                         _______       , _______       , _______           , TT(_NUMPAD)  , XXXXXXX ,      TT(_METALAYER) , XXXXXXX       , _______       , _______      , OSM(MOD_RALT)
   ),
@@ -220,6 +234,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
                         _______ , _______ , _______ , TT(_METALAYER) , _______ ,      _______ , _______        , _______        , _______ , _______
   ),
+
 
 
 };
@@ -525,6 +540,8 @@ void suspend_power_down_user(void){
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(_NAV,KC_SPC):
+            return TAPPING_TERM + 350;
+        case LT(_LEFTFN,KC_G):
             return TAPPING_TERM + 350;
         default:
             return TAPPING_TERM;
