@@ -53,8 +53,7 @@ static void print_status_narrow(void) {
 
     int highest_layer = get_highest_layer(layer_state);
     // Print current mode
-    oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n\n"), false);
 
     oled_write_P(PSTR("HRMOD"), IS_LAYER_ON(_HRMOD));
     // helper for hrmods
@@ -62,9 +61,8 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("A"),(get_mods() & MOD_MASK_ALT));
     oled_write_P(PSTR("S"),(get_mods() & MOD_MASK_SHIFT));
     oled_write_P(PSTR("C"),(get_mods() & MOD_MASK_CTRL));
-    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n\n"), false);
 
-    oled_write_P(PSTR("\n"), false);
     // Print current layer
     oled_write_P(PSTR("_"), false);
     if(highest_layer < 10){
@@ -85,6 +83,9 @@ static void print_status_narrow(void) {
             break;
         case _LOWERFN:
             oled_write_P(PSTR("lfunc"), false);
+            break;
+        case _LEFTFN:
+            oled_write_P(PSTR("<- fn"), false);
             break;
         case _NAV:
             oled_write_P(PSTR("nav  "), false);
@@ -108,8 +109,7 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("undef"), false);
     }
 
-    oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n\n"), false);
 
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
         print_rotary_mode(ROTARY_MODE_HORIZONTAL_MOVE);
@@ -117,8 +117,6 @@ static void print_status_narrow(void) {
         print_rotary_mode(left_rotary_current_mode);
     }
 
-    oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
 
 }
 
@@ -126,28 +124,20 @@ static void print_status_narrow_right(void) {
     const char *newline = newline;
     led_t led_usb_state = host_keyboard_led_state();
 
-    oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n\n"), false);
     oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);
     oled_write_P(PSTR("NMLCK"), led_usb_state.num_lock);
     oled_write_P(PSTR("CPWRD"), is_caps_word_on_mode);
     oled_write_P(PSTR("_"), is_bml_spunderscore_active);
     oled_write_P(PSTR("^"), is_bml_spshift_active);
 
-    oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
+    oled_write_P(PSTR("\n\n\n"), false);
 
     if(IS_LAYER_ON(ROTARY_MOUSE_MODE_LAYER)){
         print_rotary_mode(ROTARY_MODE_VERTICAL_MOVE);
     }else{
         print_rotary_mode(right_rotary_current_mode);
 
-    oled_write_P(PSTR("\n"), false);
-    oled_write_P(PSTR("\n"), false);
-
-
-    oled_write_P(PSTR("\n"), false);
     }
 }
 
