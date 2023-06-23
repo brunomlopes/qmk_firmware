@@ -44,7 +44,7 @@ enum custom_keycodes {
     KC_BML_TOGGLE_SPUNDERSCORE,
     KC_BML_TOGGLE_SPSHIFT,
 
-    REPEAT
+    KC_BML_DOUBLE_CTRL
 };
 
 int left_rotary_current_mode = ROTARY_MODE_VERTICAL_SCROLL;
@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // |     LSFT     | Z |  X   |  C  |         V         |        B         |      MS_BTN1       |    |      MUTE       |      N      |         M         |  ,  |  .  |  /  | OSM(MOD_RSFT) |
     //                    | LCTL | ALT |        GUI        |    MO(_LOWER)    | LT(_SYMBOL,KC_ENT) |    | LT(_NAV,KC_SPC) | MO(_SYMBOL) |       RCTL        | GUI | ALT |
 
-    KC_MUTE              , KC_1 , KC_2    , KC_3    , KC_4              , KC_5             ,                                             KC_6        , KC_7              , KC_8    , KC_9    , KC_0    , MO(_HRMOD)            ,
+    KC_MUTE              , KC_1 , KC_2    , KC_3    , KC_4              , KC_5             ,                                             KC_6        , KC_7              , KC_8    , KC_9    , KC_0    , KC_BML_DOUBLE_CTRL    ,
     MT(MOD_LALT, KC_ESC) , KC_Q , KC_W    , KC_E    , KC_R              , KC_T             ,                                             KC_Y        , KC_U              , KC_I    , KC_O    , KC_P    , MT(MOD_LALT, KC_RBRC) ,
     MT(MOD_LCTL, KC_TAB) , KC_A , KC_S    , KC_D    , LT(_LOWERFN,KC_F) , LT(_LEFTFN,KC_G) ,                                             KC_H        , LT(_LOWERFN,KC_J) , KC_K    , KC_L    , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
     KC_LSFT              , KC_Z , KC_X    , KC_C    , KC_V              , KC_B             , KC_MS_BTN1         ,      KC_MUTE         , KC_N        , KC_M              , KC_COMM , KC_DOT  , KC_SLSH , OSM(MOD_RSFT)         ,
@@ -243,70 +243,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Used to extract the basic tapping keycode from a dual-role key.
 // Example: GET_TAP_KC(MT(MOD_RSFT, KC_E)) == KC_E
 #define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
-uint16_t repeat_last_keycode = KC_NO;
-uint8_t repeat_last_modifier = 0;
-uint8_t repeat_count = 0;
-
-// Initialize variables holding the bitfield
-// representation of active modifiers.
-uint8_t repeat_mod_state;
-uint8_t repeat_oneshot_mod_state;
-bool repeat_is_counting = false;
-
-
-bool process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
-    if (keycode != REPEAT) {
-        repeat_last_modifier = repeat_oneshot_mod_state > repeat_mod_state ? repeat_oneshot_mod_state : repeat_mod_state;
-
-        switch (keycode) {
-            case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
-            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-                if (record->event.pressed) {
-                    repeat_last_keycode = GET_TAP_KC(keycode);
-                }
-                break;
-            case KC_1 ... KC_9:
-                if(repeat_is_counting && record->event.pressed){
-                    repeat_count *= 10;
-                    repeat_count += keycode - (KC_1-1);
-                    return false;
-                }
-                break;
-            case KC_0:
-                if(repeat_is_counting && record->event.pressed){
-                    repeat_count *= 10;
-                    return false;
-                }
-                break;
-            default:
-                if(record->event.pressed){
-                    repeat_last_keycode = keycode;
-                }
-            break;
-        }
-    } else { // keycode == REPEAT
-
-        if (record->event.pressed) {
-            repeat_is_counting = true;
-            repeat_count=0;
-        } else {
-            repeat_is_counting = false;
-            if(repeat_count>0){
-                register_mods(repeat_last_modifier);
-                for (size_t i = 0; i < repeat_count; i++)
-                {
-                    tap_code16(repeat_last_keycode);
-                }
-                unregister_mods(repeat_last_modifier);
-            } else {
-                register_mods(repeat_last_modifier);
-                tap_code16(repeat_last_keycode);
-                unregister_mods(repeat_last_modifier);
-            }
-        }
-    }
-    return true;
-}
 
 
 // this currently only supports control and alt. implementation can be slighly improved
@@ -318,17 +254,7 @@ uint8_t mod_state;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
-
-    bool keep_processing = true;
-    keep_processing = process_repeat_key(keycode, record);
-    // It's important to update the mod variables *after* calling process_repeat_key, or else
-    // only a single modifier from the previous key is repeated (e.g. Ctrl+Shift+T then Repeat produces Shift+T)
-    repeat_mod_state = get_mods();
-    repeat_oneshot_mod_state = get_oneshot_mods();
-
-    if(!keep_processing){
-        return false;
-    }
+    
 
     switch (keycode) {
     case ROTARY_MODE_LEFT:
@@ -356,6 +282,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_BML_FLAYER_FA:
         if(record->event.pressed)
             SEND_STRING(SS_TAP(X_F) SS_TAP(X_A));
+        break;
+    case KC_BML_DOUBLE_CTRL:
+        if (record->event.pressed) {
+            tap_code16(KC_LCTL);
+            tap_code16(KC_LCTL);
+        }
         break;
     case KC_BML_ATILDE:
         if (record->event.pressed) {
