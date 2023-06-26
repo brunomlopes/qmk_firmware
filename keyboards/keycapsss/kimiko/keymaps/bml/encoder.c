@@ -65,7 +65,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 break;
             }
         }
-        return true;
+        return false;
     }
 
     // Sometimes the cursor sticks in front of the text,
@@ -85,7 +85,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 THRICE(tap_code(KC_MS_DOWN));
             }
         }
-        return true;
+        return false;
     }
 
     switch(*current_mode_pointer) {
@@ -125,7 +125,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             }
             break;
     }
-    return true;
+    return false;
 }
 
 #endif

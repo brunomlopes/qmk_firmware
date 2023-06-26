@@ -194,17 +194,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NUMPAD] = LAYOUT(
-    // |  BSPC   | ^  |   #7    |   #8    |     #9      |     #/                |              |  TG(_NUMPAD)   |    XXXXXXX     | BML_TOGGLE_SPUNDERSCORE | RGB_TOG |  CAPS   |  NLCK   |
-    // |   <-    | -> |   #4    |   #5    |     #6      |     #*                |              |  TG(_GAMING)   |    XXXXXXX     |         XXXXXXX         | XXXXXXX | XXXXXXX | XXXXXXX |
-    // |   DEL   | v  |   #1    |   #2    |     #3      |     #-                |              |   TG(_HRMOD)   |    XXXXXXX     |         XXXXXXX         |   INS   |   DEL   |  BSPC   |
-    // | XXXXXXX | ,  |   #0    |  PDOT   |     #⮠      |     #+      |  RESET  |    | XXXXXXX | TG(_NUMPADALT) | TT(_NUMPADALT) |         XXXXXXX         | XXXXXXX | XXXXXXX | XXXXXXX |
-    //                | _______ | _______ | TG(_NUMPAD) | TT(_NUMPAD) | _______ |    | _______ |    _______     |    _______     |         _______         | _______ |
+    // |  BSPC   | ^  |   #7    |   #8    |     #9      |     #/                      |                |  TG(_NUMPAD)   |    XXXXXXX     | BML_TOGGLE_SPUNDERSCORE | RGB_TOG |  CAPS   |  NLCK   |
+    // |   <-    | -> |   #4    |   #5    |     #6      |     #*                      |                |  TG(_GAMING)   |    XXXXXXX     |         XXXXXXX         | XXXXXXX | XXXXXXX | XXXXXXX |
+    // |   DEL   | v  |   #1    |   #2    |     #3      |     #-                      |                |   TG(_HRMOD)   |    XXXXXXX     |         XXXXXXX         |   INS   |   DEL   |  BSPC   |
+    // | XXXXXXX | ,  |   #0    |  PDOT   |     #⮠      |     #+      | QK_BOOTLOADER |    | QK_REBOOT | TG(_NUMPADALT) | TT(_NUMPADALT) |         XXXXXXX         | XXXXXXX | XXXXXXX | XXXXXXX |
+    //                | _______ | _______ | TG(_NUMPAD) | TT(_NUMPAD) |    _______    |    |  _______  |    _______     |    _______     |         _______         | _______ |                    
 
-    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                          TG(_NUMPAD)    , XXXXXXX        , KC_BML_TOGGLE_SPUNDERSCORE , RGB_TOG , KC_CAPS , KC_NLCK ,
-    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6       , KC_PAST     ,                          TG(_GAMING)    , XXXXXXX        , XXXXXXX                    , XXXXXXX , XXXXXXX , XXXXXXX ,
-    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3       , KC_PMNS     ,                          TG(_HRMOD)     , XXXXXXX        , XXXXXXX                    , KC_INS  , KC_DEL  , KC_BSPC ,
-    XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT     , KC_PPLS     , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX                    , XXXXXXX , XXXXXXX , XXXXXXX ,
-                        _______ , _______ , TG(_NUMPAD) , TT(_NUMPAD) , _______ ,      _______ , _______        , _______        , _______                    , _______
+    KC_BSPC , KC_UP   , KC_P7   , KC_P8   , KC_P9       , KC_PSLS     ,                                  TG(_NUMPAD)    , XXXXXXX        , KC_BML_TOGGLE_SPUNDERSCORE , RGB_TOG , KC_CAPS , KC_NUM  ,
+    KC_LEFT , KC_RGHT , KC_P4   , KC_P5   , KC_P6       , KC_PAST     ,                                  TG(_GAMING)    , XXXXXXX        , XXXXXXX                    , XXXXXXX , XXXXXXX , XXXXXXX ,
+    KC_DEL  , KC_DOWN , KC_P1   , KC_P2   , KC_P3       , KC_PMNS     ,                                  TG(_HRMOD)     , XXXXXXX        , XXXXXXX                    , KC_INS  , KC_DEL  , KC_BSPC ,
+    XXXXXXX , KC_COMM , KC_P0   , KC_PDOT , KC_PENT     , KC_PPLS     , QK_BOOTLOADER ,      QK_REBOOT , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX                    , XXXXXXX , XXXXXXX , XXXXXXX ,
+                        _______ , _______ , TG(_NUMPAD) , TT(_NUMPAD) , _______       ,      _______   , _______        , _______        , _______                    , _______                     
   ),
 
   [_NUMPADALT] = LAYOUT(
@@ -222,20 +222,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_METALAYER] = LAYOUT(
-    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX               |              |  TG(_NUMPAD)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
-    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX               |              |  TG(_GAMING)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
-    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX               |              |   TG(_HRMOD)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
-    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX     |  RESET  |    | XXXXXXX | TG(_NUMPADALT) | TT(_NUMPADALT) | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
-    //                     | _______ | _______ | _______ | TT(_METALAYER) | _______ |    | _______ |    _______     |    _______     | _______ | _______ |
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX                     |                |  TG(_NUMPAD)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX                     |                |  TG(_GAMING)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX                     |                |   TG(_HRMOD)   |    XXXXXXX     | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    // | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |    XXXXXXX     | QK_BOOTLOADER |    | QK_REBOOT | TG(_NUMPADALT) | TT(_NUMPADALT) | XXXXXXX | XXXXXXX | XXXXXXX | XXXXXXX |
+    //                     | _______ | _______ | _______ | TT(_METALAYER) |    _______    |    |  _______  |    _______     |    _______     | _______ | _______ |                    
 
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_NUMPAD)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_GAMING)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                          TG(_HRMOD)     , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        , RESET   ,      XXXXXXX , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-                        _______ , _______ , _______ , TT(_METALAYER) , _______ ,      _______ , _______        , _______        , _______ , _______
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                                  TG(_NUMPAD)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                                  TG(_GAMING)    , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        ,                                  TG(_HRMOD)     , XXXXXXX        , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX        , QK_BOOTLOADER ,      QK_REBOOT , TG(_NUMPADALT) , TT(_NUMPADALT) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+                        _______ , _______ , _______ , TT(_METALAYER) , _______       ,      _______   , _______        , _______        , _______ , _______                     
   ),
-
-
 
 };
 
@@ -335,8 +333,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_BML_LAYERC_TAB:
         if(record->event.pressed){
             if(!(get_mods() & MOD_MASK_CTRL)){
-                register_code(KC_LCTRL);
-                unpress_mod_on_layer_change |= MOD_BIT(KC_LCTRL);
+                register_code(KC_LCTL);
+                unpress_mod_on_layer_change |= MOD_BIT(KC_LCTL);
             }
             tap_code(KC_TAB);
         }
@@ -421,16 +419,16 @@ void keyboard_post_init_user(void){
     rgblight_enable_noeeprom();
     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 
-    rgblight_sethsv_noeeprom_white();
+    rgblight_sethsv_noeeprom(HSV_WHITE);
     #endif
     transaction_register_rpc(USER_SYNC_ROTARY, user_sync_a_slave_handler);
     bml_set_layer_indicator(default_layer_state);
 }
 
 layer_state_t layer_state_set_user(layer_state_t state){
-    if (unpress_mod_on_layer_change & MOD_BIT(KC_LCTRL)){
-        unregister_code(KC_LCTRL);
-        unpress_mod_on_layer_change ^= MOD_BIT(KC_LCTRL);
+    if (unpress_mod_on_layer_change & MOD_BIT(KC_LCTL)){
+        unregister_code(KC_LCTL);
+        unpress_mod_on_layer_change ^= MOD_BIT(KC_LCTL);
     }
     if (unpress_mod_on_layer_change & MOD_BIT(KC_LALT)){
         unregister_code(KC_LALT);
@@ -440,7 +438,7 @@ layer_state_t layer_state_set_user(layer_state_t state){
     if(IS_LAYER_ON_STATE(state, _NUMPAD)){
         led_t led_usb_state = host_keyboard_led_state();
         if(!led_usb_state.num_lock){
-            tap_code(KC_NLCK);
+            tap_code(KC_NUM);
         }
     }
     bml_set_layer_indicator(state);
