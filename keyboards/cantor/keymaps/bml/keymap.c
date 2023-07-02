@@ -16,7 +16,7 @@ enum layers {
 };
 
 enum custom_keycodes {
-    KC_BML_ATILDE,
+    KC_BML_ATILDE = SAFE_RANGE,
     KC_BML_OTILDE,
     KC_BML_GRAVE,
     KC_BML_ACUTE,
@@ -49,10 +49,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LOWER] = LAYOUT_split_3x6_3(
-    KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,      KC_6         , KC_7      , KC_8       , KC_9      , KC_0       , KC_F12  ,
-    KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR  , KC_PERC ,      KC_CIRC      , KC_AMPR   , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______ ,
-    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC ,      KC_NUBS      , KC_RPRN   , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , _______ ,
-                                  TG(_NUMPAD)   , _______ , KC_SPC  ,      TT(_LOWERFN) , MO(_META) , _______                                       
+    KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,      KC_6     , KC_7      , KC_8       , KC_9      , KC_0       , KC_F12  ,
+    KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR  , KC_PERC ,      KC_CIRC  , KC_AMPR   , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______ ,
+    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC ,      KC_NUBS  , KC_RPRN   , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , _______ ,
+                                  _______       , _______ , KC_SPC  ,      _______  , MO(_META) , _______                                       
   ),
 
   [_LOWERFN] = LAYOUT_split_3x6_3(
