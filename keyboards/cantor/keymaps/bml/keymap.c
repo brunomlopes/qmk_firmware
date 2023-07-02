@@ -15,6 +15,22 @@ enum layers {
   _METALAYER
 };
 
+enum blender_keycode {
+    KC_BML_OTILDE = SAFE_RANGE,  
+    KC_BML_ATILDE, 
+    KC_BML_TILDE,
+    KC_BML_ACUTE,
+    KC_BML_HAT,
+    KC_BML_TOGGLE_SPSHIFT,
+    KC_BML_TOGGLE_SPUNDERSCORE,
+    KC_BML_FLAYER_FA,
+    KC_BML_GRAVE,
+    KC_BML_TREMA,
+    KC_BML_LAYERC_TAB,
+    KC_BML_LAYERA_TAB,
+};
+
+
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -32,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_LOWER] = LAYOUT_split_3x6_3(
     KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,      KC_6         , KC_7    , KC_8       , KC_9      , KC_0       , KC_F12     ,
     KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR  , KC_PERC ,      KC_CIRC      , KC_AMPR , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______    ,
-    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC ,      KC_NUBS      , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , MO(_HRMOD) ,
+    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC ,      KC_NUBS      , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , _______    ,
                                   TG(_NUMPAD)   , _______ , KC_SPC  ,      TT(_LOWERFN) , _______ , _______                                          
   ),
 
@@ -49,11 +65,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX ,      XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
                                   _______ , _______         , _______ ,      _______ , _______    , _______                                          
   ),
-      [_SYMBOL] = LAYOUT(
+      [_SYMBOL] = LAYOUT_split_3x6_3(
 //    A(KC_F4)          , KC_F13        , KC_F14        , KC_F15        , KC_F16            , KC_F19       ,                                 XXXXXXX       , KC_MPRV       , KC_MPLY      , KC_MNXT       , XXXXXXX                    , KC_EQL                ,
     KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E))         , KC_BML_LAYERA_TAB , KC_F20       ,      A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC      , XXXXXXX                    ,
     KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN               , S(KC_COMM)        , S(KC_DOT)    ,      A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT      , KC_BSLS                    ,
     KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN               , KC_BML_OTILDE     , KC_BML_TREMA ,                      KC_NUBS       , S(KC_NUBS)   , KC_BML_HAT   , KC_BML_TILDE , KC_BML_TOGGLE_SPUNDERSCORE ,
-                                                        KC_BML_TOGGLE_SPSHIFT , _______           , _______      ,      _______       , _______       , _______      
+                                                        KC_BML_TOGGLE_SPSHIFT , _______           , _______      ,      _______       , _______       , _______      , _______      
   ),
 };
