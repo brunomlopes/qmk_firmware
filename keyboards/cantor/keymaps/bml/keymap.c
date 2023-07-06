@@ -17,6 +17,7 @@ enum layers {
   _NAV,
   _SYMBOL,
   _SYMBOL_MAC,
+  _MACRO,
   _NUMPAD,
   _NUMPADALT,
   _META
@@ -53,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E    , KC_R              , KC_T   ,      KC_Y             , KC_U        , KC_I    , KC_O   , KC_P    , KC_RBRC               ,
     MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D    , LT(_LOWERFN,KC_F) , KC_G   ,      KC_H             , KC_J        , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
     KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V              , KC_B   ,      KC_N             , KC_M        , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
-                                         KC_LGUI , MO(_LOWER)        , KC_ENT ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_RALT                                            
+                                         KC_LGUI , MO(_LOWER)        , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_RALT                                            
   ),
 
   [_LOWER] = LAYOUT_split_3x6_3(
@@ -71,10 +72,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LOWERFN] = LAYOUT_split_3x6_3(
-    KC_DEL  , KC_F1            , KC_F2   , KC_F3   , KC_F4   , KC_F5   ,      KC_F6   , KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
-    KC_BSPC , KC_BML_FLAYER_FA , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,      KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_F12  ,
-    XXXXXXX , XXXXXXX          , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,      _______ , _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-                                           XXXXXXX , _______ , _______ ,      _______ , _______ , _______                               
+    KC_DEL  , KC_F1            , KC_F2   , KC_F3   , KC_F4   , KC_F5    ,      KC_F6   , KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
+    KC_BSPC , KC_BML_FLAYER_FA , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  ,      KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_F12  ,
+    XXXXXXX , XXXXXXX          , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4) ,      _______ , _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+                                           XXXXXXX , _______ , _______  ,      _______ , _______ , _______                               
   ),
 
   [_NAV] = LAYOUT_split_3x6_3(
@@ -101,6 +102,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______ , _______ , _______ , _______ , _______ , _______ ,      A(S(KC_8)) , A(S(KC_9)) , _______ , _______ , _______ , _______   ,
     _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
                                   _______ , _______ , _______ ,      _______ , _______ , _______                                 
+  ),
+
+  [_MACRO] = LAYOUT_split_3x6_3(
+    A(KC_F4)          , KC_F13  , KC_F14  , KC_F15        , KC_F16            , KC_F19  ,      _______ , _______ , _______ , _______ , _______ , _______ ,
+    KC_BML_LAYERC_TAB , KC_F17  , KC_F18  , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20  ,      _______ , _______ , _______ , _______ , _______ , _______ ,
+    _______           , _______ , _______ , _______       , _______           , _______ ,      _______ , _______ , _______ , _______ , _______ , _______ ,
+                                            _______       , _______           , _______ ,      _______ , _______ , _______                               
   ),
 
   [_META] = LAYOUT_split_3x6_3(
@@ -134,6 +142,23 @@ layer_state_t layer_state_add_paired(layer_state_t state, uint8_t original_layer
 }
 
 layer_state_t layer_state_set_user(layer_state_t state){
+
+    if (unpress_mod_on_layer_change & MOD_BIT(KC_LCTL)){
+        unregister_code(KC_LCTL);
+        unpress_mod_on_layer_change ^= MOD_BIT(KC_LCTL);
+    }
+    if (unpress_mod_on_layer_change & MOD_BIT(KC_LALT)){
+        unregister_code(KC_LALT);
+        unpress_mod_on_layer_change ^= MOD_BIT(KC_LALT);
+    }
+    // if by any chance we switch to the numpad layer and numlock is off, turn it on
+    if(IS_LAYER_ON_STATE(state, _NUMPAD)){
+        led_t led_usb_state = host_keyboard_led_state();
+        if(!led_usb_state.num_lock){
+            tap_code(KC_NUM);
+        }
+    }
+
     os_variant_t detected_os = detected_host_os();
     
     if(detected_os == OS_MACOS||detected_os == OS_IOS){
@@ -271,3 +296,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 };
+
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(_NAV,KC_SPC):
+        case LT(_LOWERFN,KC_F):
+        case LT(_LEFTFN,KC_G):
+        case LT(_SYMBOL,KC_ENT):
+            return TAPPING_TERM + 350;
+        default:
+            return TAPPING_TERM;
+    }
+}
