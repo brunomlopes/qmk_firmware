@@ -1,1 +1,3 @@
 SERIAL_DRIVER = usart
+
+OS_DETECTION_ENABLE  = yes
