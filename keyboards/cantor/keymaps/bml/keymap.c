@@ -46,35 +46,31 @@ enum custom_keycodes {
 #define KC_BML_TREMA RALT(KC_LBRC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    // | LALT| KC_ESC | Q | W |    E     |     R      |  T  |    |  Y  |      U      |  I  | O |  P  |       }       |
-    // | LCTL| KC_TAB | A | S |    D     |     F      |  G  |    |  H  |      J      |  K  | L | ENT | LCTL| KC_BSPC |
-    // |     LSFT     | Z | X |    C     |     V      |  B  |    |  N  |      M      |  ,  | . |  /  |     RSFT      |
-    //                        | MOD_LGUI | MO(_LOWER) | ENT |    | SPC | MO(_SYMBOL) | ALT |                          
   [_BASE] = LAYOUT_split_3x6_3(
-    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E    , KC_R              , KC_T   ,      KC_Y             , KC_U        , KC_I    , KC_O   , KC_P    , KC_RBRC               ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D    , LT(_LOWERFN,KC_F) , KC_G   ,      KC_H             , KC_J        , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V              , KC_B   ,      KC_N             , KC_M        , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
-                                         KC_LGUI , MO(_LOWER)        , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_RALT                                            
+    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E    , KC_R              , KC_T               ,      KC_Y             , KC_U        , KC_I    , KC_O   , KC_P    , KC_RBRC               ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D    , LT(_LOWERFN,KC_F) , KC_G               ,      KC_H             , KC_J        , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
+    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V              , KC_B               ,      KC_N             , KC_M        , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
+                                         KC_LGUI , MO(_LOWER)        , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_LALT                                            
   ),
 
   [_LOWER] = LAYOUT_split_3x6_3(
     KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,      KC_6     , KC_7      , KC_8       , KC_9      , KC_0       , KC_F12  ,
     KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR  , KC_PERC ,      KC_CIRC  , KC_AMPR   , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______ ,
     KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC ,      KC_NUBS  , KC_RPRN   , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , _______ ,
-                                  _______       , _______ , KC_SPC  ,      _______  , MO(_META) , _______                                       
+                                  KC_LCTL       , _______ , KC_SPC  ,      _______  , MO(_META) , _______                                       
   ),
 
   [_LOWER_MAC] = LAYOUT_split_3x6_3(
-    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
-    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
-    _______ , _______ , _______ , _______ , S(KC_EQL) , KC_EQL ,      _______ , _______ , _______ , _______ , _______ , _______   ,
-                                  _______ , _______ , _______ ,      _______ , _______ , _______                                 
+    _______ , _______ , _______ , _______ , _______   , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , _______   , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , S(KC_EQL) , KC_EQL  ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+                                  _______ , _______   , _______ ,      _______ , _______ , _______
   ),
 
   [_LOWERFN] = LAYOUT_split_3x6_3(
     KC_DEL  , KC_F1            , KC_F2   , KC_F3   , KC_F4   , KC_F5    ,      KC_F6   , KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
-    KC_BSPC , KC_BML_FLAYER_FA , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  ,      KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_F12  ,
-    XXXXXXX , XXXXXXX          , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4) ,      _______ , _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    KC_BSPC , KC_BML_FLAYER_FA , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  ,      KC_1    , KC_2    , KC_3    , KC_4    , KC_5    , KC_F12  ,
+    KC_TAB  , XXXXXXX          , XXXXXXX , XXXXXXX , XXXXXXX , A(KC_F4) ,      KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_DOT  ,
                                            XXXXXXX , _______ , _______  ,      _______ , _______ , _______                               
   ),
 
@@ -105,10 +101,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_MACRO] = LAYOUT_split_3x6_3(
-    A(KC_F4)          , KC_F13  , KC_F14  , KC_F15        , KC_F16            , KC_F19  ,      _______ , _______ , _______ , _______ , _______ , _______ ,
-    KC_BML_LAYERC_TAB , KC_F17  , KC_F18  , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20  ,      _______ , _______ , _______ , _______ , _______ , _______ ,
-    _______           , _______ , _______ , _______       , _______           , _______ ,      _______ , _______ , _______ , _______ , _______ , _______ ,
-                                            _______       , _______           , _______ ,      _______ , _______ , _______                               
+    A(KC_F4)          , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19        ,      _______ , _______ , _______ , _______ , _______ , _______ ,
+    KC_BML_LAYERC_TAB , KC_F17  , KC_F18  , KC_WH_U           , KC_BML_LAYERA_TAB , KC_F20        ,      _______ , _______ , _______ , _______ , _______ , _______ ,
+    XXXXXXX           , XXXXXXX , XXXXXXX , KC_WH_D           , XXXXXXX           , KC_AUDIO_MUTE ,      _______ , _______ , _______ , _______ , _______ , _______ ,
+                                            KC_AUDIO_VOL_DOWN , KC_AUDIO_VOL_UP   , _______       ,      _______ , _______ , _______                               
   ),
 
   [_META] = LAYOUT_split_3x6_3(
