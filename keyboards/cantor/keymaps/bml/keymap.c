@@ -3,13 +3,20 @@
 
 #include QMK_KEYBOARD_H
 
+#ifdef OS_DETECTION_ENABLE
+#    include "os_detection.h"
+#endif
+
+
 enum layers {
   _BASE,
   _LOWER,
+  _LOWER_MAC,
   _LOWERFN,
   _LEFTFN,
   _NAV,
   _SYMBOL,
+  _SYMBOL_MAC,
   _NUMPAD,
   _NUMPADALT,
   _META
@@ -55,6 +62,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   _______       , _______ , KC_SPC  ,      _______  , MO(_META) , _______                                       
   ),
 
+  [_LOWER_MAC] = LAYOUT_split_3x6_3(
+    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , _______ , KC_EQL  ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+                                  _______ , _______ , _______ ,      _______ , _______ , _______                                 
+  ),
+
   [_LOWERFN] = LAYOUT_split_3x6_3(
     KC_DEL  , KC_F1            , KC_F2   , KC_F3   , KC_F4   , KC_F5   ,      KC_F6   , KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  ,
     KC_BSPC , KC_BML_FLAYER_FA , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,      KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_F12  ,
@@ -81,6 +95,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                         _______       , MO(_META)         , _______      ,      _______       , _______       , _______                                                                          
   ),
 
+  [_SYMBOL_MAC] = LAYOUT_split_3x6_3(
+    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+                                  _______ , _______ , _______ ,      _______ , _______ , _______                                 
+  ),
+
   [_META] = LAYOUT_split_3x6_3(
     QK_BOOTLOADER , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , QK_REBOOT ,
     _______       , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
@@ -102,10 +123,25 @@ bool is_bml_spshift_active = false;
 #define TAP_HEX_CODE4(a,b,c,d) register_code(KC_LALT);tap_code(a);tap_code(b);tap_code(c);tap_code(d);unregister_code(KC_LALT);
 #define TAP_HEX_CODE2(a,b) register_code(KC_LALT);tap_code(a);tap_code(b);unregister_code(KC_LALT);
 
+layer_state_t layer_state_set_user(layer_state_t state){
+    os_variant_t detected_os = detected_host_os();
+
+    if(detected_os == OS_MACOS){
+        if(IS_LAYER_ON_STATE(state, _LOWER)){
+            layer_on(_LOWER_MAC);
+        }else{
+            layer_off(_LOWER_MAC);
+        }
+    }
+
+    return state;
+}
+
+// {}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods(); 
-    
+    //os_variant_t detected_os = detected_host_os();
 
     switch (keycode) {
     case KC_BML_FLAYER_FA:
