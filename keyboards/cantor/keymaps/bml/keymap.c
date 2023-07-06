@@ -38,7 +38,8 @@ enum custom_keycodes {
     KC_BML_TOGGLE_SPUNDERSCORE,
     KC_BML_TOGGLE_SPSHIFT,
 
-    KC_BML_DOUBLE_CTRL
+    KC_BML_DOUBLE_CTRL,
+    KC_BML_SHOW_OS
 };
 
 #define KC_BML_TREMA RALT(KC_LBRC)
@@ -65,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_LOWER_MAC] = LAYOUT_split_3x6_3(
     _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
     _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
-    _______ , _______ , _______ , _______ , _______ , KC_EQL  ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , S(KC_EQL) , KC_EQL ,      _______ , _______ , _______ , _______ , _______ , _______   ,
                                   _______ , _______ , _______ ,      _______ , _______ , _______                                 
   ),
 
@@ -97,15 +98,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOL_MAC] = LAYOUT_split_3x6_3(
     _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
-    _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______ , _______ , _______ , _______ , _______ , _______ ,      A(S(KC_8)) , A(S(KC_9)) , _______ , _______ , _______ , _______   ,
     _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
                                   _______ , _______ , _______ ,      _______ , _______ , _______                                 
   ),
 
   [_META] = LAYOUT_split_3x6_3(
-    QK_BOOTLOADER , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , QK_REBOOT ,
-    _______       , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
-    _______       , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    QK_BOOTLOADER  , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , QK_REBOOT ,
+    KC_BML_SHOW_OS , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
+    _______        , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______   ,
                                         _______ , _______ , _______ ,      _______ , _______ , _______                                 
   ),
 };
@@ -123,15 +124,21 @@ bool is_bml_spshift_active = false;
 #define TAP_HEX_CODE4(a,b,c,d) register_code(KC_LALT);tap_code(a);tap_code(b);tap_code(c);tap_code(d);unregister_code(KC_LALT);
 #define TAP_HEX_CODE2(a,b) register_code(KC_LALT);tap_code(a);tap_code(b);unregister_code(KC_LALT);
 
+layer_state_t layer_state_add_paired(layer_state_t state, uint8_t original_layer, uint8_t paired_layer){
+    if(IS_LAYER_ON_STATE(state, original_layer)){
+        state = state | ((layer_state_t)1 << paired_layer);
+    }else{
+        state = state &  ~((layer_state_t)1 << paired_layer);
+    }
+    return state;
+}
+
 layer_state_t layer_state_set_user(layer_state_t state){
     os_variant_t detected_os = detected_host_os();
-
-    if(detected_os == OS_MACOS){
-        if(IS_LAYER_ON_STATE(state, _LOWER)){
-            layer_on(_LOWER_MAC);
-        }else{
-            layer_off(_LOWER_MAC);
-        }
+    
+    if(detected_os == OS_MACOS||detected_os == OS_IOS){
+        state = layer_state_add_paired(state, _LOWER, _LOWER_MAC);
+        state = layer_state_add_paired(state, _SYMBOL, _SYMBOL_MAC);
     }
 
     return state;
@@ -141,7 +148,7 @@ layer_state_t layer_state_set_user(layer_state_t state){
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods(); 
-    //os_variant_t detected_os = detected_host_os();
+    os_variant_t detected_os = detected_host_os();
 
     switch (keycode) {
     case KC_BML_FLAYER_FA:
@@ -215,6 +222,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code(KC_TAB);
         }
         break;
+    case KC_BML_SHOW_OS:
+        if(record->event.pressed){
+            switch (detected_os)
+            {
+            case OS_UNSURE:
+                SEND_STRING("OS detection: UNSURE\n");
+                break;
+            case OS_MACOS:
+                SEND_STRING("OS detection: OSX\n");
+                break;
+            case OS_WINDOWS:
+                SEND_STRING("OS detection: WINDOWS\n");
+                break;
+            case OS_LINUX:
+                SEND_STRING("OS detection: LINUX\n");
+                break;
+            case OS_IOS:
+                SEND_STRING("OS detection: IOS\n");
+                break;
+            default:
+                SEND_STRING("OS detection: unknown:'");
+                send_byte(detected_os);
+                SEND_STRING("' \n");
+                break;
+            }
+        }    
     case LT(_NAV,KC_SPC):
         if(is_bml_spunderscore_active && record->tap.count && record->event.pressed){
             tap_code16(S(KC_SLSH));
