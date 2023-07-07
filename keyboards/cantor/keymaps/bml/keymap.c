@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______ , KC_INS  , KC_PAUS , KC_APP  , A(KC_F4)        , KC_BTN5 ,      KC_PGUP , KC_HOME    , KC_UP      , KC_END     , C(KC_DEL) , C(KC_BSPC) ,
     _______ , XXXXXXX , XXXXXXX , KC_PSCR , A(ALGR(KC_TAB)) , KC_BTN4 ,      KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
     _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX ,      XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
-                                  _______ , _______         , _______ ,      _______ , _______    , _______                                          
+                                  _______ , _______         , _______ ,      _______ , MO(_MACRO) , _______                                          
   ),
 
   [_SYMBOL] = LAYOUT_split_3x6_3(
@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB            , KC_F17        , KC_F18        , A(ALGR(KC_E)) , KC_BML_LAYERA_TAB , KC_F20       ,      A(ALGR(KC_8)) , A(ALGR(KC_9)) , KC_BML_ACUTE , KC_BML_GRAVE , KC_LBRC                    , XXXXXXX               ,
     KC_BML_LAYERC_TAB , A(ALGR(KC_2)) , XXXXXXX       , KC_COLN       , S(KC_COMM)        , S(KC_DOT)    ,      A(ALGR(KC_7)) , A(ALGR(KC_0)) , KC_ASTR      , KC_LPRN      , KC_QUOT                    , KC_BSLS               ,
     KC_LSFT           , XXXXXXX       , KC_BML_ATILDE , KC_SCLN       , KC_BML_OTILDE     , KC_BML_TREMA ,      KC_NUBS       , S(KC_NUBS)    , KC_BML_HAT   , KC_BML_TILDE , KC_BML_TOGGLE_SPUNDERSCORE , KC_BML_TOGGLE_SPSHIFT ,
-                                                        _______       , MO(_META)         , _______      ,      _______       , _______       , _______                                                                          
+                                                        _______       , MO(_META)         , _______      ,      MO(_MACRO)    , _______       , _______                                                                          
   ),
 
   [_SYMBOL_MAC] = LAYOUT_split_3x6_3(
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_MACRO] = LAYOUT_split_3x6_3(
-    A(KC_F4)          , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19        ,      _______ , _______ , _______ , _______ , _______ , _______ ,
+    A(KC_F4)          , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19        ,      _______ , KC_MPRV , KC_MPLY , KC_MNXT , _______ , _______ ,
     KC_BML_LAYERC_TAB , KC_F17  , KC_F18  , KC_WH_U           , KC_BML_LAYERA_TAB , KC_F20        ,      _______ , _______ , _______ , _______ , _______ , _______ ,
     XXXXXXX           , XXXXXXX , XXXXXXX , KC_WH_D           , XXXXXXX           , KC_AUDIO_MUTE ,      _______ , _______ , _______ , _______ , _______ , _______ ,
                                             KC_AUDIO_VOL_DOWN , KC_AUDIO_VOL_UP   , _______       ,      _______ , _______ , _______                               
