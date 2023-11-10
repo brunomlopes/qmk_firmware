@@ -76,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUMPADALT] = LAYOUT_split_3x6_3(
     XXXXXXX , KC_BSPC , KC_7 , KC_8   , KC_9    , XXXXXXX ,      KC_BSPC , KC_7   , KC_8    , KC_9 , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_TAB  , KC_4 , KC_5   , KC_6    , XXXXXXX ,      KC_TAB  , KC_4   , KC_5    , KC_6 , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_TAB  , KC_4 , KC_5   , KC_6    , XXXXXXX ,      KC_TAB  , KC_4   , KC_5    , KC_6 , XXXXXXX , KC_BSPC ,
     XXXXXXX , KC_0    , KC_1 , KC_2   , KC_3    , KC_DOT  ,      KC_0    , KC_1   , KC_2    , KC_3 , KC_DOT  , XXXXXXX ,
                                KC_DOT , KC_COMM , KC_BSPC ,      XXXXXXX , KC_DOT , KC_COMM                            
   ),
@@ -111,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_MACRO] = LAYOUT_split_3x6_3(
     A(KC_F4)           , KC_F13  , KC_F14  , KC_F15            , KC_F16            , KC_F19        ,      KC_AUDIO_VOL_UP   , KC_MPRV , KC_MPLY , KC_MNXT , _______ , _______ ,
     KC_BML_LAYERC_TAB  , KC_F17  , KC_F18  , KC_WH_U           , KC_BML_LAYERA_TAB , KC_F20        ,      KC_AUDIO_VOL_DOWN , _______ , _______ , _______ , _______ , _______ ,
-    KC_BML_DOUBLE_CTRL , XXXXXXX , XXXXXXX , KC_WH_D           , XXXXXXX           , KC_AUDIO_MUTE ,      KC_AUDIO_MUTE     , _______ , _______ , _______ , _______ , _______ ,
+    KC_BML_DOUBLE_CTRL , XXXXXXX , KC_PSCR , KC_WH_D           , XXXXXXX           , KC_AUDIO_MUTE ,      KC_AUDIO_MUTE     , _______ , _______ , _______ , _______ , _______ ,
                                              KC_AUDIO_VOL_DOWN , KC_AUDIO_VOL_UP   , _______       ,      _______           , _______ , _______
   ),
 
