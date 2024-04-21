@@ -33,5 +33,6 @@
 #    ifndef RGBLIGHT_LIMIT_VAL
 #    	define RGBLIGHT_LIMIT_VAL 150
 #    endif
+    #define RGBLIGHT_SLEEP
 #endif
 

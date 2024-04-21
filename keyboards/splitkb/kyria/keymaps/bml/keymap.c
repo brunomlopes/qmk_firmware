@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
     MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E    , KC_R               , KC_T                 ,                                                                         KC_Y    , KC_U    , KC_I    , KC_O   , KC_P    , KC_RBRC               ,
     MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D    , LT(_LOWERFN, KC_F) , LT(_NUMPADALT, KC_G) ,                                                                         KC_H    , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V               , KC_B                 , _______    , _______            ,      _______          , _______     , KC_N    , KC_M    , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
+    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V               , KC_B                 , MO(_META)  , _______            ,      _______          , MO(_MACRO)   , KC_N    , KC_M    , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
                                          _______ , _______            , KC_LGUI              , MO(_LOWER) , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_LALT , _______ , _______
   ),
 
@@ -147,11 +147,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                              _______ , KC_AUDIO_VOL_DOWN , KC_AUDIO_VOL_UP , _______ , _______ ,      _______ , _______ , _______           , _______ , _______
   ),
 
-
   [_META] = LAYOUT(
-    QK_BOOTLOADER  , _______ , _______ , _______ , _______ , _______ ,                                              _______ , _______ , _______ , _______ , _______ , QK_REBOOT ,
-    KC_BML_SHOW_OS , _______ , _______ , _______ , _______ , _______ ,                                              _______ , _______ , _______ , _______ , _______ , _______   ,
-    _______        , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______   ,
+    QK_BOOTLOADER  , _______ , _______ , _______ , _______ , _______ ,                                              _______ , _______ , _______ , _______ , _______  , QK_REBOOT ,
+    KC_BML_SHOW_OS , _______ , _______ , _______ , _______ , _______ ,                                              RGB_TOG , RGB_SAI , RGB_HUI , RGB_VAI , RGB_MOD  , _______   ,
+    _______        , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , RGB_SAD , RGB_HUD , RGB_VAD , RGB_RMOD , _______   ,
                                          _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______
   ),
 
@@ -355,10 +354,16 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
  * For your convenience, here's a copy of those settings so that you can uncomment them if you wish to apply your own modifications.
  * DO NOT edit the rev1.c file; instead override the weakly defined default functions by your own.
  */
+#ifndef OLED_ENABLE
+#define OLED_ENABLE
+#endif
 
-/* DELETE THIS LINE TO UNCOMMENT (1/2)
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
+
+void suspend_power_down_user(void) {
+    oled_off();
+}
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
@@ -371,34 +376,49 @@ bool oled_task_user(void) {
         // clang-format on
 
         oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+        oled_write_P(PSTR("Kyria rev3.0\n\n"), false);
 
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
         switch (get_highest_layer(layer_state|default_layer_state)) {
-            case _QWERTY:
-                oled_write_P(PSTR("QWERTY\n"), false);
+            case _BASE:
+                oled_write_P(PSTR("base\n"), false);
                 break;
-            case _DVORAK:
-                oled_write_P(PSTR("Dvorak\n"), false);
+            case _LOWER:
+                oled_write_P(PSTR("lower\n"), false);
                 break;
-            case _COLEMAK_DH:
-                oled_write_P(PSTR("Colemak-DH\n"), false);
+            case _LOWER_MAC:
+                oled_write_P(PSTR("lower mac\n"), false);
+                break;
+            case _LOWERFN:
+                oled_write_P(PSTR("lower fn\n"), false);
+                break;
+            case _LEFTFN:
+                oled_write_P(PSTR("left fn\n"), false);
                 break;
             case _NAV:
-                oled_write_P(PSTR("Nav\n"), false);
+                oled_write_P(PSTR("nav\n"), false);
                 break;
-            case _SYM:
-                oled_write_P(PSTR("Sym\n"), false);
+            case _SYMBOL:
+                oled_write_P(PSTR("symbol\n"), false);
                 break;
-            case _FUNCTION:
-                oled_write_P(PSTR("Function\n"), false);
+            case _SYMBOL_MAC:
+                oled_write_P(PSTR("symbol mac\n"), false);
                 break;
-            case _ADJUST:
-                oled_write_P(PSTR("Adjust\n"), false);
+            case _MACRO:
+                oled_write_P(PSTR("macro\n"), false);
+                break;
+            case _NUMPAD:
+                oled_write_P(PSTR("numpad\n"), false);
+                break;
+            case _NUMPADALT:
+                oled_write_P(PSTR("numpad alt\n"), false);
+                break;
+            case _META:
+                oled_write_P(PSTR("meta\n"), false);
                 break;
             default:
-                oled_write_P(PSTR("Undefined\n"), false);
+                oled_write_P(PSTR("undefined\n"), false);
         }
 
         // Write host Keyboard LED Status to OLEDs
@@ -446,4 +466,3 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 #endif
-DELETE THIS LINE TO UNCOMMENT (2/2) */
