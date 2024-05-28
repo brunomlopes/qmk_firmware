@@ -31,6 +31,7 @@ enum layers {
   _MACRO,
   _NUMPAD,
   _NUMPADALT,
+  _NAVALT,
   _META
 };
 
@@ -82,8 +83,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
     MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E    , KC_R               , KC_T                 ,                                                                         KC_Y    , KC_U    , KC_I    , KC_O   , KC_P    , KC_RBRC               ,
     MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D    , LT(_LOWERFN, KC_F) , LT(_NUMPADALT, KC_G) ,                                                                         KC_H    , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V               , KC_B                 , MO(_META)  , _______            ,      _______          , MO(_MACRO)   , KC_N    , KC_M    , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
-                                         _______ , _______            , KC_LGUI              , MO(_LOWER) , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_LALT , _______ , _______
+    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V               , LT(_NAVALT, KC_B)    , MO(_META)  , _______            ,      _______          , MO(_MACRO)  , KC_N    , KC_M    , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
+                                         KC_LALT , KC_LCTL            , KC_LGUI              , MO(_LOWER) , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_LALT , KC_RCTL , KC_RGUI
   ),
 
   [_LOWER] = LAYOUT(
@@ -112,6 +113,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX , KC_TAB  , KC_4 , KC_5    , KC_6    , XXXXXXX ,                                              KC_TAB  , KC_4    , KC_5    , KC_6 , XXXXXXX , KC_BSPC ,
     XXXXXXX , KC_0    , KC_1 , KC_2    , KC_3    , KC_DOT  , _______ , _______ ,      _______ , _______ , KC_0    , KC_1    , KC_2    , KC_3 , KC_DOT  , XXXXXXX ,
                                _______ , _______ , KC_DOT  , KC_COMM , KC_BSPC ,      XXXXXXX , KC_DOT  , KC_COMM , _______ , _______
+  ),
+
+  [_NAVALT] = LAYOUT(
+    XXXXXXX , KC_PGUP , KC_HOME    , KC_UP      , KC_END     , KC_BSPC ,                                              KC_BSPC , KC_7    , KC_8    , KC_9 , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL  ,                                              KC_TAB  , KC_4    , KC_5    , KC_6 , XXXXXXX , KC_BSPC ,
+    XXXXXXX , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX , _______ , _______ ,      _______ , _______ , KC_0    , KC_1    , KC_2    , KC_3 , KC_DOT  , XXXXXXX ,
+                                     _______    , _______    , XXXXXXX , KC_BSPC , KC_DEL ,      XXXXXXX , KC_DOT  , KC_COMM , _______ , _______
   ),
 
   [_NAV] = LAYOUT(
@@ -148,10 +156,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_META] = LAYOUT(
-    QK_BOOTLOADER  , _______ , _______ , _______ , _______ , _______ ,                                              _______ , _______ , _______ , _______ , _______  , QK_REBOOT ,
-    KC_BML_SHOW_OS , _______ , _______ , _______ , _______ , _______ ,                                              RGB_TOG , RGB_SAI , RGB_HUI , RGB_VAI , RGB_MOD  , _______   ,
-    _______        , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , RGB_SAD , RGB_HUD , RGB_VAD , RGB_RMOD , _______   ,
-                                         _______ , _______ , _______ , _______ , _______ ,      _______ , _______ , _______ , _______ , _______
+    QK_BOOTLOADER  , _______ , _______ , KC_SYSTEM_SLEEP , _______ , LGUI(KC_L) ,                                              _______ , _______ , _______ , _______ , _______  , QK_REBOOT ,
+    KC_BML_SHOW_OS , _______ , _______ , KC_SYSTEM_WAKE  , _______ , _______    ,                                              RGB_TOG , RGB_SAI , RGB_HUI , RGB_VAI , RGB_MOD  , _______   ,
+    _______        , _______ , _______ , _______         , _______ , _______    , _______ , _______ ,      _______ , _______ , _______ , RGB_SAD , RGB_HUD , RGB_VAD , RGB_RMOD , _______   ,
+                                         _______         , _______ , _______    , _______ , _______ ,      _______ , _______ , _______ , _______ , _______
   ),
 
 };
@@ -289,22 +297,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             switch (detected_os)
             {
             case OS_UNSURE:
-                SEND_STRING("OS detection: UNSURE\n");
+                SEND_STRING("OS detection- UNSURE\n");
                 break;
             case OS_MACOS:
-                SEND_STRING("OS detection: OSX\n");
+                SEND_STRING("OS detection- OSX\n");
                 break;
             case OS_WINDOWS:
-                SEND_STRING("OS detection: WINDOWS\n");
+                SEND_STRING("OS detection- WINDOWS\n");
                 break;
             case OS_LINUX:
-                SEND_STRING("OS detection: LINUX\n");
+                SEND_STRING("OS detection- LINUX\n");
                 break;
             case OS_IOS:
-                SEND_STRING("OS detection: IOS\n");
+                SEND_STRING("OS detection- IOS\n");
                 break;
             default:
-                SEND_STRING("OS detection: unknown:'");
+                SEND_STRING("OS detection- unknown:'");
                 send_byte(detected_os);
                 SEND_STRING("' \n");
                 break;
@@ -376,7 +384,13 @@ bool oled_task_user(void) {
         // clang-format on
 
         oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria rev3.0\n\n"), false);
+        // oled_write_P(PSTR("Kyria rev3.0\n\n"), false);
+        // helper for hrmods
+        oled_write_P(PSTR("G"),(get_mods() & MOD_MASK_GUI));
+        oled_write_P(PSTR("A"),(get_mods() & MOD_MASK_ALT));
+        oled_write_P(PSTR("S"),(get_mods() & MOD_MASK_SHIFT));
+        oled_write_P(PSTR("C"),(get_mods() & MOD_MASK_CTRL));
+        oled_write_P(PSTR("\n"), false);
 
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
@@ -413,6 +427,9 @@ bool oled_task_user(void) {
                 break;
             case _NUMPADALT:
                 oled_write_P(PSTR("numpad alt\n"), false);
+                break;
+            case _NAVALT:
+                oled_write_P(PSTR("nav alt\n"), false);
                 break;
             case _META:
                 oled_write_P(PSTR("meta\n"), false);
