@@ -26,6 +26,7 @@ enum layers {
   _LOWERFN,
   _LEFTFN,
   _NAV,
+  _MOUSE,
   _SYMBOL,
   _SYMBOL_MAC,
   _MACRO,
@@ -73,25 +74,21 @@ enum custom_keycodes {
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
 
-// Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
-// The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
-// produces the key `tap` when tapped (i.e. pressed and released).
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BASE] = LAYOUT(
-    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E    , KC_R               , KC_T                 ,                                                                         KC_Y    , KC_U    , KC_I    , KC_O   , KC_P    , KC_RBRC               ,
-    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D    , LT(_LOWERFN, KC_F) , LT(_NUMPADALT, KC_G) ,                                                                         KC_H    , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
-    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V               , LT(_NAVALT, KC_B)    , MO(_META)  , _______            ,      _______          , MO(_MACRO)  , KC_N    , KC_M    , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
-                                         KC_LALT , KC_LCTL            , KC_LGUI              , MO(_LOWER) , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_LALT , KC_RCTL , KC_RGUI
+    MT(MOD_LALT, KC_ESC) , KC_Q , KC_W , KC_E    , KC_R               , KC_T                 ,                                                                         LT(_MOUSE, KC_Y) , KC_U    , KC_I    , KC_O   , KC_P    , KC_RBRC               ,
+    MT(MOD_LCTL, KC_TAB) , KC_A , KC_S , KC_D    , LT(_LOWERFN, KC_F) , LT(_NUMPADALT, KC_G) ,                                                                         KC_H             , KC_J    , KC_K    , KC_L   , KC_ENT  , MT(MOD_LCTL, KC_BSPC) ,
+    KC_LSFT              , KC_Z , KC_X , KC_C    , KC_V               , LT(_NAVALT, KC_B)    , MO(_META)  , KC_MS_BTN1         ,      KC_MS_BTN2       , MO(_MACRO)  , KC_N             , KC_M    , KC_COMM , KC_DOT , KC_SLSH , KC_RSFT               ,
+                                         KC_LALT , KC_LCTL            , KC_LGUI              , MO(_LOWER) , LT(_MACRO, KC_ENT) ,      LT(_NAV, KC_SPC) , MO(_SYMBOL) , KC_LALT          , KC_RCTL , KC_RGUI
   ),
 
   [_LOWER] = LAYOUT(
-    KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,                                                KC_6    , KC_7    , KC_8       , KC_9      , KC_0       , KC_F12  ,
-    KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR  , KC_PERC ,                                                KC_CIRC , KC_AMPR , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______ ,
-    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC , _______ , _______ ,      _______ , _______   , KC_NUBS , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , _______ ,
-                                  _______       , _______ , KC_LCTL , _______ , KC_SPC  ,      _______ , MO(_META) , _______ , _______ , _______
+    KC_BSPC , KC_1    , KC_2    , KC_3          , KC_4    , KC_5    ,                                                    KC_6    , KC_7    , KC_8       , KC_9      , KC_0       , KC_F12  ,
+    KC_TILD , KC_EXLM , KC_AT   , KC_HASH       , KC_DLR  , KC_PERC ,                                                    KC_CIRC , KC_AMPR , KC_ASTR    , KC_LPRN   , KC_RPRN    , _______ ,
+    KC_GRV  , KC_UNDS , KC_MINS , A(ALGR(KC_2)) , KC_LCBR , KC_LBRC , MO(_NAVALT) , _______ ,      _______ , _______   , KC_NUBS , KC_RPRN , S(KC_NUBS) , S(KC_DOT) , S(KC_SLSH) , _______ ,
+                                  _______       , _______ , KC_LCTL , _______     , KC_SPC  ,      _______ , MO(_META) , _______ , _______ , _______
   ),
 
   [_LOWER_MAC] = LAYOUT(
@@ -112,14 +109,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX , KC_BSPC , KC_7 , KC_8    , KC_9    , XXXXXXX ,                                              KC_BSPC , KC_7    , KC_8    , KC_9 , XXXXXXX , XXXXXXX ,
     XXXXXXX , KC_TAB  , KC_4 , KC_5    , KC_6    , XXXXXXX ,                                              KC_TAB  , KC_4    , KC_5    , KC_6 , XXXXXXX , KC_BSPC ,
     XXXXXXX , KC_0    , KC_1 , KC_2    , KC_3    , KC_DOT  , _______ , _______ ,      _______ , _______ , KC_0    , KC_1    , KC_2    , KC_3 , KC_DOT  , XXXXXXX ,
-                               _______ , _______ , KC_DOT  , KC_COMM , KC_BSPC ,      XXXXXXX , KC_DOT  , KC_COMM , _______ , _______
+                               _______ , _______ , KC_DOT  , KC_COMM , KC_BSPC ,      KC_SPC  , KC_DOT  , KC_COMM , _______ , _______
   ),
 
   [_NAVALT] = LAYOUT(
-    XXXXXXX , KC_PGUP , KC_HOME    , KC_UP      , KC_END     , KC_BSPC ,                                              KC_BSPC , KC_7    , KC_8    , KC_9 , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL  ,                                              KC_TAB  , KC_4    , KC_5    , KC_6 , XXXXXXX , KC_BSPC ,
-    XXXXXXX , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX , _______ , _______ ,      _______ , _______ , KC_0    , KC_1    , KC_2    , KC_3 , KC_DOT  , XXXXXXX ,
-                                     _______    , _______    , XXXXXXX , KC_BSPC , KC_DEL ,      XXXXXXX , KC_DOT  , KC_COMM , _______ , _______
+    KC_LALT , KC_PGUP , KC_HOME    , KC_UP      , KC_END     , KC_BSPC ,                                              KC_BSPC , KC_7    , KC_8    , KC_9 , XXXXXXX , XXXXXXX ,
+    KC_LCTL , KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL  ,                                              KC_TAB  , KC_4    , KC_5    , KC_6 , XXXXXXX , KC_BSPC ,
+    KC_LSFT , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX , _______ , _______ ,      _______ , _______ , KC_0    , KC_1    , KC_2    , KC_3 , KC_DOT  , XXXXXXX ,
+                                     KC_BSPC    , KC_DEL     , XXXXXXX , KC_BSPC , KC_DEL  ,      XXXXXXX , KC_DOT  , KC_COMM , _______ , _______
   ),
 
   [_NAV] = LAYOUT(
@@ -127,6 +124,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______ , XXXXXXX , XXXXXXX , KC_PSCR , A(ALGR(KC_TAB)) , KC_BTN4 ,                                                 KC_PGDN , KC_LEFT    , KC_DOWN    , KC_RGHT    , KC_DEL    , KC_BSPC    ,
     _______ , C(KC_Z) , C(KC_X) , C(KC_C) , C(KC_V)         , XXXXXXX , _______ , _______ ,      _______ , _______    , XXXXXXX , C(KC_LEFT) , C(KC_DOWN) , C(KC_RGHT) , XXXXXXX   , _______    ,
                                   _______ , _______         , _______ , _______ , _______ ,      _______ , MO(_MACRO) , _______ , _______    , _______
+  ),
+
+  [_MOUSE] = LAYOUT(
+    _______ , _______ , _______ , _______ , _______ , _______ ,                                                    _______    , KC_MS_BTN4    , KC_MS_BTN5 , _______ , _______ , _______ ,
+    _______ , _______ , _______ , _______ , _______ , _______ ,                                                    _______    , _______    , _______ , _______ , _______ , _______ ,
+    _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,      KC_MS_BTN3 , KC_MS_BTN3 , _______    , _______    , _______ , _______ , _______ , _______ ,
+                                  _______ , _______ , _______ , _______ , _______ ,      KC_MS_BTN1 , KC_MS_BTN2 , _______    , _______    , _______
   ),
 
   [_SYMBOL] = LAYOUT(
@@ -412,6 +416,9 @@ bool oled_task_user(void) {
                 break;
             case _NAV:
                 oled_write_P(PSTR("nav\n"), false);
+                break;
+            case _MOUSE:
+                oled_write_P(PSTR("mouse\n"), false);
                 break;
             case _SYMBOL:
                 oled_write_P(PSTR("symbol\n"), false);
